@@ -1,0 +1,158 @@
+import { useTranslations } from "next-intl";
+import HeroSection from "@/components/HeroSection";
+import DisciplineCard from "@/components/DisciplineCard";
+import EventCard from "@/components/EventCard";
+import BlogCard from "@/components/BlogCard";
+import Link from "next/link";
+import { events } from "@/data/events";
+import { blogPosts } from "@/data/blog";
+
+type PageProps = { params: Promise<{ locale: string }> };
+
+export default async function HomePage({ params }: PageProps) {
+  const { locale } = await params;
+  return <HomeContent locale={locale} />;
+}
+
+function HomeContent({ locale }: { locale: string }) {
+  const t = useTranslations("home");
+  const td = useTranslations("disciplines");
+  const te = useTranslations("events");
+  const tb = useTranslations("blog");
+
+  const disciplines = [
+    { key: "hav", emoji: "🌊", href: `/${locale}/padling/hav` },
+    { key: "elv", emoji: "🏔️", href: `/${locale}/padling/elv` },
+    { key: "flattvann", emoji: "🏅", href: `/${locale}/padling/flattvann` },
+    { key: "surfski", emoji: "⚡", href: `/${locale}/padling/surfski` },
+    { key: "polo", emoji: "🏐", href: `/${locale}/padling/polo` },
+    { key: "junior", emoji: "🌱", href: `/${locale}/padling/junior` },
+  ] as const;
+
+  const upcoming = events.slice(0, 3);
+  const latestPosts = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  const blogCatLabels: Record<string, string> = {
+    category_tur: tb("category_tur"),
+    category_info: tb("category_info"),
+    category_klubb: tb("category_klubb"),
+    category_sosial: tb("category_sosial"),
+  };
+
+  return (
+    <>
+      <HeroSection
+        title={t("hero_title")}
+        subtitle={t("hero_sub")}
+        imageSrc="/images/hav.jpg"
+        imageAlt="Havpadling på Trondhjemsfjorden"
+        cta={{ label: t("cta_join"), href: `/${locale}/medlemskap` }}
+        ctaSecondary={{ label: t("cta_events"), href: `/${locale}/aktiviteter` }}
+      />
+
+      {/* Stats strip */}
+      <div className="bg-navy text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {[
+            t("stats_members"),
+            t("stats_locations"),
+            t("stats_equipment"),
+            t("stats_disciplines"),
+          ].map((stat) => (
+            <div key={stat} className="text-sm font-semibold text-white/80">
+              <span className="text-tkk-blue">✓</span> {stat}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Disciplines */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="w-8 border-t-2 border-teal mb-2" />
+        <h2 className="font-display font-bold text-navy text-3xl mb-8">{t("disciplines_title")}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {disciplines.map(({ key, emoji, href }) => (
+            <DisciplineCard
+              key={key}
+              title={td(`${key}_title`)}
+              description={td(`${key}_desc`)}
+              href={href}
+              emoji={emoji}
+              readMore={td("read_more")}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Upcoming events */}
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-8 border-t-2 border-teal mb-2" />
+          <h2 className="font-display font-bold text-navy text-3xl mb-8">{t("events_title")}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {upcoming.map((e) => (
+              <EventCard
+                key={e.id}
+                event={e}
+                locale={locale}
+                labels={{
+                  difficulty_nybegynner: te("difficulty_nybegynner"),
+                  difficulty_middels: te("difficulty_middels"),
+                  difficulty_erfaren: te("difficulty_erfaren"),
+                  register: te("register"),
+                }}
+              />
+            ))}
+          </div>
+          <div className="mt-8">
+            <Link
+              href={`/${locale}/aktiviteter`}
+              className="inline-block border border-navy text-navy font-semibold px-6 py-3 rounded hover:bg-navy hover:text-white transition-colors text-sm"
+            >
+              {t("events_all")} →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="w-8 border-t-2 border-teal mb-2" />
+        <h2 className="font-display font-bold text-navy text-3xl mb-8">{tb("latest")}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {latestPosts.map((post) => (
+            <BlogCard
+              key={post.slug}
+              post={post}
+              locale={locale}
+              readMoreLabel={tb("read_more")}
+              byLabel={tb("by")}
+              categoryLabels={blogCatLabels}
+            />
+          ))}
+        </div>
+        <div className="mt-8">
+          <Link
+            href={`/${locale}/blogg`}
+            className="inline-block border border-navy text-navy font-semibold px-6 py-3 rounded hover:bg-navy hover:text-white transition-colors text-sm"
+          >
+            {tb("all")} →
+          </Link>
+        </div>
+      </section>
+
+      {/* Join CTA */}
+      <section className="bg-tkk-blue py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display font-bold text-navy text-3xl mb-4">{t("join_title")}</h2>
+          <p className="text-navy/80 text-lg leading-relaxed mb-8">{t("join_text")}</p>
+          <Link
+            href={`/${locale}/medlemskap`}
+            className="inline-block bg-navy text-white font-semibold px-8 py-3 rounded hover:bg-teal transition-colors"
+          >
+            {t("join_btn")}
+          </Link>
+        </div>
+      </section>
+    </>
+  );
+}
