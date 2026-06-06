@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { BlogPost } from "@/data/blog";
+import { urlFor } from "@/lib/sanity";
+import type { BlogPostSummary } from "@/lib/queries/blog";
 
 type Props = {
-  post: BlogPost;
+  post: BlogPostSummary;
   locale: string;
   readMoreLabel: string;
   byLabel: string;
@@ -11,16 +12,17 @@ type Props = {
 };
 
 export default function BlogCard({ post, locale, readMoreLabel, byLabel, categoryLabels }: Props) {
-  const title = locale === "no" ? post.titleNo : post.titleEn;
-  const summary = locale === "no" ? post.summaryNo : post.summaryEn;
+  const title = locale === "no" ? post.title.no : (post.title.en ?? post.title.no);
+  const summary = locale === "no" ? post.summary.no : (post.summary.en ?? post.summary.no);
   const catKey = `category_${post.category}`;
   const catLabel = categoryLabels[catKey] ?? post.category;
+  const imageUrl = post.image?.asset ? urlFor(post.image).width(600).height(400).url() : null;
 
   return (
     <Link href={`/${locale}/blogg/${post.slug}`} className="group block bg-white rounded-xl shadow-sm border border-mist overflow-hidden hover:shadow-md transition-shadow">
-      {post.imageSrc && (
+      {imageUrl && (
         <div className="relative h-48 overflow-hidden">
-          <Image src={post.imageSrc} alt={post.imageAlt} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Image src={imageUrl} alt={post.image?.alt ?? title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
           <div className="absolute inset-0 bg-navy/30" />
           <span className="absolute top-3 left-3 bg-tkk-blue text-navy text-xs font-semibold px-2 py-0.5 rounded">
             {catLabel}
@@ -29,7 +31,7 @@ export default function BlogCard({ post, locale, readMoreLabel, byLabel, categor
       )}
       <div className="p-5">
         <p className="text-slate text-xs mb-2">
-          {new Date(post.date).toLocaleDateString(locale === "no" ? "nb-NO" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}
+          {new Date(post.publishedAt).toLocaleDateString(locale === "no" ? "nb-NO" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}
           {post.author && <> &middot; {byLabel} {post.author}</>}
         </p>
         <h3 className="font-display font-bold text-navy text-lg leading-snug mb-2 group-hover:text-teal transition-colors">{title}</h3>

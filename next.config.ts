@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "http", hostname: "www.tkk.no" },
+      { protocol: "https", hostname: "cdn.sanity.io" },
     ],
   },
 };

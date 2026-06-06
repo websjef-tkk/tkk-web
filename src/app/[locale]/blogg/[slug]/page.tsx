@@ -1,27 +1,33 @@
 import { useTranslations } from "next-intl";
-import { blogPosts } from "@/data/blog";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PortableText } from "@portabletext/react";
+import { getBlogPost } from "@/lib/queries/blog";
+import { urlFor } from "@/lib/sanity";
+import type { BlogPostFull } from "@/lib/queries/blog";
+
+export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string; slug: string }> };
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await getBlogPost(slug);
   if (!post) notFound();
-  return <BlogPostContent locale={locale} slug={slug} />;
+  return <BlogPostContent locale={locale} post={post} />;
 }
 
-function BlogPostContent({ locale, slug }: { locale: string; slug: string }) {
+function BlogPostContent({ locale, post }: { locale: string; post: BlogPostFull }) {
   const t = useTranslations("blog");
-  const post = blogPosts.find((p) => p.slug === slug)!;
 
-  const title = locale === "no" ? post.titleNo : post.titleEn;
-  const body = locale === "no" ? post.bodyNo : post.bodyEn;
+  const title = locale === "no" ? post.title.no : (post.title.en ?? post.title.no);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const body = (locale === "no" ? post.body?.no : (post.body?.en ?? post.body?.no)) as any[] | undefined;
   const catKey = `category_${post.category}` as const;
+  const imageUrl = post.image?.asset ? urlFor(post.image).width(1200).height(600).url() : null;
 
-  const formattedDate = new Date(post.date).toLocaleDateString(
+  const formattedDate = new Date(post.publishedAt).toLocaleDateString(
     locale === "no" ? "nb-NO" : "en-GB",
     { day: "numeric", month: "long", year: "numeric" }
   );
@@ -32,9 +38,9 @@ function BlogPostContent({ locale, slug }: { locale: string; slug: string }) {
         {t("back")}
       </Link>
 
-      {post.imageSrc && (
+      {imageUrl && (
         <div className="relative h-72 md:h-96 rounded-xl overflow-hidden mb-8">
-          <Image src={post.imageSrc} alt={post.imageAlt} fill className="object-cover" priority />
+          <Image src={imageUrl} alt={post.image?.alt ?? title} fill className="object-cover" priority />
           <div className="absolute inset-0 bg-navy/30" />
         </div>
       )}
@@ -49,27 +55,11 @@ function BlogPostContent({ locale, slug }: { locale: string; slug: string }) {
 
       <h1 className="font-display font-bold text-navy text-3xl md:text-4xl leading-tight mb-8">{title}</h1>
 
-      <div className="prose prose-navy max-w-none text-slate leading-relaxed space-y-4">
-        {body.split("\n\n").map((para, i) => {
-          const trimmed = para.trim();
-          if (!trimmed) return null;
-          if (trimmed.startsWith("**") && trimmed.endsWith("**") && trimmed.split("**").length === 3) {
-            return <h2 key={i} className="font-display font-bold text-navy text-xl mt-6">{trimmed.slice(2, -2)}</h2>;
-          }
-          const rendered = trimmed
-            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-            .replace(/\[(.+?)\]\((.+?)\)/g, `<a href="$2" target="_blank" rel="noopener noreferrer" class="text-teal underline">$1</a>`);
-          if (trimmed.startsWith("- ")) {
-            const items = trimmed.split("\n").filter((l) => l.startsWith("- "));
-            return (
-              <ul key={i} className="list-disc list-inside space-y-1">
-                {items.map((item, j) => <li key={j} dangerouslySetInnerHTML={{ __html: item.slice(2) }} />)}
-              </ul>
-            );
-          }
-          return <p key={i} dangerouslySetInnerHTML={{ __html: rendered }} />;
-        })}
-      </div>
+      {body?.length ? (
+        <div className="prose prose-slate max-w-none leading-relaxed">
+          <PortableText value={body} />
+        </div>
+      ) : null}
 
       <div className="mt-12 border-t border-mist pt-6">
         <Link href={`/${locale}/blogg`} className="text-teal text-sm font-semibold hover:underline">

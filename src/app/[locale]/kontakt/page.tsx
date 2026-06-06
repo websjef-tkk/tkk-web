@@ -1,41 +1,24 @@
 import { useTranslations } from "next-intl";
+import { getAllPeople } from "@/lib/queries/people";
+import type { SanityPerson } from "@/lib/queries/people";
+
+export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string }> };
 
-type Person = { role: { no: string; en: string }; name: string; phone: string; email: string };
-
-const board: Person[] = [
-  { role: { no: "Leder", en: "Chair" }, name: "Chris Thomas Skogli", phone: "476 44 224", email: "leder@tkk.no" },
-  { role: { no: "Nestleder", en: "Vice Chair" }, name: "Isabelle Sande", phone: "902 99 808", email: "nestleder@tkk.no" },
-  { role: { no: "Kasserer", en: "Treasurer" }, name: "Monica Engan Døhl", phone: "990 06 484", email: "kasserer@tkk.no" },
-];
-
-const leaders: Person[] = [
-  { role: { no: "Hav", en: "Sea" }, name: "Frode Vassenden", phone: "414 10 163", email: "hav@tkk.no" },
-  { role: { no: "Elv", en: "River" }, name: "Øyvind Inge Bakksjø", phone: "922 83 522", email: "elv@tkk.no" },
-  { role: { no: "Polo", en: "Polo" }, name: "Sofie Gradmann", phone: "968 04 684", email: "polo@tkk.no" },
-  { role: { no: "Flattvann", en: "Flat water" }, name: "Fernando J Perez-Fernandez", phone: "454 12 494", email: "flattvann@tkk.no" },
-  { role: { no: "Junior", en: "Junior" }, name: "Anders Foldvik", phone: "402 03 036", email: "junior@tkk.no" },
-  { role: { no: "Surfski", en: "Surfski" }, name: "Torleif Holm", phone: "977 53 020", email: "surfski@tkk.no" },
-];
-
-const others: Person[] = [
-  { role: { no: "Hyllemann / Medlemskoord.", en: "Storage / Membership coord." }, name: "Magne Lysberg", phone: "450 65 636", email: "hyllemann@tkk.no" },
-  { role: { no: "Husansvarlig", en: "Building manager" }, name: "André Sæther Berger", phone: "454 25 851", email: "hussjef@tkk.no" },
-  { role: { no: "Sosialkoordinator", en: "Social coordinator" }, name: "Håvard Dahlen", phone: "970 79 822", email: "sosialt@tkk.no" },
-  { role: { no: "Politiattestansvarlig", en: "Background check coordinator" }, name: "Isabelle Sande", phone: "902 99 808", email: "politiattest@tkk.no" },
-  { role: { no: "Barneidrettsansvarlig", en: "Youth sports coordinator" }, name: "Anders Foldvik", phone: "402 03 036", email: "junior@tkk.no" },
-  { role: { no: "Paraansvarlig", en: "Para sports coordinator" }, name: "Kristian Rye", phone: "452 64 480", email: "para@tkk.no" },
-];
-
 export default async function KontaktPage({ params }: PageProps) {
   const { locale } = await params;
-  return <KontaktContent locale={locale} />;
+  const people = await getAllPeople();
+  return <KontaktContent locale={locale} people={people} />;
 }
 
-function KontaktContent({ locale }: { locale: string }) {
+function KontaktContent({ locale, people }: { locale: string; people: SanityPerson[] }) {
   const t = useTranslations("contact");
   const isNo = locale === "no";
+
+  const board = people.filter((p) => p.group === "board");
+  const leaders = people.filter((p) => p.group === "leaders");
+  const others = people.filter((p) => p.group === "others");
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -43,7 +26,6 @@ function KontaktContent({ locale }: { locale: string }) {
       <h1 className="font-display font-bold text-navy text-4xl mb-10">{t("title")}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-        {/* Address */}
         <div className="bg-white rounded-xl border border-mist shadow-sm p-6">
           <h2 className="font-display font-bold text-navy text-xl mb-4">{t("address_title")}</h2>
           <div className="space-y-3 text-sm text-slate">
@@ -64,7 +46,6 @@ function KontaktContent({ locale }: { locale: string }) {
           </div>
         </div>
 
-        {/* Social */}
         <div className="bg-white rounded-xl border border-mist shadow-sm p-6">
           <h2 className="font-display font-bold text-navy text-xl mb-4">{t("social_title")}</h2>
           <div className="space-y-3 text-sm">
@@ -86,11 +67,10 @@ function KontaktContent({ locale }: { locale: string }) {
         </div>
       </div>
 
-      <ContactTable title={t("board_title")} people={board} isNo={isNo} />
-      <ContactTable title={t("leaders_title")} people={leaders} isNo={isNo} />
-      <ContactTable title={isNo ? "Andre" : "Others"} people={others} isNo={isNo} />
+      {board.length > 0 && <ContactTable title={t("board_title")} people={board} isNo={isNo} />}
+      {leaders.length > 0 && <ContactTable title={t("leaders_title")} people={leaders} isNo={isNo} />}
+      {others.length > 0 && <ContactTable title={isNo ? "Andre" : "Others"} people={others} isNo={isNo} />}
 
-      {/* Map */}
       <section className="mt-4">
         <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-2xl mb-4">{t("map_title")}</h2>
@@ -112,7 +92,7 @@ function KontaktContent({ locale }: { locale: string }) {
   );
 }
 
-function ContactTable({ title, people, isNo }: { title: string; people: Person[]; isNo: boolean }) {
+function ContactTable({ title, people, isNo }: { title: string; people: SanityPerson[]; isNo: boolean }) {
   return (
     <section className="mb-10">
       <div className="w-8 border-t-2 border-teal mb-2" />
@@ -121,8 +101,8 @@ function ContactTable({ title, people, isNo }: { title: string; people: Person[]
         <table className="w-full text-sm">
           <tbody>
             {people.map((p, i) => (
-              <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-mist"}>
-                <td className="px-5 py-3 text-slate">{isNo ? p.role.no : p.role.en}</td>
+              <tr key={p._id} className={i % 2 === 0 ? "bg-white" : "bg-mist"}>
+                <td className="px-5 py-3 text-slate">{isNo ? p.role.no : (p.role.en ?? p.role.no)}</td>
                 <td className="px-5 py-3 font-medium text-navy">{p.name}</td>
                 <td className="px-4 py-3 hidden sm:table-cell">
                   {p.phone && <a href={`tel:${p.phone.replace(/\s/g, "")}`} className="text-teal hover:underline">{p.phone}</a>}

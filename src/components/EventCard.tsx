@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { Event } from "@/data/events";
+import type { SanityEvent } from "@/lib/queries/events";
 
 type Props = {
-  event: Event;
+  event: SanityEvent;
   locale: string;
   labels: {
     difficulty_nybegynner: string;
@@ -12,7 +12,7 @@ type Props = {
   };
 };
 
-const difficultyColour = {
+const difficultyColour: Record<string, string> = {
   nybegynner: "bg-green-100 text-green-800",
   middels: "bg-yellow-100 text-yellow-800",
   erfaren: "bg-red-100 text-red-800",
@@ -34,14 +34,16 @@ function formatDate(dateStr: string, endDate?: string, locale?: string) {
 }
 
 export default function EventCard({ event, locale, labels }: Props) {
-  const title = locale === "no" ? event.titleNo : event.titleEn;
-  const desc = locale === "no" ? event.descNo : event.descEn;
+  const title = locale === "no" ? event.title.no : (event.title.en ?? event.title.no);
+  const desc = locale === "no" ? event.description?.no : (event.description?.en ?? event.description?.no);
   const diffLabel =
     event.difficulty === "nybegynner"
       ? labels.difficulty_nybegynner
       : event.difficulty === "middels"
       ? labels.difficulty_middels
-      : labels.difficulty_erfaren;
+      : event.difficulty === "erfaren"
+      ? labels.difficulty_erfaren
+      : undefined;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col">
@@ -50,8 +52,8 @@ export default function EventCard({ event, locale, labels }: Props) {
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${categoryColour[event.category] ?? ""}`}>
             {event.category.toUpperCase()}
           </span>
-          {event.difficulty && (
-            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${difficultyColour[event.difficulty]}`}>
+          {event.difficulty && diffLabel && (
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${difficultyColour[event.difficulty] ?? ""}`}>
               {diffLabel}
             </span>
           )}
@@ -60,7 +62,7 @@ export default function EventCard({ event, locale, labels }: Props) {
           {formatDate(event.date, event.endDate, locale)}
         </p>
         <h3 className="font-display font-bold text-navy text-lg leading-snug mb-2">{title}</h3>
-        <p className="text-slate text-sm leading-relaxed">{desc}</p>
+        {desc && <p className="text-slate text-sm leading-relaxed">{desc}</p>}
       </div>
       {event.registerUrl && (
         <div className="px-5 py-3 bg-mist border-t border-mist">

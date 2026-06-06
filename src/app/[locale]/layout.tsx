@@ -19,7 +19,7 @@ export default async function LocaleLayout({
   const [messages, session] = await Promise.all([getMessages(), getSession()]);
 
   const sessionUser = session
-    ? { firstName: session.firstName, lastName: session.lastName, email: session.email }
+    ? { firstName: session.firstName, lastName: session.lastName, email: session.email, isAdmin: session.isAdmin }
     : null;
 
   return (

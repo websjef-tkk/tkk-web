@@ -50,6 +50,7 @@ export type SessionUser = {
   nifConsentGiven: boolean;
   firstName: string | null;
   lastName: string | null;
+  isAdmin: boolean;
 };
 
 export async function getSession(): Promise<SessionUser | null> {
@@ -74,6 +75,7 @@ export async function getSession(): Promise<SessionUser | null> {
     nifConsentGiven: session.user.nifConsentGiven,
     firstName: session.user.firstName,
     lastName: session.user.lastName,
+    isAdmin: session.user.isAdmin,
   };
 }
 

@@ -4,17 +4,39 @@ import DisciplineCard from "@/components/DisciplineCard";
 import EventCard from "@/components/EventCard";
 import BlogCard from "@/components/BlogCard";
 import Link from "next/link";
-import { events } from "@/data/events";
-import { blogPosts } from "@/data/blog";
+import { getUpcomingEvents } from "@/lib/queries/events";
+import { getAllBlogPosts } from "@/lib/queries/blog";
+import type { SanityEvent } from "@/lib/queries/events";
+import type { BlogPostSummary } from "@/lib/queries/blog";
+
+export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string }> };
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
-  return <HomeContent locale={locale} />;
+  const [events, posts] = await Promise.all([
+    getUpcomingEvents(),
+    getAllBlogPosts(),
+  ]);
+  return (
+    <HomeContent
+      locale={locale}
+      events={events.slice(0, 3)}
+      posts={posts.slice(0, 3)}
+    />
+  );
 }
 
-function HomeContent({ locale }: { locale: string }) {
+function HomeContent({
+  locale,
+  events,
+  posts,
+}: {
+  locale: string;
+  events: SanityEvent[];
+  posts: BlogPostSummary[];
+}) {
   const t = useTranslations("home");
   const td = useTranslations("disciplines");
   const te = useTranslations("events");
@@ -29,13 +51,18 @@ function HomeContent({ locale }: { locale: string }) {
     { key: "junior", emoji: "🌱", href: `/${locale}/padling/junior` },
   ] as const;
 
-  const upcoming = events.slice(0, 3);
-  const latestPosts = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const blogCatLabels: Record<string, string> = {
     category_tur: tb("category_tur"),
     category_info: tb("category_info"),
     category_klubb: tb("category_klubb"),
     category_sosial: tb("category_sosial"),
+  };
+
+  const eventLabels = {
+    difficulty_nybegynner: te("difficulty_nybegynner"),
+    difficulty_middels: te("difficulty_middels"),
+    difficulty_erfaren: te("difficulty_erfaren"),
+    register: te("register"),
   };
 
   return (
@@ -49,7 +76,6 @@ function HomeContent({ locale }: { locale: string }) {
         ctaSecondary={{ label: t("cta_events"), href: `/${locale}/aktiviteter` }}
       />
 
-      {/* Stats strip */}
       <div className="bg-navy text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
@@ -65,7 +91,6 @@ function HomeContent({ locale }: { locale: string }) {
         </div>
       </div>
 
-      {/* Disciplines */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-3xl mb-8">{t("disciplines_title")}</h2>
@@ -83,26 +108,19 @@ function HomeContent({ locale }: { locale: string }) {
         </div>
       </section>
 
-      {/* Upcoming events */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="w-8 border-t-2 border-teal mb-2" />
           <h2 className="font-display font-bold text-navy text-3xl mb-8">{t("events_title")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {upcoming.map((e) => (
-              <EventCard
-                key={e.id}
-                event={e}
-                locale={locale}
-                labels={{
-                  difficulty_nybegynner: te("difficulty_nybegynner"),
-                  difficulty_middels: te("difficulty_middels"),
-                  difficulty_erfaren: te("difficulty_erfaren"),
-                  register: te("register"),
-                }}
-              />
-            ))}
-          </div>
+          {events.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {events.map((e) => (
+                <EventCard key={e._id} event={e} locale={locale} labels={eventLabels} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-slate">{locale === "no" ? "Ingen kommende arrangementer." : "No upcoming events."}</p>
+          )}
           <div className="mt-8">
             <Link
               href={`/${locale}/aktiviteter`}
@@ -114,22 +132,25 @@ function HomeContent({ locale }: { locale: string }) {
         </div>
       </section>
 
-      {/* Blog section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-3xl mb-8">{tb("latest")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {latestPosts.map((post) => (
-            <BlogCard
-              key={post.slug}
-              post={post}
-              locale={locale}
-              readMoreLabel={tb("read_more")}
-              byLabel={tb("by")}
-              categoryLabels={blogCatLabels}
-            />
-          ))}
-        </div>
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <BlogCard
+                key={post._id}
+                post={post}
+                locale={locale}
+                readMoreLabel={tb("read_more")}
+                byLabel={tb("by")}
+                categoryLabels={blogCatLabels}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-slate">{locale === "no" ? "Ingen blogginnlegg ennå." : "No blog posts yet."}</p>
+        )}
         <div className="mt-8">
           <Link
             href={`/${locale}/blogg`}
@@ -140,7 +161,6 @@ function HomeContent({ locale }: { locale: string }) {
         </div>
       </section>
 
-      {/* Join CTA */}
       <section className="bg-tkk-blue py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-display font-bold text-navy text-3xl mb-4">{t("join_title")}</h2>
