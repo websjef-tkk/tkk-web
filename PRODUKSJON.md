@@ -1,37 +1,86 @@
 # Huskeliste: Produksjonssetting
 
-## 1. Hosting og domene
+## 1. Sanity CMS (gjør dette FØRST — prosjekt-ID trengs overalt)
 
-- [ ] Velg hostingplattform (Vercel anbefales for Next.js — gratis plan holder til en liten klubb)
+- [ ] Gå til [manage.sanity.io](https://manage.sanity.io) og opprett nytt prosjekt
+  - **Velg EU-region (eu1 / Amsterdam)** — dette kan IKKE endres etterpå
+  - Dataset-navn: `production`
+- [ ] Kopier **Project ID** og oppdater `NEXT_PUBLIC_SANITY_PROJECT_ID` i hosting-miljøvariablene
+- [ ] Opprett et **read token** (Settings → API → Tokens → Add API token → Viewer)
+  - Bruk dette som `SANITY_API_READ_TOKEN`
+- [ ] Opprett et **webhook-hemmelig token** for ISR-revalidering
+  - Settings → API → Webhooks → Create webhook
+  - URL: `https://tkk.no/api/revalidate?secret=<SANITY_WEBHOOK_SECRET>`
+  - Trigger på: publish, unpublish, delete
+  - Bruk samme token som `SANITY_WEBHOOK_SECRET`
+- [ ] Inviter `leder@tkk.no` som **Administrator** (Settings → Members → Invite)
+- [ ] Logg inn på Studio (`/studio`) og legg inn innhold:
+  - `siteSettings` — heltetittel, bunntekst-tagline, sosiale lenker, adresse
+  - `person` — styre, gruppeledere og andre kontakter
+  - `disciplinePage` — én per disiplin (hav, elv, flattvann, surfski, polo, junior)
+  - `flexiblePage` — alle HMS-sider (hms, hms-generelt, hms-hav, osv.) + Klubben-sider + Medlemskap
+  - `event` — kommende aktiviteter og turer
+  - `blogPost` — blogginnlegg
+
+---
+
+## 2. Admin-bruker (leder@tkk.no)
+
+- [ ] Kjør `npm run seed` i produksjonsmiljøet (eller lokalt mot prod-databasen)
+  - Scriptet oppretter `leder@tkk.no` med `isAdmin: true`, skriver ut engangspassord og e-postbekreftelseslenke til terminalen
+- [ ] Klikk bekreftelseslenken → e-post bekreftet
+- [ ] Logg inn på nettstedet med engangspassordet → bytt passord hvis ønskelig
+- [ ] Verifiser at Admin-lenken vises i navigasjonen og at `/admin/members` er tilgjengelig
+
+---
+
+## 3. Hosting og domene
+
+- [ ] Velg hostingplattform (**Vercel** anbefales for Next.js — gratis plan holder til en liten klubb)
 - [ ] Koble domenet `tkk.no` til hostingplattformen
 - [ ] Sett opp HTTPS (skjer automatisk på Vercel/Netlify)
 - [ ] Verifiser at `www.tkk.no` og `tkk.no` begge virker (redirect én til den andre)
 
 ---
 
-## 2. Database
+## 4. Database
 
 - [ ] Bytt ut SQLite med en ekstern database — SQLite er kun egnet for utvikling
-  - Anbefalt: **Neon** (gratis PostgreSQL i skyen) eller **PlanetScale**
-  - Alternativ: PostgreSQL på egen VPS
+  - Anbefalt: **Neon** (gratis PostgreSQL i skyen) eller **Supabase** — velg **EU-region** for GDPR
+  - Obs: persondata (navn, fødselsdato, telefon) lagres her — EU er påkrevd
 - [ ] Oppdater `prisma/schema.prisma`: endre `provider = "sqlite"` til `provider = "postgresql"`
 - [ ] Oppdater `prisma.config.ts` med ny connection URL
+- [ ] Fjern `@prisma/adapter-better-sqlite3` og `better-sqlite3` fra `package.json`; installer `@prisma/adapter-neon` eller tilsvarende
+- [ ] Oppdater `src/lib/prisma.ts` til å bruke riktig adapter for valgt database
 - [ ] Kjør `npx prisma migrate deploy` mot produksjonsdatabasen
 - [ ] Legg til `DATABASE_URL` i miljøvariablene på hostingplattformen
 
 ---
 
-## 3. Miljøvariabler (sett disse i hosting-dashboardet, IKKE i kode)
+## 5. Miljøvariabler (sett disse i hosting-dashboardet, IKKE i kode)
 
+### Database
 - [ ] `DATABASE_URL` — produksjons-URL til PostgreSQL
+
+### App
 - [ ] `NEXT_PUBLIC_APP_URL` — f.eks. `https://tkk.no`
 - [ ] `SESSION_SECRET` — lang, tilfeldig streng (generer med `openssl rand -hex 32`)
-- [ ] `SMTP_HOST` — SMTP-server for utgående e-post
+
+### E-post
+- [ ] `SMTP_HOST`
 - [ ] `SMTP_PORT` — vanligvis `587` (STARTTLS) eller `465` (SSL)
 - [ ] `SMTP_SECURE` — `true` hvis port 465, ellers `false`
-- [ ] `SMTP_USER` — brukernavn for SMTP
-- [ ] `SMTP_PASS` — passord for SMTP
+- [ ] `SMTP_USER`
+- [ ] `SMTP_PASS`
 - [ ] `SMTP_FROM` — f.eks. `Trondhjems Kajakklubb <noreply@tkk.no>`
+
+### Sanity
+- [ ] `NEXT_PUBLIC_SANITY_PROJECT_ID` — fra manage.sanity.io (erstatt `placeholder`)
+- [ ] `NEXT_PUBLIC_SANITY_DATASET` — `production`
+- [ ] `SANITY_API_READ_TOKEN` — Viewer-token fra Sanity
+- [ ] `SANITY_WEBHOOK_SECRET` — hemmelig token for ISR-webhook
+
+### NIF
 - [ ] `NIF_API_BASE_URL` — base-URL fra NIF (fyll inn når tilgang er innvilget)
 - [ ] `NIF_API_KEY` — API-nøkkel fra NIF
 - [ ] `NIF_ORG_ID` — TKKs organisasjons-ID i NIF
@@ -39,7 +88,7 @@
 
 ---
 
-## 4. E-post
+## 6. E-post
 
 - [ ] Sett opp en e-posttjeneste for utgående e-post — vanlig webhotell-SMTP kan blokkeres av spamfiltre
   - Anbefalt: **Resend** (enkel, rimelig, god leveringsrate) eller **Postmark**
@@ -49,46 +98,37 @@
 
 ---
 
-## 5. NIF API-integrasjon
+## 7. NIF API-integrasjon
 
-- [ ] Søk om API-tilgang hos Norges Idrettsforbund (IT-avdelingen / idrettsforbundet.atlassian.net)
-- [ ] Finn riktig endepunkt for PersonInfo-oppslag på e-post (se dokumentasjon)
+- [ ] Søk om API-tilgang hos Norges Idrettsforbund
+- [ ] Finn riktig endepunkt for PersonInfo-oppslag på e-post
 - [ ] Oppdater `src/lib/nif.ts` hvis endepunkt-URL eller responsformat avviker fra stubben
 - [ ] Test oppslaget mot NIF staging-miljø før produksjon
 - [ ] Verifiser at feltene (`personId`, `firstName`, `lastName`, `birthDate`, `primaryEmail`, `primaryPhoneMobile`) stemmer med faktisk API-respons
 
 ---
 
-## 6. Sikkerhet
+## 8. Sikkerhet
 
 - [ ] Sjekk at `.env.local` **ikke** er committet til GitHub (det er det ikke — `.env*` er i `.gitignore`)
 - [ ] Sett `NODE_ENV=production` på hostingplattformen (Vercel gjør dette automatisk)
 - [ ] Aktiver `SMTP_SECURE=true` og bruk port 465 hvis SMTP-leverandøren støtter det
 - [ ] Vurder rate-limiting på `/api/auth/register` og `/api/auth/login` for å hindre brute-force
-  - Vercel Edge Middleware eller et eksternt verktøy som Upstash Ratelimit
+  - Vercel Edge Middleware eller Upstash Ratelimit
 - [ ] Vurder å aktivere Content Security Policy (CSP)-header i `next.config.ts`
+- [ ] Bekreft at Sanity-prosjektet bruker EU-region (eu1) — kan verifiseres under Settings → API i Sanity-dashboardet
 
 ---
 
-## 7. Bilder og statiske filer
+## 9. Bilder og statiske filer
 
-- [ ] Erstatt eventuelle bilder fra `www.tkk.no` med egne bilder du har rettigheter til
-  - Nåværende heltebilde (`hav.jpg`) er hentet fra tkk.no — sjekk om dere eier rettighetene
-- [ ] Optimaliser bilder (Next.js `<Image>` håndterer mye automatisk, men sørg for riktige størrelser)
+- [ ] Last opp bilder til Sanity Studio (brukes av `disciplinePage` og `blogPost`)
+- [ ] Erstatt evt. gjenværende bilder under `public/images/` med egne bilder dere har rettigheter til
 - [ ] Legg til `favicon.ico` og evt. `apple-touch-icon.png` under `public/`
 
 ---
 
-## 8. Innhold
-
-- [ ] Oppdater kontaktinformasjon og personliste i `src/app/[locale]/kontakt/page.tsx` og `om-klubben/page.tsx` ved styrevalg
-- [ ] Oppdater blogginnlegg i `src/data/blog.ts` med aktuelt innhold
-- [ ] Oppdater aktiviteter i `src/data/events.ts`
-- [ ] Vurder å sette opp **Sanity.io** (allerede planlagt) for CMS-styrt innhold slik at ikke-tekniske redaktører kan publisere artikler og aktiviteter uten å redigere kode
-
----
-
-## 9. Analytics og overvåking (valgfritt, men anbefalt)
+## 10. Analytics og overvåking (valgfritt, men anbefalt)
 
 - [ ] Sett opp **Plausible** eller **Fathom** for personvernvennlig statistikk (ingen cookie-banner nødvendig)
 - [ ] Sett opp feillogging, f.eks. **Sentry**, for å fange opp produksjonsfeil
@@ -96,11 +136,15 @@
 
 ---
 
-## 10. Sluttsjekk
+## 11. Sluttsjekk
 
-- [ ] Test hele registreringsflyt i produksjonsmiljø (registrer → e-post → samtykke → profil)
+- [ ] Test hele registreringsflyt i produksjonsmiljø (registrer → e-post → NIF-samtykke → profil)
 - [ ] Test logg inn / logg ut
-- [ ] Test at NIF-data hentes korrekt
+- [ ] Test admin-tilgang: logg inn som `leder@tkk.no` → Admin-lenke vises → `/admin/members` laster
+- [ ] Bekreft at Sanity-innhold vises på alle sider (blogg, aktiviteter, disiplinside, HMS-sider, osv.)
+- [ ] Test Sanity-webhook: publiser en endring i Studio → vent ~10 sek → bekreft at siden oppdateres
+- [ ] Test at `/studio` laster og at du kan redigere innhold
+- [ ] Test at NIF-data hentes korrekt (eller at mock-modus er deaktivert)
 - [ ] Test språkbytte (norsk ↔ engelsk)
 - [ ] Test på mobil og nettbrett
 - [ ] Kjør Lighthouse (i Chrome DevTools) og sjekk ytelse, tilgjengelighet og SEO
@@ -109,8 +153,10 @@
 
 ## Rask prioritert rekkefølge
 
-1. **Database** (PostgreSQL) + **miljøvariabler** → uten dette kan ikke autentisering kjøre
-2. **E-post** (SMTP + DNS) → uten dette kan ikke brukere bekrefte kontoen sin
-3. **NIF API** → søk om tilgang tidlig, det kan ta tid å få svar
-4. **Hosting + domene** → koble alt sammen
-5. **Innhold** → oppdater med faktiske data
+1. **Sanity CMS** — opprett prosjekt (EU), kopier Project ID, fyll inn innhold
+2. **Database** (PostgreSQL i EU) + **miljøvariabler** → uten dette kan ikke autentisering kjøre
+3. **E-post** (SMTP + DNS) → uten dette kan ikke brukere bekrefte kontoen sin
+4. **Admin-bruker** — kjør `npm run seed`, klikk verifiseringslenke
+5. **Hosting + domene** → koble alt sammen og sett miljøvariabler i dashboardet
+6. **NIF API** → søk om tilgang tidlig, det kan ta tid å få svar
+7. **Innhold** → legg inn alt i Sanity Studio
