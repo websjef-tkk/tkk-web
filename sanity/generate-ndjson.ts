@@ -1,6 +1,12 @@
 /**
  * Generates seed-content.ndjson for import via:
- *   npx sanity dataset import sanity/seed-content.ndjson production --replace
+ *   npx sanity dataset import sanity/seed-content.ndjson --dataset production --missing
+ *
+ * Use --missing to add only new documents without touching existing Studio content.
+ * Use --replace only when intentionally overwriting (e.g. structural schema changes).
+ *
+ * To export the current content lake as a snapshot:
+ *   npx sanity dataset export production sanity/export.ndjson --no-drafts
  */
 import fs from "fs";
 import path from "path";
@@ -352,5 +358,7 @@ const ndjson = docs.map(d => JSON.stringify(d)).join("\n");
 fs.writeFileSync(outputPath, ndjson, "utf-8");
 
 console.log(`Genererte ${docs.length} dokumenter → ${outputPath}`);
-console.log("\nImporter med:");
-console.log("  npx sanity dataset import sanity/seed-content.ndjson production --replace");
+console.log("\nImporter (kun nye dokumenter — påvirker ikke eksisterende Studio-innhold):");
+console.log("  npx sanity dataset import sanity/seed-content.ndjson --dataset production --missing");
+console.log("\nBruk --replace kun hvis du bevisst vil overskrive innhold fra Studio:")
+console.log("  npx sanity dataset import sanity/seed-content.ndjson --dataset production --replace");
