@@ -6,13 +6,22 @@ export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string }> };
 
-type Block = { children?: { text?: string }[] };
+type Block = { style?: string; children?: { text?: string }[] };
 
-function blockTexts(blocks: unknown[] | undefined): string[] {
-  if (!Array.isArray(blocks)) return [];
-  return (blocks as Block[])
-    .map((b) => b.children?.[0]?.text ?? "")
-    .filter(Boolean);
+function splitBySections(blocks: unknown[]): { title: string; texts: string[] }[] {
+  const result: { title: string; texts: string[] }[] = [];
+  let current: { title: string; texts: string[] } | null = null;
+  for (const b of blocks as Block[]) {
+    if (b.style === "h2") {
+      if (current) result.push(current);
+      current = { title: b.children?.[0]?.text ?? "", texts: [] };
+    } else if (current) {
+      const text = b.children?.[0]?.text ?? "";
+      if (text) current.texts.push(text);
+    }
+  }
+  if (current) result.push(current);
+  return result;
 }
 
 function parsePrice(line: string): [string, string] {
@@ -30,17 +39,15 @@ export default async function MedlemskapPage({ params }: PageProps) {
   const title = no ? page.title.no : (page.title.en ?? page.title.no);
   const intro = no ? page.intro?.no : (page.intro?.en ?? page.intro?.no);
 
-  const sections = page.sections ?? [];
-  const getBody = (i: number) =>
-    blockTexts(no ? sections[i]?.body?.no : ((sections[i]?.body?.en ?? sections[i]?.body?.no) as unknown[]));
+  const rawBody = (no ? page.body?.no : (page.body?.en ?? page.body?.no)) ?? [];
+  const sections = splitBySections(rawBody);
 
-  const priceRows = getBody(0).map(parsePrice);
-  const benefits = getBody(1);
-  const [qualText] = getBody(2);
-  const [afterText] = getBody(3);
+  const priceRows = (sections[0]?.texts ?? []).map(parsePrice);
+  const benefits = sections[1]?.texts ?? [];
+  const qualText = sections[2]?.texts[0];
+  const afterText = sections[3]?.texts[0];
 
-  const secTitle = (i: number) =>
-    no ? sections[i]?.title?.no : (sections[i]?.title?.en ?? sections[i]?.title?.no);
+  const secTitle = (i: number) => sections[i]?.title ?? "";
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

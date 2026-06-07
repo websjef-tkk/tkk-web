@@ -82,49 +82,30 @@ export const flexiblePage = defineType({
       ],
     }),
     defineField({
-      name: "sections",
-      title: "Seksjoner",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Seksjonstittel",
-              type: "object",
-              fields: [
-                defineField({ name: "no", title: "Norsk", type: "string" }),
-                defineField({ name: "en", title: "English", type: "string" }),
-              ],
-            }),
-            defineField({
-              name: "body",
-              title: "Innhold",
-              type: "object",
-              fields: [
-                defineField({
-                  name: "no",
-                  title: "Norsk",
-                  type: "array",
-                  of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
-                }),
-                defineField({
-                  name: "en",
-                  title: "English",
-                  type: "array",
-                  of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
-                }),
-              ],
-            }),
-          ],
-          preview: {
-            select: { title: "title.no" },
-            prepare({ title }: { title?: string }) {
-              return { title: title ?? "Seksjon" };
-            },
-          },
-        },
+      name: "body",
+      title: "Innhold",
+      type: "object",
+      fields: [
+        defineField({
+          name: "no",
+          title: "Norsk",
+          type: "array",
+          of: [{ type: "block", styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Overskrift 2", value: "h2" },
+            { title: "Overskrift 3", value: "h3" },
+          ], marks: { annotations: [linkAnnotation] } }],
+        }),
+        defineField({
+          name: "en",
+          title: "English",
+          type: "array",
+          of: [{ type: "block", styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Heading 2", value: "h2" },
+            { title: "Heading 3", value: "h3" },
+          ], marks: { annotations: [linkAnnotation] } }],
+        }),
       ],
     }),
   ],

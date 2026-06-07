@@ -35,6 +35,7 @@ function block(text: string, style = "normal") {
   };
 }
 
+function h2(text: string) { return block(text, "h2"); }
 function heading(text: string) { return block(text, "h3"); }
 
 function linkBlock(text: string, style = "normal") {
@@ -64,13 +65,6 @@ function lines(arr: string[]) {
   return arr.map(l => l.startsWith("### ") ? heading(l.slice(4)) : linkBlock(l));
 }
 
-function section(
-  titleNo: string, titleEn: string,
-  bodyNo: ReturnType<typeof block>[],
-  bodyEn: ReturnType<typeof block>[]
-) {
-  return { _type: "object", _key: key(), title: { no: titleNo, en: titleEn }, body: { no: bodyNo, en: bodyEn } };
-}
 
 const docs: object[] = [];
 
@@ -162,151 +156,189 @@ for (const d of disciplineContent) {
 
 // flexible pages - HMS (generated from hms-content.json)
 for (const page of hmsContent) {
+  const bodyNo = page.sections.flatMap((s: { titleNo: string; bodyNo: string[] }) => [h2(s.titleNo), ...lines(s.bodyNo)]);
   docs.push({
     _id: `flexiblePage-${page.id}`,
     _type: "flexiblePage",
     pageId: page.id,
     title: { no: page.titleNo, en: page.titleNo },
     intro: { no: page.introNo, en: page.introNo },
-    sections: page.sections.map(s =>
-      section(s.titleNo, s.titleNo, lines(s.bodyNo), lines(s.bodyNo))
-    ),
+    body: { no: bodyNo, en: bodyNo },
   });
 }
-
 
 docs.push({
   _id: "flexiblePage-hms-mitt-varsel", _type: "flexiblePage", pageId: "hms-mitt-varsel",
   title: { no: "Mitt varsel", en: "Report a concern" },
   intro: { no: "Si fra når du opplever noe som er et brudd på vårt reglement, etiske leveregler og retningslinjer. Vi ønsker det skal være lav terskel for å si fra!", en: "Speak up when you experience something that violates our regulations, ethical guidelines and policies. We want the threshold for reporting to be low!" },
-  sections: [
-    section(
-      "Hva kan varsles?",
-      "What can be reported?",
-      [block("Du kan varsle om hendelser du selv har opplevd, vært vitne til eller hørt om: overgrep, vold, underslag av penger, trakassering, mobbing, juksing i konkurranser, rasistiske utrop, diskriminerende oppførsel.")],
-      [block("You can report incidents you have experienced, witnessed or heard about: abuse, violence, embezzlement, harassment, bullying, cheating in competitions, racist remarks, discriminatory behaviour.")]
-    ),
-    section(
-      "Slik varsler du",
-      "How to report",
-      [block("Varsling skjer via Norges Idrettsforbunds varslingsportal. Du kan også ta kontakt direkte med styret i TKK dersom du har spørsmål om fremgangsmåten."), block("Varsle via Idrettsforbundet: https://www.idrettsforbundet.no/tema/varsling/")],
-      [block("Reporting is done via the Norwegian Sports Federation's whistleblowing portal. You can also contact the TKK board directly if you have questions about the procedure."), block("Report via the Sports Federation: https://www.idrettsforbundet.no/tema/varsling/")]
-    ),
-  ],
+  body: {
+    no: [
+      h2("Hva kan varsles?"),
+      block("Du kan varsle om hendelser du selv har opplevd, vært vitne til eller hørt om: overgrep, vold, underslag av penger, trakassering, mobbing, juksing i konkurranser, rasistiske utrop, diskriminerende oppførsel."),
+      h2("Slik varsler du"),
+      block("Varsling skjer via Norges Idrettsforbunds varslingsportal. Du kan også ta kontakt direkte med styret i TKK dersom du har spørsmål om fremgangsmåten."),
+      block("Varsle via Idrettsforbundet: https://www.idrettsforbundet.no/tema/varsling/"),
+    ],
+    en: [
+      h2("What can be reported?"),
+      block("You can report incidents you have experienced, witnessed or heard about: abuse, violence, embezzlement, harassment, bullying, cheating in competitions, racist remarks, discriminatory behaviour."),
+      h2("How to report"),
+      block("Reporting is done via the Norwegian Sports Federation's whistleblowing portal. You can also contact the TKK board directly if you have questions about the procedure."),
+      block("Report via the Sports Federation: https://www.idrettsforbundet.no/tema/varsling/"),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-hms-hendelsesrapporter", _type: "flexiblePage", pageId: "hms-hendelsesrapporter",
   title: { no: "Hendelsesrapporter", en: "Incident reports" },
   intro: { no: "Styret ønsker rapport om alle padlerelaterte hendelser, inkludert ulykker, nestenulykker og andre hendelser klubben kan lære av.", en: "The board welcomes reports about all paddling-related incidents, including accidents, near-misses and other events from which the club can learn." },
-  sections: [
-    section(
-      "Slik rapporterer du",
-      "How to report",
-      [block("Bruk rapporteringsskjemaet under. Rapporten sendes direkte til styret og behandles på neste styremøte. Ved alvorlige ulykker skal leder kontaktes direkte."), block("RAPPORTER HENDELSE HER: https://forms.gle/xHHAakYQFtJ5Hzay9")],
-      [block("Use the reporting form below. The report is sent directly to the board and handled at the next board meeting. In the event of serious accidents, the club leader must be contacted directly."), block("REPORT AN INCIDENT HERE: https://forms.gle/xHHAakYQFtJ5Hzay9")]
-    ),
-    section(
-      "Tidligere rapporterte hendelser",
-      "Previously reported incidents",
-      [block("Velt på fellestur til Knarrlaget — april 2024")],
-      [block("Capsize on group tour to Knarrlaget — April 2024")]
-    ),
-  ],
+  body: {
+    no: [
+      h2("Slik rapporterer du"),
+      block("Bruk rapporteringsskjemaet under. Rapporten sendes direkte til styret og behandles på neste styremøte. Ved alvorlige ulykker skal leder kontaktes direkte."),
+      block("RAPPORTER HENDELSE HER: https://forms.gle/xHHAakYQFtJ5Hzay9"),
+      h2("Tidligere rapporterte hendelser"),
+      block("Velt på fellestur til Knarrlaget — april 2024"),
+    ],
+    en: [
+      h2("How to report"),
+      block("Use the reporting form below. The report is sent directly to the board and handled at the next board meeting. In the event of serious accidents, the club leader must be contacted directly."),
+      block("REPORT AN INCIDENT HERE: https://forms.gle/xHHAakYQFtJ5Hzay9"),
+      h2("Previously reported incidents"),
+      block("Capsize on group tour to Knarrlaget — April 2024"),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-hms-politiattest", _type: "flexiblePage", pageId: "hms-politiattest",
   title: { no: "Politiattest", en: "Background check certificate" },
   intro: { no: "Politiattest kreves for trenere, instruktører og ledere som skal ha direkte kontakt med mindreårige (under 18 år) eller mennesker med utviklingshemming.", en: "A background check certificate (politiattest) is required for coaches, instructors and leaders who will have direct contact with minors (under 18) or people with developmental disabilities." },
-  sections: [
-    section(
-      "Hvem må levere?",
-      "Who must submit?",
-      [block("Trenere, instruktører og lagledere som skal ha direkte kontakt med mindreårige (personer under 18 år), eller mennesker med utviklingshemming, vil alltid være omfattet. Attesten må fornyes hvert tredje år ved ny rolle.")],
-      [block("Coaches, instructors and team leaders who will have direct contact with minors (persons under 18) or people with developmental disabilities are always covered. The certificate must be renewed every three years when taking on a new role.")]
-    ),
-    section(
-      "Fremgangsmåte",
-      "Procedure",
-      [
-        block("1. Ta kontakt med politiattestansvarlig i TKK med opplysninger om din rolle."),
-        block("2. Ansvarlig bekrefter formålet digitalt og sender instruksjoner for søknad via Min idrett."),
-        block("3. Attesten fremvises for ansvarlig — digitalt via Digipost er akseptert."),
-        block("Politiattestansvarlig: Isabelle Sande, 902 99 808"),
-      ],
-      [
-        block("1. Contact TKK's background check coordinator with details of your role."),
-        block("2. The coordinator confirms the purpose digitally and sends instructions for application via Min idrett."),
-        block("3. The certificate is shown to the coordinator — digital presentation via Digipost is accepted."),
-        block("Background check coordinator: Isabelle Sande, 902 99 808"),
-      ]
-    ),
-  ],
+  body: {
+    no: [
+      h2("Hvem må levere?"),
+      block("Trenere, instruktører og lagledere som skal ha direkte kontakt med mindreårige (personer under 18 år), eller mennesker med utviklingshemming, vil alltid være omfattet. Attesten må fornyes hvert tredje år ved ny rolle."),
+      h2("Fremgangsmåte"),
+      block("1. Ta kontakt med politiattestansvarlig i TKK med opplysninger om din rolle."),
+      block("2. Ansvarlig bekrefter formålet digitalt og sender instruksjoner for søknad via Min idrett."),
+      block("3. Attesten fremvises for ansvarlig — digitalt via Digipost er akseptert."),
+      block("Politiattestansvarlig: Isabelle Sande, 902 99 808"),
+    ],
+    en: [
+      h2("Who must submit?"),
+      block("Coaches, instructors and team leaders who will have direct contact with minors (persons under 18) or people with developmental disabilities are always covered. The certificate must be renewed every three years when taking on a new role."),
+      h2("Procedure"),
+      block("1. Contact TKK's background check coordinator with details of your role."),
+      block("2. The coordinator confirms the purpose digitally and sends instructions for application via Min idrett."),
+      block("3. The certificate is shown to the coordinator — digital presentation via Digipost is accepted."),
+      block("Background check coordinator: Isabelle Sande, 902 99 808"),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-klubben-administrasjon", _type: "flexiblePage", pageId: "klubben-administrasjon",
   title: { no: "Administrasjon", en: "Administration" },
   intro: { no: "Her finner du styrende dokumenter, protokoller fra årsmøter og styremøter, og annen administrativ informasjon om klubben.", en: "Here you will find governing documents, minutes from annual meetings and board meetings, and other administrative information." },
-  sections: [
-    section("Årsmøter", "Annual general meetings", [block("Årsmøtet holdes hvert år i første kvartal. Her legges fremtidsplanen, budsjettet vedtas, og styret velges. Protokoller er tilgjengelige på forespørsel.")], [block("The annual general meeting is held every year in the first quarter. Here the future plan is laid out, the budget approved, and the board elected. Minutes are available on request.")]),
-    section("Styremøter", "Board meetings", [block("Styret møtes jevnlig gjennom hele året for å lede klubbens daglige drift, økonomi og HMS.")], [block("The board meets regularly throughout the year to manage the club's day-to-day operations, finances and H&S.")]),
-    section("Vedtekter", "Bylaws", [block("TKKs vedtekter er det styrende dokumentet for klubbens virksomhet. Stiftet 27. april 1932. Ta kontakt med styret for innsyn i dokumenter.")], [block("TKK's bylaws are the governing document for the club. Founded 27 April 1932. Contact the board for access to documents.")]),
-  ],
+  body: {
+    no: [
+      h2("Årsmøter"), block("Årsmøtet holdes hvert år i første kvartal. Her legges fremtidsplanen, budsjettet vedtas, og styret velges. Protokoller er tilgjengelige på forespørsel."),
+      h2("Styremøter"), block("Styret møtes jevnlig gjennom hele året for å lede klubbens daglige drift, økonomi og HMS."),
+      h2("Vedtekter"), block("TKKs vedtekter er det styrende dokumentet for klubbens virksomhet. Stiftet 27. april 1932. Ta kontakt med styret for innsyn i dokumenter."),
+    ],
+    en: [
+      h2("Annual general meetings"), block("The annual general meeting is held every year in the first quarter. Here the future plan is laid out, the budget approved, and the board elected. Minutes are available on request."),
+      h2("Board meetings"), block("The board meets regularly throughout the year to manage the club's day-to-day operations, finances and H&S."),
+      h2("Bylaws"), block("TKK's bylaws are the governing document for the club. Founded 27 April 1932. Contact the board for access to documents."),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-klubben-klubbhus", _type: "flexiblePage", pageId: "klubben-klubbhus",
   title: { no: "Klubbhus og eiendom", en: "Club house and facilities" },
   intro: { no: "TKK har to baser langs Trondhjemsfjorden med tilgang til vann, utstyrslager og sosiale fasiliteter.", en: "TKK has two bases along the Trondheim fjord with access to water, equipment storage and social facilities." },
-  sections: [
-    section("Skansen — hjemmebasen", "Skansen — home base", [block("Klubbhuset på Skansen ble åpnet 26. juni 1953. Her finner du utlånskajakkene, lageret og de sosiale arenaene. Adresse: Nedre Ila 12, 7018 Trondheim.")], [block("The clubhouse at Skansen was opened on 26 June 1953. Here you will find the rental kayaks, storage and social areas. Address: Nedre Ila 12, 7018 Trondheim.")]),
-    section("Østmarkneset", "Østmarkneset", [block("Østmarkneset ved Ladekaia er TKKs andre base med kajakkutstyr til utlån og en fantastisk beliggenhet rett ved vannet.")], [block("Østmarkneset near Ladekaia is TKK's second base with kayak equipment for loan and a fantastic location right by the water.")]),
-    section("Boplassleie", "Storage rental", [block("Priser 2026: Skansen kr 750, Østmarkneset kr 600. Det er for øyeblikket venteliste.")], [block("2026 prices: Skansen NOK 750, Østmarkneset NOK 600. There is currently a waiting list.")]),
-  ],
+  body: {
+    no: [
+      h2("Skansen — hjemmebasen"), block("Klubbhuset på Skansen ble åpnet 26. juni 1953. Her finner du utlånskajakkene, lageret og de sosiale arenaene. Adresse: Nedre Ila 12, 7018 Trondheim."),
+      h2("Østmarkneset"), block("Østmarkneset ved Ladekaia er TKKs andre base med kajakkutstyr til utlån og en fantastisk beliggenhet rett ved vannet."),
+      h2("Boplassleie"), block("Priser 2026: Skansen kr 750, Østmarkneset kr 600. Det er for øyeblikket venteliste."),
+    ],
+    en: [
+      h2("Skansen — home base"), block("The clubhouse at Skansen was opened on 26 June 1953. Here you will find the rental kayaks, storage and social areas. Address: Nedre Ila 12, 7018 Trondheim."),
+      h2("Østmarkneset"), block("Østmarkneset near Ladekaia is TKK's second base with kayak equipment for loan and a fantastic location right by the water."),
+      h2("Storage rental"), block("2026 prices: Skansen NOK 750, Østmarkneset NOK 600. There is currently a waiting list."),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-klubben-sosialgruppe", _type: "flexiblePage", pageId: "klubben-sosialgruppe",
   title: { no: "Sosialgruppen", en: "Social group" },
   intro: { no: "Sosialgruppen jobber for trivsel og fellesskap gjennom arrangementer og spontane aktiviteter gjennom hele året.", en: "The social group works to promote wellbeing and community through events and spontaneous activities throughout the year." },
-  sections: [
-    section("Faste tradisjoner", "Regular traditions", [block("1. mai: AVPLASK. Første søndag i advent: Adventpadling. Høst: Krabbe-kvelder. Før jul: Lutefiskmiddag.")], [block("1 May: AVPLASK. First Sunday of Advent: Advent paddling. Autumn: Crab evenings. Before Christmas: Lutefisk dinner.")]),
-    section("Kontakt", "Contact", [block("Oppdateringer publiseres i klubbens Facebook-gruppe. Sosialkoordinator: Håvard Dahlen, 970 79 822.")], [block("Updates are published in the club's Facebook group. Social coordinator: Håvard Dahlen, 970 79 822.")]),
-  ],
+  body: {
+    no: [
+      h2("Faste tradisjoner"), block("1. mai: AVPLASK. Første søndag i advent: Adventpadling. Høst: Krabbe-kvelder. Før jul: Lutefiskmiddag."),
+      h2("Kontakt"), block("Oppdateringer publiseres i klubbens Facebook-gruppe. Sosialkoordinator: Håvard Dahlen, 970 79 822."),
+    ],
+    en: [
+      h2("Regular traditions"), block("1 May: AVPLASK. First Sunday of Advent: Advent paddling. Autumn: Crab evenings. Before Christmas: Lutefisk dinner."),
+      h2("Contact"), block("Updates are published in the club's Facebook group. Social coordinator: Håvard Dahlen, 970 79 822."),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-klubben-stotteordninger", _type: "flexiblePage", pageId: "klubben-stotteordninger",
   title: { no: "Støtteordninger", en: "Support schemes" },
   intro: { no: "TKK har to vedtatte støtteordninger for medlemmer.", en: "TKK has two adopted support schemes for members." },
-  sections: [
-    section("Utdanningsstøtte", "Education support", [block("Støtte til relevante kurs eller utdanning innen padling og sikkerhet. Søknad sendes til styret med beskrivelse av kurs, kostnad og relevans.")], [block("Support for relevant courses or training in paddling and safety. Applications are sent to the board with a description of the course, cost and relevance.")]),
-    section("Støtte til konkurransepadling for unge", "Support for competitive paddling", [block("TKK støtter unge padlere (under 25 år) som ønsker å delta i konkurranser nasjonalt eller internasjonalt.")], [block("TKK supports young paddlers (under 25) who wish to compete nationally or internationally.")]),
-  ],
+  body: {
+    no: [
+      h2("Utdanningsstøtte"), block("Støtte til relevante kurs eller utdanning innen padling og sikkerhet. Søknad sendes til styret med beskrivelse av kurs, kostnad og relevans."),
+      h2("Støtte til konkurransepadling for unge"), block("TKK støtter unge padlere (under 25 år) som ønsker å delta i konkurranser nasjonalt eller internasjonalt."),
+    ],
+    en: [
+      h2("Education support"), block("Support for relevant courses or training in paddling and safety. Applications are sent to the board with a description of the course, cost and relevance."),
+      h2("Support for competitive paddling"), block("TKK supports young paddlers (under 25) who wish to compete nationally or internationally."),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-klubben-kjoregodtgjorelse", _type: "flexiblePage", pageId: "klubben-kjoregodtgjorelse",
   title: { no: "Kjøregodtgjørelse", en: "Mileage allowance" },
   intro: { no: "TKK refunderer kjøregodtgjørelse og visse utgifter for frivillige og tillitsvalgte som utfører oppdrag for klubben.", en: "TKK reimburses mileage allowance and certain expenses for volunteers who carry out assignments for the club." },
-  sections: [
-    section("Kjøregodtgjørelse", "Mileage allowance", [block("Satsen følger Statens reiseregulativ. Kjøringen må godkjennes på forhånd. Skjema fås på klubbhuset eller ved å kontakte kasserer.")], [block("The rate follows the Government's travel regulations. Driving must be approved in advance. Forms are available at the clubhouse or from the treasurer.")]),
-    section("Andre utgifter", "Other expenses", [block("Kvittering leveres til kasserer innen 30 dager. Kasserer: Monica Engan Døhl, 990 06 484.")], [block("Receipts must be submitted to the treasurer within 30 days. Treasurer: Monica Engan Døhl, 990 06 484.")]),
-  ],
+  body: {
+    no: [
+      h2("Kjøregodtgjørelse"), block("Satsen følger Statens reiseregulativ. Kjøringen må godkjennes på forhånd. Skjema fås på klubbhuset eller ved å kontakte kasserer."),
+      h2("Andre utgifter"), block("Kvittering leveres til kasserer innen 30 dager. Kasserer: Monica Engan Døhl, 990 06 484."),
+    ],
+    en: [
+      h2("Mileage allowance"), block("The rate follows the Government's travel regulations. Driving must be approved in advance. Forms are available at the clubhouse or from the treasurer."),
+      h2("Other expenses"), block("Receipts must be submitted to the treasurer within 30 days. Treasurer: Monica Engan Døhl, 990 06 484."),
+    ],
+  },
 });
 
 docs.push({
   _id: "flexiblePage-medlemskap", _type: "flexiblePage", pageId: "medlemskap",
   title: { no: "Medlemskap", en: "Membership" },
   intro: { no: "Meld deg inn via Min Idrett, betal medlemskontingenten og aksepter klubbens vedtekter. Du er da medlem!", en: "Register via Min Idrett, pay the membership fee and accept the club's bylaws. You are then a member!" },
-  sections: [
-    section("Priser 2026", "2026 Prices", [block("Voksen: kr 800"), block("Ungdom (19–25 år): kr 400"), block("Barn (–18 år): kr 50"), block("Boplassleie Skansen: kr 750"), block("Boplassleie Østmarkneset: kr 600")], [block("Adult: NOK 800"), block("Youth (19–25 years): NOK 400"), block("Children (under 18): NOK 50"), block("Storage Skansen: NOK 750"), block("Storage Østmarkneset: NOK 600")]),
-    section("Dette er inkludert", "What's included", [block("Gratis lån av kajakk og utstyr til klubbaktiviteter"), block("Tilgang til alle turer og aktiviteter"), block("Vinterbassengtrening i Pirbadet"), block("Aktivt sosialt miljø"), block("Rabatter hos samarbeidspartnere")], [block("Free loan of kayak and equipment for club activities"), block("Access to all tours and activities"), block("Winter pool training at Pirbadet"), block("Active social community"), block("Discounts from partner businesses")]),
-    section("Krav til kvalifikasjoner", "Qualification requirements", [block("NPF grunnkurs (16 timer, vått kort) kreves for sjø, elv og surfski. Flattvann, polo og junior kan starte uten kurs.")], [block("An NPF basic course (16 hours, wet card) is required for sea, river and surfski. Flat water, polo and junior can start without a course.")]),
-    section("Etter innmelding", "After joining", [block("Send bilde av vått kort til godkjenning og registrer deg i Padleboken.")], [block("Submit a photo of your wet card for approval and register in Padleboken.")]),
-  ],
+  body: {
+    no: [
+      h2("Priser 2026"), block("Voksen: kr 800"), block("Ungdom (19–25 år): kr 400"), block("Barn (–18 år): kr 50"), block("Boplassleie Skansen: kr 750"), block("Boplassleie Østmarkneset: kr 600"),
+      h2("Dette er inkludert"), block("Gratis lån av kajakk og utstyr til klubbaktiviteter"), block("Tilgang til alle turer og aktiviteter"), block("Vinterbassengtrening i Pirbadet"), block("Aktivt sosialt miljø"), block("Rabatter hos samarbeidspartnere"),
+      h2("Krav til kvalifikasjoner"), block("NPF grunnkurs (16 timer, vått kort) kreves for sjø, elv og surfski. Flattvann, polo og junior kan starte uten kurs."),
+      h2("Etter innmelding"), block("Send bilde av vått kort til godkjenning og registrer deg i Padleboken."),
+    ],
+    en: [
+      h2("2026 Prices"), block("Adult: NOK 800"), block("Youth (19–25 years): NOK 400"), block("Children (under 18): NOK 50"), block("Storage Skansen: NOK 750"), block("Storage Østmarkneset: NOK 600"),
+      h2("What's included"), block("Free loan of kayak and equipment for club activities"), block("Access to all tours and activities"), block("Winter pool training at Pirbadet"), block("Active social community"), block("Discounts from partner businesses"),
+      h2("Qualification requirements"), block("An NPF basic course (16 hours, wet card) is required for sea, river and surfski. Flat water, polo and junior can start without a course."),
+      h2("After joining"), block("Submit a photo of your wet card for approval and register in Padleboken."),
+    ],
+  },
 });
 
 // recurringEvents
@@ -326,29 +358,27 @@ const allSubPageContent = [
   ...klubbenExtra,
 ];
 for (const page of allSubPageContent) {
+  const bodyNo = page.sections.flatMap((s: { titleNo: string; bodyNo: string[] }) => [h2(s.titleNo), ...lines(s.bodyNo)]);
   docs.push({
     _id: `flexiblePage-${page.id}`,
     _type: "flexiblePage",
     pageId: page.id,
     title: { no: page.titleNo, en: page.titleNo },
     intro: { no: page.introNo, en: page.introNo },
-    sections: page.sections.map(s =>
-      section(s.titleNo, s.titleNo, lines(s.bodyNo), lines(s.bodyNo))
-    ),
+    body: { no: bodyNo, en: bodyNo },
   });
 }
 
 // flexible pages - padling extra (kurs, kom-i-gang, turledelse-hav)
 for (const page of padlingExtra) {
+  const bodyNo = page.sections.flatMap((s: { titleNo: string; bodyNo: string[] }) => [h2(s.titleNo), ...lines(s.bodyNo)]);
   docs.push({
     _id: `flexiblePage-${page.id}`,
     _type: "flexiblePage",
     pageId: page.id,
     title: { no: page.titleNo, en: page.titleNo },
     intro: { no: page.introNo, en: page.introNo },
-    sections: page.sections.map(s =>
-      section(s.titleNo, s.titleNo, lines(s.bodyNo), lines(s.bodyNo))
-    ),
+    body: { no: bodyNo, en: bodyNo },
   });
 }
 

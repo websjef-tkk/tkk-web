@@ -1,16 +1,11 @@
 import { sanityClient } from "../sanity";
 
-export interface PageSection {
-  title?: { no?: string; en?: string };
-  body?: { no?: unknown[]; en?: unknown[] };
-}
-
 export interface FlexiblePage {
   _id: string;
   pageId: string;
   title: { no: string; en?: string };
   intro?: { no?: string; en?: string };
-  sections?: PageSection[];
+  body?: { no?: unknown[]; en?: unknown[] };
 }
 
 export interface SubPageLink {
@@ -37,10 +32,7 @@ export async function getFlexiblePage(pageId: string): Promise<FlexiblePage | nu
         pageId,
         title,
         intro,
-        sections[] {
-          title,
-          body
-        }
+        body
       }`,
       { pageId }
     );
