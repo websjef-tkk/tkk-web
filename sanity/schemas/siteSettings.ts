@@ -40,6 +40,36 @@ export const siteSettings = defineType({
     defineField({ name: "postalAddress", title: "Postadresse", type: "text", rows: 2 }),
     defineField({ name: "phone", title: "Telefon", type: "string" }),
     defineField({ name: "orgNr", title: "Org.nr.", type: "string" }),
+    defineField({
+      name: "partners",
+      title: "Samarbeidspartnere",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Navn", type: "string" }),
+            defineField({ name: "url", title: "Nettside", type: "url" }),
+            defineField({ name: "logo", title: "Logo", type: "image", options: { hotspot: true } }),
+            defineField({
+              name: "description",
+              title: "Beskrivelse",
+              type: "object",
+              fields: [
+                defineField({ name: "no", title: "Norsk", type: "string" }),
+                defineField({ name: "en", title: "English", type: "string" }),
+              ],
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "url" },
+            prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+              return { title: title ?? "Partner", subtitle };
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     prepare() {

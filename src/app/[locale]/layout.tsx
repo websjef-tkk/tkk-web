@@ -23,14 +23,10 @@ export default async function LocaleLayout({
     : null;
 
   return (
-    <html lang={locale} className="h-full">
-      <body className="min-h-full flex flex-col antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <Nav locale={locale} sessionUser={sessionUser} />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <Nav locale={locale} sessionUser={sessionUser} />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </NextIntlClientProvider>
   );
 }

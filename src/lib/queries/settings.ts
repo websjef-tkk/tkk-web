@@ -1,5 +1,12 @@
 import { sanityClient } from "../sanity";
 
+export interface Partner {
+  name?: string;
+  url?: string;
+  description?: { no?: string; en?: string };
+  logo?: { asset: { _ref: string } };
+}
+
 export interface SiteSettings {
   heroTitle?: { no: string; en?: string };
   heroSubtitle?: { no: string; en?: string };
@@ -10,6 +17,7 @@ export interface SiteSettings {
   postalAddress?: string;
   phone?: string;
   orgNr?: string;
+  partners?: Partner[];
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
@@ -24,7 +32,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         visitingAddress,
         postalAddress,
         phone,
-        orgNr
+        orgNr,
+        partners[] { name, url, description, logo }
       }`
     );
   } catch {

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "padling-junior-velkommen",
+    "titleNo": "Velkommen til TKK Junior",
+    "introNo": "Trondhjems Kajakklubb driver padleaktiviteter for barn og unge i alderen 11 til 16 år.",
+    "sections": [
+      {
+        "titleNo": "Tilbudet",
+        "bodyNo": [
+          "Klubben tilbyr sommeraktiviteter ved Skansen, Kyvannet og Nidelva, med treninger primært på tirsdager. Vinterhalvåret avholdes treninger i Pirbadet på lørdager.",
+          "I løpet av sommersesongen arrangerer vi turer og kurs, spesielt tilpasset barn, ungdom og familier."
+        ]
+      },
+      {
+        "titleNo": "Kommunikasjon",
+        "bodyNo": [
+          "Informasjon deles gjennom Facebook-gruppen \"Juniorpadling TKK\"."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-junior-utstyr",
+    "titleNo": "Juniorutstyr",
+    "introNo": "TKK har eget utstyr tilpasset barn og unge på alle anlegg.",
+    "sections": [
+      {
+        "titleNo": "Hav, Skansen",
+        "bodyNo": [
+          "4 Wilderness Tsunami SP (2 rød, 2 gul)",
+          "3 Palm Colt juniorårer, 185 cm",
+          "5 Palm Colt juniorårer, 195 cm",
+          "6 Harmony nylon spruttrekk (til Tsunami SP)",
+          "8 Palm juniorvester"
+        ]
+      },
+      {
+        "titleNo": "Hav, Jonsvatnet",
+        "bodyNo": [
+          "2 Wilderness Tsunami SP (1 rød, 1 gul)",
+          "2 Werner Sprite juniorårer (190 cm og 200 cm)"
+        ]
+      },
+      {
+        "titleNo": "Elv, Skansen",
+        "bodyNo": [
+          "4 WaveSport Fuse 35 (2 oransje, 1 rød-hvit-blå, 1 blå-hvit-blå)",
+          "1 LiquidLogic Remix 47 (oransje)",
+          "1 Jackson Sidekick (oransje)",
+          "4 AT Grom årer (180 cm og 185 cm)",
+          "2 Werner Amigo juniorårer (185 cm)",
+          "4 Playboater junior spruttrekk (til Fuse 35)",
+          "Juniorhjelmer"
+        ]
+      },
+      {
+        "titleNo": "Polo, Kyvannet",
+        "bodyNo": [
+          "4 Galasport junior polo paddles (180 cm)",
+          "3 Hiko junior spruttrekk",
+          "Juniorhjelmer og -vester"
+        ]
+      }
+    ]
+  }
+]

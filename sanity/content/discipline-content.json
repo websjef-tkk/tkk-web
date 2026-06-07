@@ -1,0 +1,238 @@
+[
+  {
+    "discipline": "hav",
+    "titleNo": "Havpadling",
+    "titleEn": "Sea Kayaking",
+    "taglineNo": "~450 medlemmer, ukentlige turer og store sommerekspedisjoner",
+    "taglineEn": "~450 members, weekly tours and major summer expeditions",
+    "introNo": "I havgruppa er trivsel og eventyrlyst i fokus. Vi er en gjeng på omtrent 450 medlemmer med det til felles at vi padler havkajakk. Her vil du finne medlemmer på alle nivåer fra helt fersk til ekspert.",
+    "introEn": "In the sea kayaking group, enjoyment and adventure are the focus. With ~450 members we offer something for everyone — from a relaxed Sunday tour to week-long expeditions along the Norwegian coast.",
+    "bodyNo": [
+      "### Turer i Trondhjemsfjorden",
+      "Årlig blir det registrert rundt 3000 turer i Trondhjemsfjorden fra våre lokasjoner på Skansen og Østmarkneset. På Skansen finner du vårt ærverdige klubbhus med mange lånekajakker til klubbens medlemmer.",
+      "### Faste turer",
+      "Tirsdagspadling kl. 18:00 er åpen for nybegynnere med aktivitetsleder. Søndagsturen kl. 12:00 er en tradisjon med lunsjstopp og sosialt samvær.",
+      "### Sommerturer og ekspedisjoner",
+      "Hvert år arrangerer vi ambisiøse sommerturer til destinasjoner som Lofoten, Kragerø, Helgeland og Bohuslän i Sverige.",
+      "### Utstyr og sikkerhet",
+      "Som medlem kan du låne kajakk og utstyr gratis. NPF grunnkurs (16 timer, våttkort) er påkrevd for å delta på turer og låne utstyr."
+    ],
+    "bodyEn": [
+      "### Tours in the Trondheim fjord",
+      "We log around 3,000 paddle trips per year from two bases. Skansen is home base with the historic clubhouse, rental kayaks and a great social atmosphere.",
+      "### Regular tours",
+      "Tuesday paddling at 18:00 is open to beginners. The Sunday tour at 12:00 is a tradition with a food break and social gathering.",
+      "### Summer expeditions",
+      "Every year we arrange ambitious summer trips to Lofoten, Kragerø, Helgeland and Bohuslän in Sweden.",
+      "### Equipment and safety",
+      "As a member you can borrow a kayak and equipment for free. An NPF basic course (16 hours, wet card) is required."
+    ],
+    "subPageLinks": [
+      { "titleNo": "Havpadling", "titleEn": "Sea Kayaking", "href": "/padling/hav/havpadling" },
+      { "titleNo": "Søndagstur", "titleEn": "Sunday Tour", "href": "/padling/hav/sondagstur" },
+      { "titleNo": "Reolplasser", "titleEn": "Storage", "href": "/padling/hav/reolplasser" },
+      { "titleNo": "Padlekart Midt-Norge", "titleEn": "Paddling Map", "href": "/padling/hav/padlekart-midt-norge" },
+      { "titleNo": "Fyrmestergrad", "titleEn": "Lighthouse Challenge", "href": "/padling/hav/fyrmestergrad" },
+      { "titleNo": "Verktøy for turledelse", "titleEn": "Tour Leadership", "href": "/padling/hav/turledelse-hav" },
+      { "titleNo": "Turrapporter", "titleEn": "Trip Reports", "href": "/padling/hav/turrapporter" },
+      { "titleNo": "HMS Havpadling", "titleEn": "H&S Sea Kayaking", "href": "/hms/hav" },
+      { "titleNo": "Fellespadling", "titleEn": "Group Paddling", "href": "/hms/hav/fellespadling" },
+      { "titleNo": "Munkholmen", "titleEn": "Munkholmen", "href": "/hms/hav/munkholmen" },
+      { "titleNo": "Cruisebåter", "titleEn": "Cruise Ships", "href": "/hms/hav/cruisebater" },
+      { "titleNo": "Rull & Tull", "titleEn": "Roll & Fun", "href": "/hms/hav/rull-tull" },
+      { "titleNo": "Sikker padling", "titleEn": "Safe Paddling", "href": "/hms/hav/sikker-padling" }
+    ]
+  },
+  {
+    "discipline": "elv",
+    "titleNo": "Elvepadling",
+    "titleEn": "River Kayaking",
+    "taglineNo": "Trening på Nidelva og turer til Sjoa, Trysil og Oppdal for alle nivåer",
+    "taglineEn": "Training on Nidelva and trips to Sjoa, Trysil and Oppdal for all levels",
+    "introNo": "TKK arrangerer aktiviteter for alle som er interessert i å starte eller utvikle sine ferdigheter på elvepadling i et trygt, kompetent og trivelig miljø.",
+    "introEn": "TKK organises activities for all who want to start or develop their river kayaking skills in a safe, competent and enjoyable environment.",
+    "bodyNo": [
+      "### Nidelva — hjemmebanen vår",
+      "Nidelva renner gjennom hjertet av Trondheim og er vår naturlige treningsbane. Vi holder ukentlige padleøkter her gjennom hele sesongen.",
+      "### Turer for alle nivåer",
+      "Vi arrangerer turer til Sjoa, Trysil, Oppdal og nordover mot Nordland. Hvert år er det planlagte og spontane elveturer for alle nivåer.",
+      "### Vintertrening i Pirbadet",
+      "Når elvene fryser, flytter vi treningen innendørs til Pirbadet for teknikk, eskimorulle og balanse.",
+      "### Utstyr til utlån",
+      "Vi låner ut elvekajakkene og alt nødvendig sikkerhetsutstyr til trening og tur."
+    ],
+    "bodyEn": [
+      "### Nidelva — our home river",
+      "Nidelva runs through the heart of Trondheim and is our natural training ground.",
+      "### Tours for all levels",
+      "We arrange trips to Sjoa, Trysil, Oppdal and northwards towards Nordland.",
+      "### Winter training at Pirbadet",
+      "When the rivers freeze, we move indoors to Pirbadet for technique, Eskimo roll and balance.",
+      "### Equipment for loan",
+      "We loan out river kayaks and all necessary safety equipment for training and tours."
+    ],
+    "subPageLinks": [
+      { "titleNo": "Elvepadling", "titleEn": "River Kayaking", "href": "/padling/elv/elvepadling" },
+      { "titleNo": "Elvekajakk — lån og leie", "titleEn": "Kayak Loan", "href": "/padling/elv/elvekajakk-lan-og-leie" },
+      { "titleNo": "HMS Elvepadling", "titleEn": "H&S River Kayaking", "href": "/hms/elv" },
+      { "titleNo": "Klubbpadling Nidelven", "titleEn": "Club Paddling Nidelven", "href": "/hms/elv/klubbpadling-nidelven" },
+      { "titleNo": "Spontan tur", "titleEn": "Spontaneous Tour", "href": "/hms/elv/spontan-tur" }
+    ]
+  },
+  {
+    "discipline": "flattvann",
+    "titleNo": "Flattvann",
+    "titleEn": "Flat Water",
+    "taglineNo": "Onsdagstrening på Jonsvannet — konkurransepadling for fartselskere",
+    "taglineEn": "Wednesday training on Jonsvannet — competitive paddling for speed enthusiasts",
+    "introNo": "Flattvannsgruppa er en gjenoppliving av en stolt konkurransetradisjon i TKK — etter over 40 år i dvale er konkurransepadlingen tilbake.",
+    "introEn": "The flat water group is a revival of a proud competitive tradition in TKK — after more than 40 years of dormancy, competitive paddling is back.",
+    "bodyNo": [
+      "### Onsdagstrening på Jonsvannet",
+      "Gjennom sommerhalvåret samles vi på Jonsvannet hver onsdag kl. 18:00 for strukturert trening.",
+      "### Hva er flattvannspaddling?",
+      "Flattvannspaddling handler om å bevege seg raskt og effektivt på stille vann. Vi padler på flattvann med spesialiserte kajakker og surfski.",
+      "### Surfski — en ny dimensjon",
+      "Surfski er designet for å utnytte vind og bølger. TKK etablerte surfskigruppa i juni 2023 og har egne surfski til utlån."
+    ],
+    "bodyEn": [
+      "### Wednesday training at Jonsvannet",
+      "During summer, we gather at Jonsvannet every Wednesday at 18:00 for structured training.",
+      "### What is flat water paddling?",
+      "Flat water paddling is about moving quickly and efficiently on calm water.",
+      "### Surfski — a new dimension",
+      "Surfski is designed to harness wind and waves. TKK established its surfski group in June 2023."
+    ],
+    "subPageLinks": [
+      { "titleNo": "Flattvann & Surfski", "titleEn": "Flatwater & Surfski", "href": "/padling/flattvann/flattvann-surfski" },
+      { "titleNo": "Flattvannskajakker", "titleEn": "Flatwater Kayaks", "href": "/padling/flattvann/flattvanns-kajakker" },
+      { "titleNo": "Surfski", "titleEn": "Surfski", "href": "/padling/flattvann/surfski" },
+      { "titleNo": "Vingårer", "titleEn": "Wing Paddles", "href": "/padling/flattvann/vingarer" }
+    ]
+  },
+  {
+    "discipline": "surfski",
+    "titleNo": "Surfski",
+    "titleEn": "Surfski",
+    "taglineNo": "Åpent cockpit, bølgeridning og høy fart. Etablert 2023",
+    "taglineEn": "Open cockpit, wave riding and high speed. Established 2023",
+    "introNo": "Surfski er en populær gren etablert i juni 2023, som kombinerer høy hastighet med økt sikkerhet og åpen cockpit. Den er spesielt velegnet for bølgepadling og frisk medvind.",
+    "introEn": "Surfski is a popular discipline established in June 2023, combining high speed with increased safety and an open cockpit. Especially suited for wave paddling and strong tailwinds.",
+    "bodyNo": [
+      "### Hva er surfski?",
+      "Surfski er en lang, smal og åpen kajakk. Det åpne cockpitet gjør det trygt å kantre og komme seg opp igjen. Opprinnelig utviklet fra australsk/sør-afrikansk livredning.",
+      "### Fart og bølger",
+      "Surfski er designet for å utnytte vind og bølger — teknikken kalles 'downwinding'. Smalt forskipsdesign gir lav motstand og høy hastighet.",
+      "### Kurs og trening",
+      "TKK har tre godkjente surfski-instruktører og egne klubbsurfskier til utlån. Kurs kjøres fra mai til september. Surfski-grunnkurs er påkrevd for å låne utstyr.",
+      "### Kom i gang",
+      "Nybegynnere bør starte på bredere og mer stabile modeller. Kontakt gruppeleder Torleif for mer info."
+    ],
+    "bodyEn": [
+      "### What is surfski?",
+      "A surfski is a long, narrow and open kayak. The open cockpit makes it safe to capsize and remount.",
+      "### Speed and waves",
+      "Surfski is designed to harness wind and waves — the technique is called 'downwinding'.",
+      "### Courses and training",
+      "TKK has three certified surfski instructors and club surfskis for loan. Courses run from May to September. A surfski basic course is required to borrow equipment.",
+      "### Getting started",
+      "Beginners should start on wider, more stable models. Contact group leader Torleif for more info."
+    ],
+    "subPageLinks": []
+  },
+  {
+    "discipline": "polo",
+    "titleNo": "Kajakkpolo",
+    "titleEn": "Kayak Polo",
+    "taglineNo": "Lagspill med kajakk og ball. Gull i NM 2016. Aktivt siden 2010",
+    "taglineEn": "Team sport with kayak and ball. National gold medal 2016. Active since 2010",
+    "introNo": "Kajakkpolo er lite i Norge, men vokser i Trondheim! TKK har hatt kajakkpololag siden 2010 og har deltatt i mange turneringer og Norgesmesterskap. I 2016 vant vi gull!",
+    "introEn": "Kayak polo is small in Norway, but growing in Trondheim! TKK has had a polo team since 2010 and has participated in many tournaments and national championships. We won gold in 2016!",
+    "bodyNo": [
+      "### Hva er kajakkpolo?",
+      "Kajakkpolo spilles på et avgrenset vannareal med to lag på fem spillere. Sporten krever padleteknikk, koordinasjon, lagtaktikk og rask beslutningstaking.",
+      "### Trening gjennom hele året",
+      "Om sommeren trener vi på Kyvannet. Om vinteren i Pirbadet. Treningene er åpne for alle — ingen kajakk-erfaring kreves!",
+      "### Bli med på laget",
+      "Kom på trening — ingen erfaring kreves. Ta kontakt via Facebook-gruppa 'Kajakkpolo i Trondheim'."
+    ],
+    "bodyEn": [
+      "### What is kayak polo?",
+      "Kayak polo is played on a bounded water area with two teams of five players. It requires paddling technique, coordination, team tactics and quick decisions.",
+      "### Year-round training",
+      "In summer we train at Kyvannet. In winter at Pirbadet. Sessions are open to all — no kayaking experience required!",
+      "### Join the team",
+      "Come to training — no experience required. Contact us via the Facebook group 'Kajakkpolo i Trondheim'."
+    ],
+    "subPageLinks": []
+  },
+  {
+    "discipline": "junior",
+    "titleNo": "Junior",
+    "titleEn": "Junior",
+    "taglineNo": "For barn og unge 11–16 år. Trening hele året",
+    "taglineEn": "For children and youth aged 11–16. Training year-round",
+    "introNo": "Trondhjems Kajakklubb driver padleaktiviteter for barn og unge i alderen 11 til 16 år. Juniorgruppa er et populært tilbud med treninger og kurs gjennom hele sesongen.",
+    "introEn": "Trondhjems Kajakklubb runs paddling activities for children and youth aged 11 to 16. The junior group is a popular programme with training and courses throughout the season.",
+    "bodyNo": [
+      "### Sommersesongen",
+      "Om sommerhalvåret har vi treninger ved Skansen, på Kyvannet og i Nidelva. Treninger gjennomføres tirsdag på sommeren. Vi arrangerer turer og kurs spesielt tilpasset barn, ungdom og familier.",
+      "### Vintersesongen",
+      "Vinterhalvåret avholdes treninger i Pirbadet på lørdager kl. 19:00-20:30.",
+      "### Kommunikasjon",
+      "Informasjon deles gjennom Facebook-gruppen 'Juniorpadling TKK'."
+    ],
+    "bodyEn": [
+      "### Summer season",
+      "During summer we train at Skansen, Kyvannet and Nidelva. Trainings on Tuesdays. We arrange tours and courses especially for children, youth and families.",
+      "### Winter season",
+      "Winter training is at Pirbadet on Saturdays at 19:00-20:30.",
+      "### Communication",
+      "Information is shared through the Facebook group 'Juniorpadling TKK'."
+    ],
+    "subPageLinks": [
+      { "titleNo": "Velkommen til TKK Junior", "titleEn": "Welcome to TKK Junior", "href": "/padling/junior/velkommen-til-tkk-junior" },
+      { "titleNo": "Juniorutstyr", "titleEn": "Junior Equipment", "href": "/padling/junior/juniorutstyr" }
+    ]
+  },
+  {
+    "discipline": "pirbadet",
+    "titleNo": "Pirbadet",
+    "titleEn": "Pirbadet",
+    "taglineNo": "Vintertrening i basseng for alle padlegreiner",
+    "taglineEn": "Winter pool training for all paddling disciplines",
+    "introNo": "TKK har bassengtreninger i Pirbadet i vinterhalvåret, ca fra midten av oktober til slutten av april.",
+    "introEn": "TKK runs pool training sessions at Pirbadet during winter, approximately from mid-October to end of April.",
+    "bodyNo": [
+      "### Teknikk- og rulletrening",
+      "Onsdager kl. 21:00–22:30 i bølgebassenget, åpen for alle medlemmer i TKK. Ingen påmelding.",
+      "### Kajakkpolo",
+      "Torsdager kl. 21:00–22:30 i den dype delen av idrettsbassenget. Åpen for alle membres i TKK. Påmelding via Spond.",
+      "### Juniortrening",
+      "Lørdager kl. 19:00–20:30 i bølgebassenget. Åpen for alle medlemmer i juniorgruppa.",
+      "### Viktige regler",
+      "Er det flere enn 12 i vannet, vent til noen går ut. Ved bruk av bølgemaskinen: maks 6 kajakker på vannet om gangen.",
+      "### Utstyr",
+      "Polokajakker, årer, vester og hjelmer ligger på enden av galleriet på 2. etg. Elve- og juniorkajakker er på et lagerrom på utsiden av bygget.",
+      "### Etter treningen",
+      "Kajakker, vester, spruttrekk og hjelmer skal spyles grundig med ferskvann. Rydd utstyret på plass slik du fant det."
+    ],
+    "bodyEn": [
+      "### Technique and roll training",
+      "Wednesdays 21:00–22:30 in the wave pool, open to all TKK members. No sign-up required.",
+      "### Kayak polo",
+      "Thursdays 21:00–22:30 in the sports pool. Open to all TKK members. Sign up via Spond.",
+      "### Junior training",
+      "Saturdays 19:00–20:30 in the wave pool. Open to all junior group members.",
+      "### Important rules",
+      "If more than 12 people are in the water, wait until someone leaves. When using the wave machine: max 6 kayaks at a time.",
+      "### Equipment",
+      "Polo kayaks, paddles, life jackets and helmets are at the end of the gallery on the 2nd floor.",
+      "### After training",
+      "Rinse kayaks, life jackets, skirts and helmets thoroughly with fresh water. Put equipment back as you found it."
+    ],
+    "subPageLinks": [
+      { "titleNo": "HMS Pirbadet", "titleEn": "H&S Pirbadet", "href": "/hms/pirbadet" }
+    ]
+  }
+]

@@ -13,6 +13,11 @@ export interface FlexiblePage {
   sections?: PageSection[];
 }
 
+export interface SubPageLink {
+  title: { no?: string; en?: string };
+  href: string;
+}
+
 export interface DisciplinePage {
   _id: string;
   discipline: string;
@@ -21,6 +26,7 @@ export interface DisciplinePage {
   intro?: { no?: string; en?: string };
   body?: { no?: unknown[]; en?: unknown[] };
   heroImage?: { asset: { _ref: string }; alt?: string };
+  subPageLinks?: SubPageLink[];
 }
 
 export async function getFlexiblePage(pageId: string): Promise<FlexiblePage | null> {
@@ -53,7 +59,8 @@ export async function getDisciplinePage(discipline: string): Promise<DisciplineP
         tagline,
         intro,
         body,
-        heroImage
+        heroImage,
+        subPageLinks[] { title, href }
       }`,
       { discipline }
     );

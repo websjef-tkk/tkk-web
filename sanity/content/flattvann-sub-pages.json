@@ -1,0 +1,145 @@
+[
+  {
+    "id": "padling-flattvann-flattvann-surfski",
+    "titleNo": "Flattvann & Surfski",
+    "introNo": "Flattvann-og-surfski-gruppa er relativt ny i Trondhjems Kajakklubb, og kan sees på som en gjennoppståelse av den stolte konkurransepadling som foregikk i klubben for over 40 år siden.",
+    "sections": [
+      {
+        "titleNo": "Om disiplinen",
+        "bodyNo": [
+          "Begrepet flattvannspadling kommer av at vi padler på flatt vann hvor man tryggere kan padle rankere båter og er et utrykk for padling på konkurranseform. Surfski-padling kommer av at vi padler med vinden og surfer havbølgene med spesialtilpassede kajakker, kalt Surfski."
+        ]
+      },
+      {
+        "titleNo": "Våre aktiviteter",
+        "bodyNo": [
+          "Ukentlig treningspadling hver onsdag kl. 18.00 på Jonsvannet, i sommerhalvåret."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-flattvann-kajakker",
+    "titleNo": "Flattvannskajakker",
+    "introNo": "TKKs treningskajakker ligger ved roklubbens lokaler på Jonsborg ved Jonsvannet og er til for alle klubbens medlemmer. Utstyret må behandles med stor respekt da det er av glassfiber og dyrt.",
+    "sections": [
+      {
+        "titleNo": "Regler for bruk",
+        "bodyNo": [
+          "Alle som vil bruke båtene plikter å delta på treningspadling med flattvann-og-surfeski-gruppa for en kort innføring i bruk av utstyret.",
+          "Legg kajakkene forsiktig på gresset. Ikke sitt i kajakken på land, da roret vil knekke.",
+          "Roerne eier og har førsterett på brygga ved Jonsborg. Gjør deg ferdig på gresset før du bærer til brygga for sjøsetting.",
+          "Spør heller en gang for mye enn for lite. Kontakt leder for flattvann."
+        ]
+      },
+      {
+        "titleNo": "Citius 55",
+        "bodyNo": [
+          "L=520cm, B=55cm, 13 kg — Stabil",
+          "Kan håndteres av de fleste som har padlet havkajakk. Kajakken er relativt stabil i bølger forfra, men kan være utfordrende i sidevind med lette personer ombord. Høyt forskip gir tørr gange i bølger. Lasteluke bak for lett oppakning."
+        ]
+      },
+      {
+        "titleNo": "Citius 48",
+        "bodyNo": [
+          "L=520cm, B=48cm, 12 kg — Litt ustabil, rask",
+          "Kan håndteres om du er vant til tur-racere, men føles topp-rank dersom du kun har sittet i havkajakk. Rask kajakk med høyt forskip, som gir tørr gange i bølger."
+        ]
+      },
+      {
+        "titleNo": "Struer Boat Tracer",
+        "bodyNo": [
+          "L=520cm, B=51cm, 13 kg — Litt ustabil, rask",
+          "Kan håndteres om du er vant til tur-racere, men føles topp-rank dersom du kun har sittet i havkajakk. Stabiliteten er som i Citius 48, men båten er mer retningsstabil og har lavere fordekk."
+        ]
+      },
+      {
+        "titleNo": "Andre kajakker",
+        "bodyNo": [
+          "Dobbel surfeski Nelo Viper SS2 — spennende surfeski for to personer med god stabilitet.",
+          "Hav-Racer Citius Sea Racer 580 — ekstra lang treningskajakk egnet i sjøgang.",
+          "Surfski Zedtech Corvette — nybegynnersurfski med stabilitet for bølgepadling.",
+          "Flattvann for lette, Zedtech Alito — treningskajakk med lite volum for lettere personer."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-flattvann-surfski",
+    "titleNo": "Surfski",
+    "introNo": "TKK har flere surfski til utlån for medlemmer med godkjent kompetanse.",
+    "sections": [
+      {
+        "titleNo": "PP Cyclone",
+        "bodyNo": [
+          "L=520 cm, B=51 cm, 11.5 kg — Superlett og rask",
+          "Kan håndteres om du er vant til tur-racere, men føles topp-rank dersom du kun har sittet i havkajakk. Ekstremt lett og rask kajakk, fin for lette personer."
+        ]
+      },
+      {
+        "titleNo": "Sipre Millenium",
+        "bodyNo": [
+          "L=558 cm, B=50 cm, 15 kg — Tur-racer/havkajakk",
+          "Kan håndteres om man er vant med ranke havkajakker og flattvannskajakker. Båten har lasteluke bak, dekksrigg, hav-cockpit og høyere fordekk som gjør at den egner seg til dagsturer med litt bølger."
+        ]
+      },
+      {
+        "titleNo": "Carbonology Cruze",
+        "bodyNo": [
+          "L=550 cm, B=56 cm, 14.5 kg — Tryggeste båt i flåten",
+          "Surfeskien er like stabil som havkajakker og tåler svært mye sjø når man padler den med eller mot bølgene. Åpen cockpit krever at du kler deg godt, men gjør egenredning enklere. Husk å bruk sikkerhetslenka, så ikke surfeskien blåser vekk ved velt."
+        ]
+      },
+      {
+        "titleNo": "Stellar S18S",
+        "bodyNo": [
+          "L=550 cm, B=54 cm, 16 kg — Stødig nybegynnersurfski",
+          "Surfeskien er like stabil som havkajakker og tåler svært mye sjø. Åpen cockpit krever at du kler deg godt, men gjør egenredning enklere. Husk å bruk sikkerhetslenka. Denne surfeskien har lasteluker til å legge ekstra skift og nistepakke."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-flattvann-vingarer",
+    "titleNo": "Vingårer",
+    "introNo": "Alle årer er av samme type som brukes i store konkurranser. De er lette og gode å padle med. Lengden og vinkelen er mulig å stille inn.",
+    "sections": [
+      {
+        "titleNo": "Innstilling av vinkel og lengde",
+        "bodyNo": [
+          "Innstilling av vinkel: Har du veldig høy åreføring (som på OL) skal du ha rundt 80°, og om du padler med litt lavere åreføring (mer typisk havpadling) skal du ha ca 60°. For de fleste passer 75°.",
+          "### Innstilling av lengde",
+          "Kroppslengde 160 cm: Surfski 200 cm, flattvannskajakk 205 cm",
+          "Kroppslengde 170 cm: Surfski 205 cm, flattvannskajakk 210 cm",
+          "Kroppslengde 180 cm: Surfski 210 cm, flattvannskajakk 215 cm",
+          "Kroppslengde 190 cm: Surfski 215 cm, flattvannskajakk 220 cm",
+          "Tips: For lange distanser kan du korte ned åren med 2-3 cm om du begynner å bli sliten."
+        ]
+      },
+      {
+        "titleNo": "Braca Children",
+        "bodyNo": [
+          "635 cm² — Fantastisk åre for de fleste. Laget for ungdommer som konkurrerer sprint. Fungerer godt for alle typer padling. Vekt ca 700 g."
+        ]
+      },
+      {
+        "titleNo": "Braca IV Max",
+        "bodyNo": [
+          "765 cm² — For litt sterkere personer eller deg som liker å padle med litt høyere frekvens. Vekt ca 750 g."
+        ]
+      },
+      {
+        "titleNo": "ZJ W0",
+        "bodyNo": [
+          "720 cm² — For medium sterke personer. Veldig godt likt åre av de fleste som prøver den. Vekt ca 620 g."
+        ]
+      },
+      {
+        "titleNo": "Think Powerwing",
+        "bodyNo": [
+          "635 cm² — Spesielt konstruert for surfski og brukes av dyktige utøvere for lengre distanser. Passer alle treningstyper unntatt sprint. Vekt ca 630 g."
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "padling-elv-elvepadling",
+    "titleNo": "Elvepadling",
+    "introNo": "TKK arrangerer aktiviteter for alle som er interessert i å starte eller utvikle sine ferdigheter på elvepadling i et trygt, kompetent og ikke minst trivelig miljø.",
+    "sections": [
+      {
+        "titleNo": "Våre aktiviteter",
+        "bodyNo": [
+          "Ukentlige padlinger på Nidelva for både nybegynnere og erfarne.",
+          "Planlagte og spontane elveturer for både nybegynnere og erfarne. Hvert år har vi turer til steder som Sjoa, Trysil, Oppdal og Nordland.",
+          "Innetrening i Pirbadet hver vinter for trening på teknikk og rulle.",
+          "Jevnlige treninger med slalåmkajakk.",
+          "Vi låner ut utstyr og kajakker til klubbens medlemmer til trening og tur, både for elv og slalåm."
+        ]
+      },
+      {
+        "titleNo": "Padlemuligheter rundt Trondheim",
+        "bodyNo": [
+          "I Trondheimsregionen finnes flere gode padleelver. Midt gjennom Trondheim går Nidelva som er meget godt egnet elv for nybegynnere. Ellers ligger det mange elver mellom Trondheim og Oppdal, men også østover og inn i Sverige."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-elv-kajakk-lan",
+    "titleNo": "Elvekajakk — lån og leie",
+    "introNo": "Husk å lese HMS-risikoark for den type padling som gjelder.",
+    "sections": [
+      {
+        "titleNo": "Nidelven (spontanturer, kurs, klubbpadling)",
+        "bodyNo": [
+          "Medlemmer med godkjent kompetanse (Grunnkurs Elv eller tilsvarende) kan fritt benytte kajakkene (pluss spruttrekk, vest og åre) på Nidelven."
+        ]
+      },
+      {
+        "titleNo": "Spontantur grad 3",
+        "bodyNo": [
+          "Medlemmer med godkjent kompetanse (Grunnkurs Elv eller tilsvarende) kan leie kajakk (pluss vest og åre) til spontanturer sammen med andre klubbmedlemmer og som skjer andre steder enn Nidelven, men begrenset til grad 3 i nærområdet. Dette gjelder elver som Sokna nedre og midtre, Bua øvre, Fora nedre, Homla. Annen bruk avtales med elvesjef. Leieprisen er da kr. 50 pr. døgn."
+        ]
+      },
+      {
+        "titleNo": "TKK-arrangerte turer",
+        "bodyNo": [
+          "Medlemmer med godkjent kompetanse (Grunnkurs Elv eller tilsvarende) kan leie kajakk (pluss vest og åre) til turer og arrangementer i TKK-regi. Leieprisen er da kr. 50 pr. døgn."
+        ]
+      },
+      {
+        "titleNo": "Spesielle tilfeller",
+        "bodyNo": [
+          "Aktivitetsledere kan i særlige tilfeller ta med ikke-medlemmer uten godkjent kompetanse og la disse låne kajakk (pluss spruttrekk, vest og åre) for en prøvepadling av Nidelven."
+        ]
+      }
+    ]
+  }
+]

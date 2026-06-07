@@ -1,0 +1,606 @@
+[
+  {
+    "id": "hms",
+    "titleNo": "Klubbens HMS-plan",
+    "introNo": "Trondhjems Kajakklubb (TKK) er et idrettslag med ca. 500 medlemmer. Klubben arrangerer aktiviteter innen havpadling, flattvannspadling, surfskipadling, elvepadling, kajakkpolo samt en egen gruppe for juniorer. I tillegg kan klubbens medlemmer låne padleutstyr og leie reolplass for egen kajakk.",
+    "sections": [
+      {
+        "titleNo": "Innledning med forankring og mål",
+        "bodyNo": [
+          "Når du deltar på padleaktiviteter organisert av TKK, har både du og klubben ansvar for din sikkerhet. Som deltaker må du gjøre egne vurderinger og opptre aktsomt. I henhold til lover og forskrifter er klubben pålagt å drive helse-, miljø- og sikkerhetsarbeid (HMS). Arbeidet skal være systematisk og det skal dokumenteres skriftlig.",
+          "Å vurdere risiko, gjøre tiltak for å redusere risiko og fange opp uønskede hendelser for å lære av disse, skal foregå rutinemessig. Dette skal være en del av «kulturen» i klubben.",
+          "Hovedmålet med HMS-arbeidet i TKK er å unngå hendelser som medfører skade på mennesker, miljø og utstyr.",
+          "I dette ligger at det skal:",
+          "• skapes et godt klubbmiljø med fokus på padleglede, utfordringer, samhold og sikkerhet for padlere tilknyttet klubben",
+          "• jobbes aktivt for å unngå padleulykker, fremme risikobevissthet, ansvarsbevissthet og kunnskap om sikkerhet hos padlere tilknyttet klubben",
+          "• gjøres skriftlige risikovurderinger i forkant av aktiviteter, fortløpende risikovurdering underveis og sette inn aktuelle risikoreduserende tiltak for å forebygge ulykker og skader på mennesker, utstyr og miljø",
+          "• være et fokus på sporløs ferdsel, at vernebestemmelser følges og at vi tar vare på naturen.",
+          "TKK oppfordrer sine medlemmer til å følge Padlevettreglene som er utgitt av Sjøfartsdirektoratet i samarbeid med Norges Padleforbund og Redningsselskapet.",
+          "Deltakere på kurs og andre aktiviteter skal få den informasjon de trenger for å vurdere egen sikkerhet. Dersom deltakerne er barn, skal både barn og foreldre motta tilpasset informasjon.",
+          "Klubben skal ha gode rutiner for opplæring av personer med sentrale verv, aktivitetsledere og andre medlemmer med tanke på sikkerhet.",
+          "Som tilbyder av risikofylte forbrukertjenester er virksomheten i klubben underlagt Produktkontrolloven, Internkontrollforskriften og Raftingforskriften."
+        ]
+      },
+      {
+        "titleNo": "Organisering og ansvar ved ledelse av aktivitet",
+        "bodyNo": [
+          "• Klubbens leder har det overordnede ansvaret for at alle sikkerhetsoppgaver er ivaretatt og fordelt.",
+          "• Alle padleaktiviteter i regi av TKK skal ha en ansvarlig leder. Lederen skal ha tilstrekkelig kompetanse til å vurdere risikobildet i forkant og underveis slik at aktiviteten gjennomføres sikkert.",
+          "• Som hovedregel vurderes kompetanse med bakgrunn i Norges Padleforbund (NPF) sin standard i Våttkortstigen.",
+          "• Klubben skal ha skriftlig oversikt over hver aktivitetsleders formelle kompetanse. I tilfeller hvor aktivitetslederens realkompetanse vurderes høyere enn formell kompetanse, kan hen godkjennes til å lede mer avanserte turer. Dette skal begrunnes og dokumenteres skriftlig.",
+          "• Alle padleaktiviteter i regi av TKK skal risikovurderes. Skriftlig risikovurdering skal godkjennes og kvalitetssikres av grensjef før aktiviteten kan gjennomføres.",
+          "• Faste klubbaktiviteter behøver ikke godkjenning av grensjef hver gang. Ferdig utfylte risikovurderinger som tar høyde for variasjon i forholdene, skal være tilgjengelig slik at den som leder turen enkelt kan gjøre risikovurdering i forkant av aktiviteten.",
+          "• Aktivitetsleder skal sjekke at deltakerne har godkjent kompetanse: Turer: Minimum grunnkurs ihht padleforbundets våttkortstige. Trening og kurs: Gjeldende regler for grenen. Aktivitetsleder kan definere strengere krav.",
+          "*På søndagstur fra Skansen / Østmarkneset velger gruppen selv en leder og to padlere som padler bakerst. Disse skal gjennomføre risikovurdering som ligger tilgjengelig i gangen på klubbhuset.*"
+        ]
+      },
+      {
+        "titleNo": "Klubbens trenere/aktivitetsledere som reiser eller overnatter med barn",
+        "bodyNo": [
+          "I dette kapitlet defineres alle under 18 år som barn.",
+          "### Retningslinjer for overnatting:",
+          "• En voksen uten familietilknytning skal ikke dele rom med barn som er alene.",
+          "• Det bør tilstrebes at barn deler rom med hverandre, mens voksne har egne rom.",
+          "• I tilfeller der dette ikke er mulig (f.eks. begrenset plass), bør det være en skriftlig avtale med foreldre/foresatte på forhånd.",
+          "### Trygg samhandling mellom voksne og barn:",
+          "• Voksne ledere bør alltid opptre profesjonelt og holde en tydelig grense mellom det å være en ansvarlig voksen og det å være en venn.",
+          "• Det bør unngås situasjoner der en voksen og et barn er alene sammen på et rom eller i en bil.",
+          "• Kommunikasjon med ungdommene bør være åpen og inkluderende, men alltid med bevissthet om maktbalansen.",
+          "### Reiserutiner og sikkerhet:",
+          "• Det bør være minst to voksne ansvarlige på turer med overnatting.",
+          "• Foreldre skal informeres tydelig om hvem som har ansvaret for deres barn under reisen og oppholdet.",
+          "• Alle barn på reise skal ha en ansvarlig voksen (reiseleder) å forholde seg til gjennom hele turen. Dette skal være avklart i forkant av reise og samtykke gitt av foresatte.",
+          "• Dersom en voksen må være alene med et barn (f.eks. i transport), bør dette være avtalt med foresatte på forhånd.",
+          "### Retningslinjer for digital kommunikasjon:",
+          "• All kommunikasjon mellom voksen og barn bør skje via åpne kanaler som klubbens felles gruppe eller e-post.",
+          "• Private meldinger mellom en voksen og barn bør begrenses til praktisk informasjon og holdes profesjonelle."
+        ]
+      },
+      {
+        "titleNo": "Avviksrapportering",
+        "bodyNo": [
+          "Klubbens rapporteringssystem for hendelser og avvik skal være tilgjengelig for medlemmer eller andre som har deltatt på organisert aktivitet, leid kajakk eller på annen måte har vært involvert der klubben har et ansvar for aktiviteten.",
+          "Å trekke lærdom av ulykker og hendelser er en meget viktig del av HMS-arbeidet og det skal være lav terskel for å rapportere.",
+          "Styret skal så raskt som praktisk mulig vurdere om hendelse eller avvik er av en slik karakter at NPF sitt system for «Rapportering av uønsket hendelse» skal brukes.",
+          "### Rutiner for behandling av rapporter:",
+          "• Skjema på tkk.no skal brukes.",
+          "• En rapport om «uønsket hendelse eller avvik» skal automatisk generere en mail eller sms til klubbens styreleder og/eller nestleder.",
+          "• Hendelser med alvorlighetsgrad «død» og «alvorlig personskade med medisinsk oppfølging» medfører at styret skal samles så raskt som praktisk mulig og følge opp det som har skjedd. Det skal føres en logg over hva styret har gjort i oppfølgingen av hendelsen.",
+          "• Hendelse med «personskade med førstehjelpsbehandling» og andre hendelser samt forbedringsforslag, skal behandles på førstkommende styremøte. Ved behov kan styreleder kalle inn til ekstraordinært styremøte for å behandle saken.",
+          "### Tilbakemelding til den som har rapportert:",
+          "• Melder skal få en autogenerert tilbakemelding fra klubben om mottatt rapport.",
+          "• Melder skal få beskjed fra styret at rapporten blir behandlet og med forespørsel om å komme med innspill til hendelsen hvis det er behov for dette.",
+          "• Melder skal få tilbakemelding på styrets behandling og eventuelle tiltak styret vil iverksette.",
+          "### Revisjon av rapporteringssystemet:",
+          "• Årlig på første styremøte etter klubbens årsmøte.",
+          "• Når styret mener det er viktig etter alvorlige hendelser eller avvik."
+        ]
+      },
+      {
+        "titleNo": "Sporløs ferdsel og naturvern",
+        "bodyNo": [
+          "Det er en forventning til at klubbens medlemmer har forståelse for at enkelte padleaktiviteter kan påvirke miljøet negativt. Allemannsretten gir oss rettigheter vi skal være glad for finnes, men samtidig er det plikter vi må forholde oss til. Sporløs ferdsel er en av disse. På hjemmesiden til Norsk Friluftsliv finnes en god oversikt over hva sporløs ferdsel betyr og hvordan vi kan bidra til å ta vare på naturen når vi oppholder oss i den.",
+          "Klubbaktiviteter skal gjennomføres innenfor de lover og regler som gjelder lokalt og nasjonalt med tanke på naturvern. Det betyr også at man må sette seg inn i hva myndigheter i andre land stiller av krav.",
+          "I organisert aktivitet er det naturlig at turleder har satt seg inn i vernebestemmelsene for det området man skal padle i. Hver enkelt av oss har også et ansvar til å følge opp eller søke informasjon slik at aktivitetene ikke bidrar til å forstyrre fugler og dyr og påføre naturen unødvendig slitasje eller skade. Ta spesielt hensyn under hekketiden.",
+          "Hos Miljødirektoratet finner man relevant og god informasjon, det samme hos miljøavdelingen i den kommunen du skal ferdes i.",
+          "For padling på Jonsvatnet: Padlere skal holde seg i kajakken. Organiserte aktiviteter utenom flattvannstrening er ikke tillatt."
+        ]
+      },
+      {
+        "titleNo": "Klubbutstyr",
+        "bodyNo": [
+          "Klubbens utstyr som brukes i organiserte aktiviteter og lånes av medlemmer til egen aktivitet, skal jevnlig kontrolleres og vedlikeholdes.",
+          "• Utstyr som er skadet eller har mangler skal merkes og ikke brukes før det er reparert eller byttet ut med nytt.",
+          "• En plan for vedlikehold og kontroll av utstyret skal være utarbeidet.",
+          "• Klubben skal ha en oversikt over ovennevnte utstyr.",
+          "• Klubbutstyr som kan bringes med på turer og andre organiserte aktiviteter, skal være tilgjengelig på klubbhuset når det ikke er i bruk.",
+          "### Ansvar:",
+          "• Grensjef er ansvarlig for gruppens padleutstyr.",
+          "• Nevnte sjefer skal utarbeide og til enhver tid ha en oppdatert liste over utstyret, hva som skal kontrolleres og vedlikeholdes og hvor ofte dette skal gjøres.",
+          "• Utstyr som ikke skal brukes, skal merkes, repareres eller erstattes.",
+          "• Kassert utstyr skal ikke brukes i organisert aktivitet i klubben.",
+          "• Hussjef er ansvarlig for at vanntett pakket 1.hjelpsutstyr samt «redningsposer» er tilgjengelig for turledere og andre som arrangerer organisert aktivitet i klubben.",
+          "• Hussjef er ansvarlig for at VHF-radioer fungerer og er tilgjengelig for turledere og andre som arrangerer organisert aktivitet.",
+          "• Hussjef skal sjekke innhold i portabelt 1.hjelpsutstyr minimum 2 ganger pr år og etterfylle når utstyr er brukt.",
+          "Medlemmer som låner klubbutstyr og oppdager feil på utstyret er ansvarlig for å legge utstyret i merket kasse for ødelagt utstyr. Dette er viktig for å hindre at utstyret blir brukt av andre før det er reparert, erstattet eller kassert. I ytterste konsekvens kan defekt utstyr medføre alvorlige hendelser eller skape farlige situasjoner for andre padlere. Aktivitetsledere som holder grunnkurs er ansvarlig for det samme når deltagere ikke er medlemmer av klubben."
+        ]
+      },
+      {
+        "titleNo": "Beredskapsplan",
+        "bodyNo": [
+          "Beredskapsplanen beskriver tiltakene som skal iverksettes for å redusere konsekvensene etter en hendelse. Dette inkluderer en varslingsplan for ansvarlig leder for aktiviteten og hvordan styret skal håndtere alvorlige hendelser.",
+          "### Varsling:",
+          "Alvorlig hendelse med personskade, savnet padler, drukning eller andre alvorlige forhold:",
+          "• Ring 112/113 eller bruk kanal 16 på VHF-radio. Det anbefales å ringe via app som automatisk gir din posisjon til nødetatene.",
+          "### Innhold i varslingen:",
+          "• Hvem er det som varsler",
+          "• Hva har skjedd",
+          "• Posisjon",
+          "### Når leder mener å ha kontroll på situasjonen, varsles:",
+          "• TKK sin styreleder",
+          "• Hvis leder ikke er tilgjengelig skal TKK sin nestleder varsles",
+          "### Organisering av skadested:",
+          "Leder eller den som leder gir ansvaret, skal sørge for at:",
+          "• Skadestedet organiseres og ta ansvar for gruppens sikkerhet",
+          "• Starte førstehjelp/livreddende førstehjelp og videreføre dette med bakgrunn i innspill fra operatør på 112/113",
+          "• Klargjøre for mottak av enheter fra nødetatene"
+        ]
+      },
+      {
+        "titleNo": "Politiattest",
+        "bodyNo": [
+          "Politiattestansvarlig utnevnes av styret og har ansvar for å innhente politiattest av alle fra og med 16 år som utfører oppgaver som innebærer et tillits- eller ansvarsforhold for mindreårige eller personer med utviklingshemming.",
+          "Dette skal dokumenteres skriftlig."
+        ]
+      },
+      {
+        "titleNo": "Revisjon av HMS-planen",
+        "bodyNo": [
+          "HMS-planen skal være et levende dokument og revideres etter følgende plan:",
+          "• Årlig på første styremøte etter klubbens årsmøte.",
+          "• Med bakgrunn i revisjoner av nasjonale lovverk som påvirker innholdet i planen.",
+          "• Så raskt som mulig etter alvorlige hendelser eller avvik."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-generelt",
+    "titleNo": "Internkontroll",
+    "introNo": "Klubbens mål er å systematisk sikre at alle aktiviteter planlegges, organiseres og utføres i samsvar med gjeldende lover og forskrifter, inkludert Internkontrollforskriften (§5) og Produktkontrolloven (§2a).",
+    "sections": [
+      {
+        "titleNo": "1. Formål",
+        "bodyNo": [
+          "Klubbens mål er å systematisk sikre at alle aktiviteter planlegges, organiseres og utføres i samsvar med gjeldende lover og forskrifter, inkludert Internkontrollforskriften (§5) og Produktkontrolloven (§2a). I tillegg skal klubben ha konkrete HMS-mål, som inkluderer:",
+          "• Forebygging av ulykker og skader.",
+          "• Opplæring og kompetanseutvikling for alle medlemmer.",
+          "• Systematisk risikovurdering og forbedringstiltak.",
+          "Disse målene skal dokumenteres og oppdateres jevnlig i klubbens HMS-plan."
+        ]
+      },
+      {
+        "titleNo": "2. Ansvar og organisering",
+        "bodyNo": [
+          "Styret har det overordnede ansvaret for HMS-arbeidet og utpeker en HMS-ansvarlig for oppfølging av sikkerhetsrutiner. For å sikre bred medvirkning fra medlemmene, skal alle medlemmer:",
+          "• Delta aktivt i sikkerhetsarbeidet ved å rapportere hendelser og foreslå forbedringer.",
+          "• Bidra til gjennomføringen av risikovurdering før turer og aktiviteter.",
+          "• Bli informert om klubbens HMS-arbeid gjennom jevnlige møter og oppdateringer."
+        ]
+      },
+      {
+        "titleNo": "3. Sikkerhet og risikovurdering",
+        "bodyNo": [
+          "For å sikre trygg padling, skal klubben gjennomføre løpende risikovurderinger, inkludert:",
+          "• Årlig gjennomgang av sjekklister og skjemaer.",
+          "• Evaluering av alle hendelser som krever oppfølging.",
+          "• Tilpasning av sikkerhetsrutiner basert på erfaringer og innrapporterte hendelser.",
+          "• Evaluering av gjennomføring av risikovurdering før turer og kurs.",
+          "• Evaluering av kvalitetssikring av utstyr."
+        ]
+      },
+      {
+        "titleNo": "4. Opplæring og kompetanse",
+        "bodyNo": [
+          "Alle medlemmer skal ha godkjent kompetanse tilsvarende grunnkurs. For å sikre kontinuerlig kompetanseutvikling, skal klubben:",
+          "• Tilby relevante kurs (teknikkurs, aktivitetslederkurs, livredningskurs og lignende).",
+          "• Støtte medlemmer som vil ta kurs og tilegne seg kompetanse som klubben mangler (mot bidrag til klubben).",
+          "• Oppfordre medlemmer til å delta på førstehjelpskurs.",
+          "• Ha en strukturert oversikt over medlemmenes kompetanse opp til Grunnkurs.",
+          "Aktivitetsledere skal ha formelt godkjent kompetanse på nivå beskrevet i klubbens kompetansematrise. For å sikre at aktivitetsledere har riktig kompetanse, skal klubben:",
+          "• Holde en oppdatert oversikt over aktivitetsledernes kompetanse.",
+          "• Ha en tydelig kompetansematrise publisert på sine nettsider.",
+          "• Informere nye aktivitetsledere og grensjefer om kravene."
+        ]
+      },
+      {
+        "titleNo": "5. Miljøhensyn",
+        "bodyNo": [
+          "Klubbens medlemmer skal oppfordres til sporløs ferdsel. Grenene skal ha egne regler som sikrer at aktivitetens miljøpåvirkning begrenses."
+        ]
+      },
+      {
+        "titleNo": "6. Avvikshåndtering",
+        "bodyNo": [
+          "Alle avvik og hendelser skal systematisk registreres og følges opp gjennom en tydelig prosess:",
+          "1. Rapportering: Medlemmer og aktivitetsledere skal bruke det elektroniske rapporteringsskjemaet publisert på klubbens nettside.",
+          "2. Analyse: Styret skal vurdere avviket og foreslå konkrete forbedringstiltak.",
+          "3. Tilbakemelding: Styret skal informere medlemmene om iverksatte tiltak.",
+          "4. Oppfølging: Alle større hendelser skal evalueres og føre til oppdateringer i HMS-rutinene."
+        ]
+      },
+      {
+        "titleNo": "7. Systematisk oppfølging",
+        "bodyNo": [
+          "For å sikre kontinuerlig forbedring, skal internkontrollen evalueres jevnlig:",
+          "• Årlig revisjon etter årsmøtet, med dokumenterte tiltak for forbedring.",
+          "• Ekstra revisjoner etter alvorlige hendelser, med konkret oppfølging av sikkerhetsrutiner.",
+          "• Publisering av årsrapport, der oppsummering av avvik og tiltak gjøres tilgjengelig for medlemmene."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-pirbadet",
+    "titleNo": "Pirbadet",
+    "introNo": "TKK har bassengtreninger i Pirbadet i vinterhalvåret, ca fra midten av oktober til slutten av april. (Ikke i påskeuken).",
+    "sections": [
+      {
+        "titleNo": "Teknikk- og rulletrening",
+        "bodyNo": [
+          "Onsdager kl 2100-2230 i bølgebassenget, åpen for alle medlemmer i TKK. Ingen påmelding.",
+          "Informasjon om inngangsbillett er sendt ut til alle betalende medlemmer på e-post så fort vi mottar dette. Dersom dette ikke er mottatt før første trening kan man henvende seg i resepsjonen i Pirbadet.",
+          "Adgang til garderoben starter en halvtime før treningen, og garderobetiden etterpå er også en halvtime. Alle må være ute av bygget senest kl 23. Man benytter «treningsgarderobene», det vil si garderobene som har utgang på langside av 50m basseng. Man benytter samme inngang til bygningen, men går ned korridoren til Impulse, til høyre etter inngangsdøren.",
+          "Utstyr ligger i en bod på utsiden som må bæres inn (evt bruk polobåter som ligger inne).",
+          "### Husk!",
+          "1. Dette er ikke en organisert trening. Lurer du på hvordan dette gjøres? Bare spør på facebook eller noen av de faste deltakerne.",
+          "2. Er det flere enn 12 i vannet, vent til noen går ut før du går inn. La andre slippe til dersom det er flere enn 12 på trening.",
+          "3. Ved bruk av bølgemaskinen: Maks 6 bemannede kajakker på vannet om gangen. Ingen deltakere uten kajakk i vannet.",
+          "4. Husk Padleglede for alle!"
+        ]
+      },
+      {
+        "titleNo": "Kajakkpolo",
+        "bodyNo": [
+          "Torsdager kl 2100-2230 i den dype delen av idrettsbassenget. Åpen for alle medlemmer i TKK.",
+          "Påmelding via Spond: https://group.spond.com/OFNCD"
+        ]
+      },
+      {
+        "titleNo": "Juniortrening",
+        "bodyNo": [
+          "Lørdager kl 1900-2030 i bølgebassenget. Åpen for alle medlemmer i juniorgruppa (<20), samt det er anledning for juniormedlemmer fra Byneset IL og Malvik IL padling å delta, koordinert av TKK. Ingen påmelding."
+        ]
+      },
+      {
+        "titleNo": "Utstyr",
+        "bodyNo": [
+          "Polokajakker, årer, vester og hjelmer ligger på enden av galleriet på 2. etg. Elve- og juniorkajakker er på et lagerrom på utsiden av bygget (man følger korridoren fra resepsjonen mot vest forbi garderobene og ut. Lagerrommet er til høyre for nødutgangen, koden til låsen er samme som til klubbhuset).",
+          "Når man henter utstyr før treningen starter, skal dette plasseres slik at det ikke er i veien, eller til sjenanse for ordinære badegjester. Det er ikke anledning til komme seg på vannet før treningen starter, selv om bassenget skulle være tomt.",
+          "Etter treningen skal kajakker, vester, spruttrekk og hjelmer spyles grundig med ferskvann. Bruk den tykke svarte slangen nærmest bassenget (bølgebasseng: ved siden av trappa til restauranten, idrettsbasseng: rett ved siden av bassenget). Vær nøye med å tømme båtene for vann etter spyling, og rydd utstyret på plass slik du fant det før treningen."
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse for TKK bassengtrening i Pirbadet",
+        "bodyNo": [
+          "Risikofaktorer: Fysisk skade, Drukning, Sykdom/medisinsk tilstand.",
+          "### Person:",
+          "Årsaksfaktorer: Mangelfull kunnskap, Uhell.",
+          "Forhåndsregler: Ved bruk av bølgemaskinen skal én person stå på post ved nødstopp-knappen.",
+          "### Utstyr:",
+          "Kajakker, årer og spruttrekk. Hjelm når bølgemaskinen kjøres.",
+          "### Miljø:",
+          "Innendørs oppvarmet basseng.",
+          "Forhåndsregler: Maks ca 12 bemannede kajakker i vannet om gangen. Ved bruk av bølgemaskinen: Maks 6 bemannede kajakker på vannet om gangen, ingen deltakere uten kajakk i vannet.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Kontakt vaktene i Pirbadet.",
+          "Politi 112, Medisinsk 113, Brann 110.",
+          "Kontakt alltid leder/nestleder eller annet styremedlem ved ulykker eller nestenulykker. Henvis evt. presse til leder av TKK.",
+          "Anbefalt tilleggskompetanse: Oppdatert førstehjelpskurs."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav",
+    "titleNo": "HMS Havpadling",
+    "introNo": "Retningslinjer og risikoanalyse for organisert havpadling i regi av Trondhjems Kajakklubb.",
+    "sections": [
+      {
+        "titleNo": "Hurtigbåtene",
+        "bodyNo": [
+          "Hurtigbåtene har en hastighet på 20-37 knop. Derfor skal kryssing av hurtigbåtenes trasé skje ved Ravnkloutløpet."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav-fellespadling",
+    "titleNo": "Fellespadling Hav",
+    "introNo": "Fellespadling er dagsturer fra Skansen åpen for alle deltakere med godkjent padlekompetanse (Grunnkurs Hav eller tilsvarende). Turene går normalt med utgangspunkt fra Skansen. Revisjon 02.02.2013.",
+    "sections": [
+      {
+        "titleNo": "Om aktiviteten",
+        "bodyNo": [
+          "Søndag er det fellespadling beregnet på alle medlemmer i TKK - nybegynnere som erfarne. Da møtes vi på Skansen og er klar til å dra ut klokken 1200. Vi padler dit vær og deltagernivå tillater. En typisk tur kan gå til Munkholmen eller Sponhuset. Søndagspadling går hver søndag hele året, nesten uten unntak (sist avlysning var vinteren 2009/2010). Andre fellespadlinger er Fullmånepadling, Adventspadling, Frokostpadling, Onsdagspadling. Disse annonseres ved behov av enkeltmedlemmer som tar initiativ via mail og/eller på klubbens facebook-gruppe."
+        ]
+      },
+      {
+        "titleNo": "Følgende gjelder",
+        "bodyNo": [
+          "• Avplask er tidspunktet for avgang fra Skansen (12:00 for søndagspadling). Da skal man være klar på vannet til å padle.",
+          "• Alle har i utgangspunktet ansvar for egen sikkerhet.",
+          "• Alle har et kollektivt ansvar for gruppens sikkerhet.",
+          "• Erfarne har naturlig nok et noe større ansvar enn nybegynnere.",
+          "• Snakk med deltagere som er dårlig rustet eller har problemer.",
+          "• Følg med de rundt deg i gruppen.",
+          "• Før avgang blir gruppen enig om en eller flere (avhengig av størrelsen på gruppen) som holder oversikt over antallet i gruppen.",
+          "• Den som forlater gruppen for å avslutte eller padle seg en tur skal informere de gjenværende om hva de gjør.",
+          "• De som slutter seg til gruppen på et senere tidspunkt skal tilkjennegi at de slutter seg til.",
+          "• Hvis gruppen splittes (f.eks. hvis en del vil padle tilbake via Munkholmen), gjelder det ovennevnte."
+        ]
+      },
+      {
+        "titleNo": "Hurtigbåtene",
+        "bodyNo": [
+          "Hurtigbåtene har en hastighet på 20-37 knop. Derfor skal kryssing av hurtigbåtenes trasé skje ved Ravnkloutløpet."
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse for Fellespadling Hav",
+        "bodyNo": [
+          "Risikofaktorer: Fysisk skade, Drukning, Hypotermi, Sykdom/medisinsk tilstand.",
+          "### Person:",
+          "Mangelfull trening, Manglende kunnskap. Forhåndsregler: Nødvendig kompetanse.",
+          "### Utstyr:",
+          "Feil bekledning, Feil utstyr, Tap av/skade på utstyr, Mangelfull kunnskap om utstyr. Forhåndsregler: Kajakker med spruttrekk. Klær etter vanntemperatur. Mobiltelefon for nødkontakt.",
+          "### Miljø:",
+          "Vær; vind og bølger, Båttrafikk, Luft- og vanntemperatur. Forhåndsregler: Sjekk værmelding. Vis aktsomhet overfor båttrafikk ved Skansenutløpet og spesielt ved Ravnkloutløpet.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Få padler på land. Utøv førstehjelp. Ved alvorlig nødsituasjon, kontakt hjelp: Medisinsk hjelp: 113, Politi: 112.",
+          "Ved ulykke eller nestenulykke, informer alltid leder/nestleder eller annet styremedlem i TKK. Henvis eventuelle journalister til leder av TKK.",
+          "### Krav til kompetanse:",
+          "Godkjent NPF Grunnkurs Hav eller tilsvarende. Anbefalt tilleggskompetanse: Oppdatert førstehjelpskurs.",
+          "### Merknader:",
+          "• Følg godt med etter tidlige faresignal for hypotermi slik at det stoppes.",
+          "• Unngå for stor spredning i gruppen (det kan være veldig stor forskjell i padleferdighetene).",
+          "• Følg med båttrafikken, spesielt hurtigbåtene."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav-munkholmen",
+    "titleNo": "Padlerute til Munkholmen",
+    "introNo": "Hvordan unngå hurtigbåten når du skal til Munkholmen?",
+    "sections": [
+      {
+        "titleNo": "Hurtigbåtruten og Munkholmen",
+        "bodyNo": [
+          "Det går hurtigbåt til Brekstad++ og til Vanvikan, og de har litt forskjellig rute på fjorden, men alle går mellom Trolla og Munkholmen. Ute på fjorden kommer de så raskt at kajakkpadlere ikke har noen mulighet til å komme seg unna hvis det er fare for kollisjon. Dessuten er vi så godt som usynlige for skipperne. Den eneste plassen hurtigbåtene går seint nok til at vi klarer å hanskes med den er i utløpet fra hurtigbåthavna, og der og bare der skal vi krysse leia deres."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav-cruisebater",
+    "titleNo": "Padling nær cruisebåter",
+    "introNo": "Havnesjefen har bedt om at vi padlere holder en sikkerhetsavstand på 100m til cruiseskipene. Kartskissen viser sånn omtrendt hva det vil innebære.",
+    "sections": [
+      {
+        "titleNo": "Begrunnelse for sikkerhetsavstanden",
+        "bodyNo": [
+          "Begrunnelsen for sikkerhetsavstanden er todelt: a) terrorfare for skipet med uautorisert trafikk i nærheten (ISPS-krav), og b) en fare for sikkerheten til padlere når cruisebåter plutselig skal legge fra kai (propellstrømmer, påkjørsel, ..).",
+          "Området innafor cruisebåten og under cruisekaia er innafor enhver rimelig sikkerhetsavstand, og det må ikke forekomme. Det er spesielt farlig under kaia når sidepropellene kjøres."
+        ]
+      },
+      {
+        "titleNo": "Forslag til kurs",
+        "bodyNo": [
+          "Det er vanskelig å estimere hva 100m er på sjøen, så et forslag til kurs østover kan være: Padle fra lykta ved Ravnkloutløpet mot Munkholmen til du har spissen på Pir I og lykta ved utløpet av Nidelva på linje, deretter følger du den linjen østover. Da skulle avstanden til cruiseskipene være ok med god margin. (Alternativt kan man legge kursen om Kanalen og elva)."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav-rull-tull",
+    "titleNo": "Rull & Tull",
+    "introNo": "Rull & Tull er åpen for alle medlemmer av TKK med Grunnkurs Hav eller tilsvarende kompetanse. Versjon: 02.02.2013.",
+    "sections": [
+      {
+        "titleNo": "Om aktiviteten",
+        "bodyNo": [
+          "Rull & Tull arrangeres på Skansen, kl. 18:00 fredager i perioden april-oktober. Innkalling skjer pr. mail og på facebook. Målet er rulletrening, trening på redningsøvelser og annet tull man kan finne på.",
+          "Trondheimsfjorden kan være kald, det kan blåse fort opp. Det kan skje at du eller en du padler sammen med går rundt en dag, selv om dere er aldri så erfarne. Da gjelder det at kameratredning og egenredning sitter slik at det går fort å få den uheldige opp av vannet. Spesielt hvis vedkommende ikke padler med tørrdrakt. Redningsteknikker må repeteres for at de skal fungere når det gjelder. Redningsteknikker må repeteres minimum én gang pr. år, helst oftere.",
+          "Rull&Tull er en glimrende anledning til å trene på redning. Rull&tull er ikke et arrangement utelukkende for erfarne padlere som kan å rulle. På Rull&Tull kan alle møte opp for å trene redning eller rulle. Det er også en fin anledning til å trene på f.eks. svingteknikk eller kanting. Kanskje du har lyst til å se om du får til et stunt du har tenkt på, f.eks. å bytte kajakk med en annen eller å stå i kajakken? (Klarer du det ikke, så blir det trening på egenredning eller kameratredning i stedet).",
+          "Rull&Tull er ikke et organisert kurs, men en uformell sammenkomst. Deltagere må vise litt initiativ, trenger man instruksjon, så spør om hjelp. De fleste vil mer enn gjerne hjelpe. Og husk, vi kan alle bidra, så selv om man ikke er så dreven, så kan man hjelpe en annen med å trene på kameratredning.",
+          "Rull&Tull foregår enten på utsiden av moloen på Skansen (for de som er skeptisk til å gjøre dette på dypt vann, så kan det beroliges med at det faktisk er en strand der hvor en kan stå ved siden av kajakken og hjelpe hvis det trengs), eller i Ilsvika, litt avhengig av været.",
+          "Alle havpadlere i TKK oppfordres til å ta seg en tur eller flere innom Rull&Tull på fredager i sommerhalvåret (vi holder stort sett på fra april til oktober). Det er faktisk gøy, men husk bekledning som gjør at en ikke begynner å fryse for fort. Deltagere trenger ikke tørrdrakt, selv om det er det mest behagelige. Det fungerer med våtdrakt, gjerne med ull under, også, og vi er nært klubblokalene, så det er fort gjort å komme seg i hus og en varm dusj om det trengs."
+        ]
+      },
+      {
+        "titleNo": "Følgende gjelder",
+        "bodyNo": [
+          "1. Innkalling av Rull og Tull skjer på TKK's facebook-gruppe.",
+          "2. Avplask kl. 18:00.",
+          "3. Alle har i utgangspunktet ansvar for egen sikkerhet.",
+          "4. Alle har et kollektivt ansvar for gruppens sikkerhet:",
+          "   1. Erfarne har naturlig nok et noe større ansvar enn nybegynnere.",
+          "   2. Snakk med deltagere som er dårlig rustet eller har problemer.",
+          "   3. Følg med de rundt deg i gruppen.",
+          "5. Den som forlater gruppen for å avslutte eller padle seg en tur skal informere de gjenværende om hva de gjør."
+        ]
+      },
+      {
+        "titleNo": "Unntak fra påbud om redningsvest",
+        "bodyNo": [
+          "Vi har unntak fra påbudet om redningsvest på Rull & Tull hvis de følgende kriterier er oppfylt:",
+          "1. Deltagere uten redningsvest bruker tuilik, og",
+          "2. Rull og Tull arrangeres nært land utenfor moloen på Skansen eller i Ilsvika, og",
+          "3. det er minimum 3 deltagere på Rull & Tull, og",
+          "4. minimum en av deltagerne er Aktivitetsleder.",
+          "Dette er i henhold til forskrift. Se også http://padling.no/norges-padleforbund/generelt-vestpaabud/"
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse for Rull og Tull",
+        "bodyNo": [
+          "Risikofaktorer: Fysisk skade, Drukning, Hypotermi, Sykdom/medisinsk tilstand.",
+          "### Person:",
+          "Mangelfull trening, Manglende kunnskap. Forhåndsregler: Nødvendig kompetanse. Følg godt med etter tidlige faresignal for hypotermi.",
+          "### Utstyr:",
+          "Feil bekledning, Feil utstyr, Tap av/skade på utstyr. Forhåndsregler: Kajakker med spruttrekk. Klær etter vanntemperatur. Mobiltelefon for nødkontakt.",
+          "### Miljø:",
+          "Vær, vind og bølger, Båttrafikk, Luft- og vanntemperatur. Forhåndsregler: Sjekk værmelding. Unngå å ligge rett utenfor Skansenutløpet p.g.a. båttrafikken.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Få padler på land. Utøv førstehjelp. Medisinsk hjelp: 113. Politi: 112. Redningsskøyta: 911 44 470.",
+          "Ved ulykke eller nestenulykke, informer alltid leder/nestleder eller annet styremedlem i TKK. Henvis eventuelle journalister til leder av TKK.",
+          "Krav til kompetanse: Godkjent NPF Grunnkurs Hav eller tilsvarende. Anbefalt tilleggskompetanse: Oppdatert førstehjelpskurs."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-hav-sikker-padling",
+    "titleNo": "Sikker padling",
+    "introNo": "Selv om vi i liten grad har vært utsatt for ulykker må vi innse at havpadling på alle nivåer vil inneholde et risikoelement. Klubbens aktivitetsledere gjennomgår forøvrig et solid kursopplegg. Når du leser dette så husk at det viktigste tross alt er å ha en meningsfylt fritidssyssel, og at reglene ikke er ment å være til hinder for dette.",
+    "sections": [
+      {
+        "titleNo": "Padlevett",
+        "bodyNo": [
+          "1. Bruk padlevest. Det finnes få situasjoner hvor padling uten vest kan forsvares. Gjør vesten til en selvfølgelig del av bekledningen.",
+          "2. Vær synlig, men ikke stol på at du blir sett. Bruk farger som synes. Vær likevel oppmerksom og opptre defensivt. Det nytter lite å ha rett om man ikke blir sett.",
+          "3. Vær bevisst egne ferdigheter. Bruk padlestigen. Denne gir enkle regler for hva man bør tillate seg på et gitt nivå. Likevel, du må selv vite hva akkurat du kan mestre. Si alltid i fra om du nærmer deg en grense.",
+          "4. Les værmeldingen. Respekter vær og farvann. Man er utsatt i en kajakk, og man blir liten når det blåser opp. Kulde og motvind kan tappe krefter. Værmeldingen stemmer ikke alltid, men den er et godt utgangspunkt.",
+          "5. Kle deg etter vanntemperaturen. Spør deg selv hva konsekvensen blir om du havner i vannet eller om du må padle med våte klær. Kle deg etter det.",
+          "6. Vær godt rustet, selv på korte turer. Ha alltid med redningsutstyr som pumpe og årepose. Ta med deg litt ekstra klær og mat i en vanntett pose. Resten avhenger av turen du skal på.",
+          "7. Informer andre om turplanene. Gjør det til en vane å fortelle andre hvor du drar og hvilken tidsramme du har. Unngå deres bekymring ved å holde deg til planen.",
+          "8. Vær sosial. Hold oversikt og pass på alle. Det er tryggest å padle sammen med andre. Sjekk regelmessig at alle er med. Se etter tegn til tretthet eller nedkjøling. Si selv i fra om du blir usikker, trett eller kald.",
+          "9. Hjelp til med å holde gruppen samlet. Hold deg nær nok gruppen til å kunne kommunisere. Vær lojal mot turleder og utnevnte hjelpere.",
+          "10. Vær et forbilde. Jo mer erfaring du har jo viktigere er det å være et godt eksempel. Det nytter lite med regler om ikke gode forbilder viser hvordan de følges i praksis."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-elv",
+    "titleNo": "HMS Elvepadling",
+    "introNo": "Retningslinjer og risikoanalyse for organisert elvepadling på Nidelven og andre elver.",
+    "sections": [
+      {
+        "titleNo": "Aktiviteter",
+        "bodyNo": [
+          "Se egne HMS-ark for Klubbpadling Nidelven og Spontan tur med TKK utstyr."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-elv-klubbpadling-nidelven",
+    "titleNo": "Klubbpadling Nidelven",
+    "introNo": "Klubbpadling på Nidelva er fellesturer med padling fra Nedre Leirfoss til Sluppen. Versjon: 2014-31-03.",
+    "sections": [
+      {
+        "titleNo": "Om aktiviteten",
+        "bodyNo": [
+          "Aktiviteten starter med oppmøte på Skansen, opplasting av utstyr, plan for logistikk, og kjøring til put-in (inkl. evt. skytling av biler til take-out). Etter padling følger skytling for å hente biler ved put-in, opplasting av utstyr og kjøring tilbake til Skansen for avlasting av utstyr.",
+          "Aktiviteten er i utgangspunktet åpen for alle med godkjent padlekompetanse (grunnkurs elv). I tilfeller hvor det er for få sikre padlere i forhold til antallet potensielle svømmere (forholdet bør ikke være mye høyere enn 1:2) så skal antallet usikre padlere begrenses. Dette er eneste gyldige grunn til å bortvise padlere; da dette er en fellesaktivitet, skal ikke nybegynnere bortvises fordi f.eks. erfarne padlere heller vil surfe enn å passe på «ferskinger». Det forventes at mer erfarne padlere gir råd, hjelp og veiledning til de mindre erfarne.",
+          "Det kan også tas med en padler uten godkjent padlekompetanse (grunnkurs elv) hvis forholdet mellom sikre og usikre padlere er slik at denne kan følges opp eksplisitt av én sikker padler under hele aktiviteten, og denne tar ansvar for at ikke dette belaster gruppa. Padleren med ansvar skal helst ha aktivitetslederkurs, eller tilsvarende realkompetanse.",
+          "Hvis personer under 16 år skal padle, så skal de ha samtykke fra foresatte (enten skriftlig eller ved personlig oppmøte), og foresatte skal være orientert den risiko aktiviteten innebærer.",
+          "Tidspunkt for aktiviteten kan variere, men et typisk forløp er oppmøte på Skansen kl 17 og retur rundt kl 21. På seinhøsten må man som regel starte tidligere enn ellers i året pga lysforhold. Til tross for at aktiviteten ofte omtales som «tirsdagspadling» eller «onsdagspadling», kan den i prinsippet foregå på en hvilken som helst ukedag."
+        ]
+      },
+      {
+        "titleNo": "Koordinatorens ansvar",
+        "bodyNo": [
+          "Når klubbpadling er satt opp på TKKs program skal aktiviteten ha en koordinator. Dennes ansvar er følgende:",
+          "• Ønske folk velkommen, spesielt nye fjes. Hjelpe folk å finne seg til rette, finne riktig utstyr og fordele seg på biler. Gjerne også pushe på for litt effektivitet. :)",
+          "• Samle inn 50 kroner fra alle deltakere, til dekning av kjøreutgifter. Fordele innsamlede midler på kjørende sjåfører som tar delansvar for transport av hele gruppa med utstyr.",
+          "• Personer som kjører kan velge å stå utenfor ordningen, dvs de trenger ikke betale, men får da heller ingen godtgjørelse.",
+          "• Det er lurt av koordinator å gjøre ovenstående før Skansen forlates - etter dette er det erfaringsmessig vanskelig å få det gjort tilfredsstillende.",
+          "• Påse at gruppa har et akseptabelt antall sikre padlere i forhold til antall usikre padlere; eventuelt redusere antall padlere til forholdet blir akseptabelt.",
+          "• Utpeke en leder blant gruppa for selve padleaktiviteten. Hvis gruppa er stor kan den deles opp; det skal da være en leder for hver gruppe og ingen skal være i tvil om hvilken gruppe de tilhører."
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse for klubbpadling",
+        "bodyNo": [
+          "Risikofaktorer: Fysisk skade (kutt, slag, etc.), Hypotermi, Drukning, Sykdom/medisinsk tilstand.",
+          "### Person:",
+          "Mangelfull trening. Manglende kunnskap. Ikke følge instruksjon. Forhåndsregler: Nødvendig kompetanse. Kompetent gruppeleder. Sikkerhets-/førstehjelpskurs. Følg spesielt godt med på nybegynnere og usikre padlere.",
+          "### Utstyr:",
+          "Feil bekledning. Feil utstyr. Tap av/skade på utstyr. Forhåndsregler: Hjelm og flytevest. Varme/vannavvisende klær. Førstehjelpsutstyr. (Mobiltelefon.)",
+          "### Miljø:",
+          "Luft- og vanntemperatur. Forhåndsregler: Riktig bekledning i forhold til luft- og vanntemperatur.",
+          "### Kompetanse:",
+          "Relevant utdanning: NPF Grunnkurs Elv.",
+          "Krav til kompetanse: Godkjent NPF Grunnkurs Elv eller tilsvarende *",
+          "Anbefalt tilleggskompetanse: Førstehjelpskurs. NPF Sikkerhetskurs.",
+          "* personer uten Grunnkurs Elv kan delta så lenge gruppen har nok kompetente ledere til at den uerfarne får dedikert oppfølging.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Få padler på land. Utøv førstehjelp. Ved mistanke om alvorlig nødsituasjon, kontakt medisinsk hjelp (113) og eventuelt politi (112).",
+          "Ved ulykke eller nestenulykke, informer alltid leder/nestleder eller annet styremedlem i TKK. Henvis eventuelle journalister til leder av TKK."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-elv-klubbpadling-nidelven-hms",
+    "titleNo": "Klubbpadling Nidelven (HMS-ark, risikoanalyse)",
+    "introNo": "Klubbpadling på Nidelva er fellesturer med padling fra Nedre Leirfoss til Sluppen. Versjon: 2014-31-03.",
+    "sections": [
+      {
+        "titleNo": "Om aktiviteten",
+        "bodyNo": [
+          "Aktiviteten starter med oppmøte på Skansen, opplasting av utstyr, plan for logistikk, og kjøring til put-in (inkl. evt. skytling av biler til take-out). Etter padling følger skytling for å hente biler ved put-in, opplasting av utstyr og kjøring tilbake til Skansen for avlasting av utstyr.",
+          "Aktiviteten er i utgangspunktet åpen for alle med godkjent padlekompetanse (grunnkurs elv). I tilfeller hvor det er for få sikre padlere i forhold til antallet potensielle svømmere (forholdet bør ikke være mye høyere enn 1:2) så skal antallet usikre padlere begrenses. Dette er eneste gyldige grunn til å bortvise padlere; da dette er en fellesaktivitet, skal ikke nybegynnere bortvises fordi f.eks. erfarne padlere heller vil surfe enn å passe på «ferskinger». Det forventes at mer erfarne padlere gir råd, hjelp og veiledning til de mindre erfarne.",
+          "Det kan også tas med en padler uten godkjent padlekompetanse (grunnkurs elv) hvis forholdet mellom sikre og usikre padlere er slik at denne kan følges opp eksplisitt av én sikker padler under hele aktiviteten, og denne tar ansvar for at ikke dette belaster gruppa. Padleren med ansvar skal helst ha aktivitetslederkurs, eller tilsvarende realkompetanse.",
+          "Hvis personer under 16 år skal padle, så skal de ha samtykke fra foresatte (enten skriftlig eller ved personlig oppmøte), og foresatte skal være orientert den risiko aktiviteten innebærer.",
+          "Tidspunkt for aktiviteten kan variere, men et typisk forløp er oppmøte på Skansen kl 17 og retur rundt kl 21. På seinhøsten må man som regel starte tidligere enn ellers i året pga lysforhold. Til tross for at aktiviteten ofte omtales som «tirsdagspadling» eller «onsdagspadling», kan den i prinsippet foregå på en hvilken som helst ukedag.",
+          "Når klubbpadling er satt opp på TKKs program skal aktiviteten ha en koordinator. Dennes ansvar er:",
+          "• Ønske folk velkommen, spesielt nye fjes. Hjelpe folk å finne seg til rette, finne riktig utstyr og fordele seg på biler.",
+          "• Samle inn 50 kroner fra alle deltakere, til dekning av kjøreutgifter.",
+          "• Påse at gruppa har et akseptabelt antall sikre padlere i forhold til antall usikre padlere.",
+          "• Utpeke en leder blant gruppa for selve padleaktiviteten."
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse for klubbpadling",
+        "bodyNo": [
+          "Risikofaktorer: Fysisk skade (kutt, slag, etc.), Hypotermi, Drukning, Sykdom/medisinsk tilstand.",
+          "### Person:",
+          "Mangelfull trening. Manglende kunnskap. Ikke følge instruksjon. Forhåndsregler: Nødvendig kompetanse. Kompetent gruppeleder. Sikkerhets-/førstehjelpskurs.",
+          "### Utstyr:",
+          "Feil bekledning. Feil utstyr. Tap av/skade på utstyr. Forhåndsregler: Hjelm og flytevest. Varme/vannavvisende klær. Førstehjelpsutstyr. (Mobiltelefon.)",
+          "### Miljø:",
+          "Luft- og vanntemperatur. Forhåndsregler: Riktig bekledning.",
+          "### Kompetanse:",
+          "Relevant utdanning: NPF Grunnkurs Elv. Krav til kompetanse: Godkjent NPF Grunnkurs Elv eller tilsvarende. Anbefalt tilleggskompetanse: Førstehjelpskurs, NPF Sikkerhetskurs.",
+          "* personer uten Grunnkurs Elv kan delta så lenge gruppen har nok kompetente ledere til at den uerfarne får dedikert oppfølging.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Få padler på land. Utøv førstehjelp. Ved mistanke om alvorlig nødsituasjon, kontakt medisinsk hjelp (113) og eventuelt politi (112).",
+          "Ved ulykke eller nestenulykke, informer alltid leder/nestleder eller annet styremedlem i TKK. Henvis eventuelle journalister til leder av TKK."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hms-elv-spontan-tur",
+    "titleNo": "Spontan tur med TKK utstyr",
+    "introNo": "Medlemmer av TKK med elvekompetanse godkjent av elvesjef i medlemsliste kan låne elvekajakker til turer som ikke er arrangert av TKK.",
+    "sections": [
+      {
+        "titleNo": "Om aktiviteten",
+        "bodyNo": [
+          "For å låne en båt i TKK man må vite at turen han padler er i henhold til egen padlekompetanse. Man må vurdere tur etter teknisk vanskelighet, mulige konsekvenser og sikkerhet i gruppen.",
+          "### Teknisk vanskelighet:",
+          "Vurdert etter elvefører (for eksempel norww.com, Klatt-Obsommer guide) og vannstand. Hva er vanskelighetsgraden, og hvilken type vanskelighet er det? (storvann og hull, bratt, teknisk, små bakevjer). Vanskelighetsgrad er beskrevet fra grade 2 til 6 hvor 5 og 6 er «extreme padling». Utstyr fra TKK kan ikke lånes for grade 5 og 6.",
+          "### Mulige konsekvenser:",
+          "Pool drop eller kontinuerlig elv? Er det farlig hvis man mister linje? Er det mulig å synfare og er det mulig å bære? Er det mulig å sikre? Er elven isolert, og er det telefon dekning, dvs hvor lang tid skal det ta hvis man trenger ekstern hjelp.",
+          "### Sikkerhet i gruppa:",
+          "Er det for mange eller for få padlere i gruppa? Har alle padlere nok kompetanse for å padle turen? Hvor mange år har de padlet og har de padlet lignende turer før? Hvis noen deltakere er svakere, er de erfarne padlerne gode nok og villige til å sikre? Er det nok flinke padlere og ikke for mange svake padlere? Har gruppa nok sikkerhetsutstyr (safety rope, karabin, førstehjelp, telefon, eventuelt mat). Ikke minst vet man hvordan å utføre sikkerhet i elva?",
+          "Hvis disse 3 punkter er tilfredsstillende, kan utstyr lånes med følgende forutsetninger:",
+          "1. Før turen må man sjekke at det er ingen kurs eller tur arrangert av TKK når man vil på tur. Kurs og tur arrangert av TKK har prioritet for bruk av båter.",
+          "2. Når man tar båten må man skrive seg i boken i båtreol hvor man skal og med hvem, og skrive seg tilbake når man er ferdig med turen.",
+          "3. Båter må desinfiseres mot gyro hvis det er infisert elv før de settes tilbake i reol. Utstyr tapt eller skadet må betales tilbake."
+        ]
+      },
+      {
+        "titleNo": "Risikoanalyse",
+        "bodyNo": [
+          "Man må vurdere at risikosjanser er akseptable — turen slik den er definert skal ikke medføre skader. Men man sikrer seg ikke ved å tro man gjør noe uten risiko, man sikrer seg ved å vite hva man skal gjøre hvis fare skjer.",
+          "Risikofaktorer: Fysisk skade (spesielt utsatt skulder hvis man bruker skulder fleksibelt, eller ansikt hvis man ikke ligger mot båten når man ruller og treffer stein), Hypotermi, Drukning.",
+          "### Person:",
+          "Mangelfull padleteknikk, Manglende kunnskap om elva, Ikke følge gruppe-instruksjon. Forhåndsregler: Nødvendig teknisk padlekompetanse. Nødvendig elve- og sikkerhetskompetanse. Organisert gruppe med klar kommunikasjon.",
+          "### Utstyr:",
+          "Feil bekledning, Feil utstyr. Forhåndsregler: Hjelm og flytevest. Varme/vannavvisende klær. Båter med flyteposer. Safety rope, karabin, Førstehjelpsutstyr, Mobiltelefon.",
+          "### Miljø:",
+          "Luft- og vanntemperatur, Stor og sterk vann (resirkulering hull), Stein, trær. Forhåndsregler: Riktig bekledning. Synfaring og eventuelt bæring. Sikkerhet langs rapid på plass før en paddler.",
+          "### Tiltak ved uhell/ulykke/nødsituasjon:",
+          "Få padler på land. Utøv førstehjelp. Ved mistanke om alvorlig nødsituasjon, kontakt medisinsk hjelp (113) og politi (112).",
+          "Ved ulykke eller nestenulykke, informer alltid leder/nestleder eller annet styremedlem i TKK. Henvis eventuelle journalister til leder av TKK."
+        ]
+      }
+    ]
+  }
+]

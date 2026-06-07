@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "seed:sanity": "tsx sanity/seed-content.ts",
+    "seed:ndjson": "tsx sanity/generate-ndjson.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
@@ -15,6 +17,7 @@
     "@prisma/client": "^7.8.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.30.0",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^8.0.0",
     "bcryptjs": "^3.0.3",

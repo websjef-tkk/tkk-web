@@ -1,0 +1,199 @@
+[
+  {
+    "id": "padling-kurs",
+    "titleNo": "Kurs",
+    "introNo": "Det holdes mange kurs gjennom sesongen i TKK. Kursene holdes normalt kun for medlemmer av TKK, så medlemskontingent må være betalt for å kunne delta.",
+    "sections": [
+      {
+        "titleNo": "Planlagte kurs",
+        "bodyNo": [
+          "Planlagte kurs legges ut på forsiden av tkk.no",
+          "De siste årene har vi holdt rundt seks grunnkurs hav og to grunnkurs elv årlig, og holder også sikkerhetskurs, teknikkurs og aktivitetslederkurs ved behov og kapasitet. Vi har også sertifiserte trenere på flattvann.",
+          "Våre kursholdere er alle kvalifiserte aktivitetsledere gjennom kursstigen til Norges Padleforbund. Kursene følger Våttkort-kravene til NPF og kvalifiserer til våttkort."
+        ]
+      },
+      {
+        "titleNo": "Typiske kurs i TKK",
+        "bodyNo": [
+          "Hav - Grunnkurs",
+          "Hav - Teknikkurs",
+          "Hav - Aktivitetslederkurs",
+          "Elv - Introkurs",
+          "Elv - Grunnkurs",
+          "Elv - Sikkerhetskurs",
+          "Flattvann - Grunnkurs for ungdommer",
+          "Junior - Padleskole",
+          "Rullekurs",
+          "Livredningskurs"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "kom-i-gang",
+    "titleNo": "Kom i gang",
+    "introNo": "Velkommen som medlem i Trondhjems kajakklubb!",
+    "sections": [
+      {
+        "titleNo": "Slik kommer du i gang",
+        "bodyNo": [
+          "Har du ikke meldt deg inn enda, kan du lese mer om medlemskap her. Husk også å melde deg inn i gren (hav, flattvann, polo, elv).",
+          "Som nyinnmeldt medlem kan det være mye nytt å forholde seg til. Vi har samlet litt praktisk informasjon ut i fra egne erfaringer om hvordan man kommer i gang i Trondhjems kajakklubb. Vi anbefaler nye medlemmer med ferskt våttkort å bli med på tirsdagpadling (som er spesielt organisert for nybegynnere) eller søndagstur hvor alle medlemmer kan delta. Turene er markert i kalenderen på fremsiden, med mer informasjon.",
+          "På tirsdagspadlingen vil du få en ekstra grundig innføring i hvordan det fungerer med utstyr og TKK-turer, og det vil være én aktivitetsleder per fem deltakere."
+        ]
+      },
+      {
+        "titleNo": "Før du deltar på tur",
+        "bodyNo": [
+          "Gjør deg gjerne kjent med følgende:",
+          "Kort om klubben",
+          "Låne kajakk",
+          "HMS",
+          "Har du spørsmål, kan du kontakte sjef for din padlegren."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "padling-turledelse-hav",
+    "titleNo": "Verktøy for turledelse",
+    "introNo": "Turer ledet av aktivitetsledere er det TKK kan bidra med til havpadlere for at de skal padle mer, treffe flere fine folk, og utvide sin padleerfaring. TKK og medlemmene vil ha mange og vellykkede turer!",
+    "sections": [
+      {
+        "titleNo": "Rollen som aktivitetsleder på tur",
+        "bodyNo": [
+          "Absolutt alle kan arrangere turer, og styre med påmelding, logistikk, bestillinger, velge turmål, navigere, padle først, osv. Men på TKK-turer skal det være med en aktivitetsleder for å ta ansvar for sikkerhet på vannet. Denne aktivitetslederen kan også hjelpe til med noe av det praktiske med dataprogrammer, betaling, annonsering som krever tilganger og kunnskaper som ikke alle andre har. Derfor retter denne veiledningen seg til aktivitetsledere, til bruk på klubbturer arrangert av andre eller seg selv."
+        ]
+      },
+      {
+        "titleNo": "Bestilling, betaling av fellesutlegg",
+        "bodyNo": [
+          "Privatpersoner (f.eks turledere) skal aldri samle inn penger fra turdeltakere for å dekke store utlegg for klubbarrangementer. I stedet skal deltakerne betale til klubben, og så skal klubben betale de store utleggene til f.eks overnatting eller felles matservering.",
+          "### Hvorfor skal det være slik?",
+          "Klubben avlaster turlederen for økonomisk risiko (hvis det blir færre deltakere enn forventet, eller hvis en deltaker er sein med å betale)",
+          "Turlederen skal slippe å kunne mistenkes for å underslå penger",
+          "Pengeflyten i klubben blir mulig å revidere",
+          "### Deltakerbetaling",
+          "Deltakernene betaler inn beløpet som påmeldingsavgift i iSonen.",
+          "Deltakerne VIPPSer sin andel til TKKs VIPPS-konto (merket slik at det er mulig å se hvem som har betalt hva)",
+          "Deltakerne betaler sin andel direkte til leverandøren",
+          "### Betaling til leverandør",
+          "Noen utleiere kan ta betalt ved å sende faktura til klubben",
+          "Andre utleiere tar betalt med kort ved bestilling. Da må turleder legge ut og få tilbake utlegget fra klubben via et reservasjonsskjema.",
+          "Små utlegg kan fremdeles utveksles direkte mellom medlemmer i klubben. Det kan være is, vaffel, kjøregodtgjørelse, hjelp ved glemt lommebok osv.",
+          "Hvor går grensa mellom smått og stort? Kanskje så mye du synes det er greit å tape hvis noen ikke betaler tilbake?"
+        ]
+      },
+      {
+        "titleNo": "Definer tur på iSonen, legg inn på tkk.no og på FB",
+        "bodyNo": [
+          "[Logg inn på iSonen](http://isonen.no/), bruk din Idrettens ID",
+          "Arrangør - Nytt arrangement - gå gjennom 11 steg",
+          "### Viktigste steg",
+          "1: Når: Når er turen, når starter og slutter påmelding",
+          "2: Sted",
+          "3: Kontaktinformasjon (for å kunne kontakte turarrangøren)",
+          "5: Deltakerinformasjon (hvilken info vil du ha fra deltakerne ved påmelding. Slå forhåndsvalg av og på, og lag dine egne spørsmål (har du bil?)",
+          "6: Bilde og dokumenter. Et fint forsidebilde frister deltakerne. Dra det rett fra PCen og inn i arrangementet. Ingen format-krav til bildet.",
+          "7: Betaling og fakturering: Få inn penger til fellesutgifter her. Ved avmelding: lett å refundere, egen knapp",
+          "11: Om arrangementet: En fristende turbeskrivelse, turlengde, kompetansekrav, avbestillingsregler, dato for turmøte",
+          "### Om start og slutt av påmelding",
+          "På turer som forventes å bli raskt fullbooka er det fint å ha påmeldingsstart litt etter publisering på iSonen og annonsering på FB. Da får de som virkelig ønsker å være med en rimelig sjanse til å være klar når påmeldingen åpner.",
+          "Påmeldingsfrist. Tidlig eller sent? Tidlig=lettest for planleggingen, sent = flest deltakere. En god kombi: Du kan sette en første påmeldingsfrist til det tidspunktet du må vite om det er nok folk til at turen kan gå. Så kan du forlenge påmeldingsfristen dersom turen ikke er full.",
+          "### Riktig utfylling av betaling og fakturering (steg 7)",
+          "Velg konto = Oppgjørskonto",
+          "Velg VIPPS",
+          "Hak av for 'Ja, legg til påmeldingsavgift.'",
+          "Skriv inn beløpet",
+          "### Publisering",
+          "Trykk Publiser i isonen for å gjøre arrangementet synlig i isonen",
+          "Legg link til isonen i en post på FB. Linken får du i isonen: Vis Oversikt for turen, trykk på Del, kopier link",
+          "Send mail til havsjef for å få lagt turen inn på terminlista på nettsida"
+        ]
+      },
+      {
+        "titleNo": "Definer tur i Padleboken for reservasjon av utstyr",
+        "bodyNo": [
+          "I TKK bruker vi [padleboken.no](https://padleboken.no/logg/?K=TKK.NO) for utsjekk av klubbkajakker, og for å reservere kajakker til turer. Hvis de er reservert vil de ikke være valgbare i padleboken.no når andre medlemmer vil sjekke ut en kajakk.",
+          "For at turdeltakerne skal kunne reservere kajakk i padleboken.no må turleder ha definert turen der som en klubbtur:",
+          "Åpne TKK sin padlebok på padleboken.no",
+          "Velg knappen TUR ADMIN (finnes den ikke? Be leder eller havsjef om tilgang)",
+          "Fyll ut turens navn, beskrivelse, dato for turen, og dato for åpning av påmelding.",
+          "Hak av for 'Kan påmeldte reserver utstyr:'",
+          "Velg navnet ditt i navnelista. Står ikke navnet ditt der? Be leder eller havsjef om hjelp",
+          "Trykk LAGRE",
+          "Da kommer det opp en påmeldingslink som du kan sende til deltakerne. De må melde seg på padlebok-turen via den linken (MELD MEG PÅ), og reservere kajakken der (RESERVER UTSTYR).",
+          "Permen med reservasjonsskjema på Skansen brukes nå bare til reservasjon av henger og kajakkstativ."
+        ]
+      },
+      {
+        "titleNo": "Turmøte",
+        "bodyNo": [
+          "Et turmøte kan være en anledning til å få ut info om turopplegget, og gjøre avtaler for samkjøring, kokelag osv. Turmøtet er spesielt nyttig for deltakere med liten erfaring fra klubbturer.",
+          "Et turmøte kan ha følgende agenda:",
+          "Når og hvor går turen",
+          "Hvilken overnatting: telt/innendørs",
+          "Kompetansekrav: Hvor lange etapper, hvilke værforhold må deltakerne kunne takle.",
+          "Kokelag: Det er både praktisk og sosialt å gå sammen om å lage middag i grupper 2-3-4 deltakere (som deler 1-2 kokeapparater)",
+          "Samkjøring: Hvem har bil og hvem trenger transport, hvor skal folk og båter hentes."
+        ]
+      },
+      {
+        "titleNo": "Samkjøring, kjøregodtgjørelse",
+        "bodyNo": [
+          "Klubbens forslag til kjøregodtgjørelse: [tkk.no/om-klubben/kjoregodtgjorelse](/om-klubben/kjoregodtgjorelse)"
+        ]
+      },
+      {
+        "titleNo": "Risikovurdering fram mot turen, mulig avlysning",
+        "bodyNo": [
+          "En tur skal ikke gjennomføres for enhver pris. Vær og forhold kan gjøre det farlig, eller ødelegge for formålet med turen. Da skal turlederen vurdere værmeldingen opp mot kompetansen i gruppa og mot formålet med turen, og eventuelt avlyse turen.",
+          "Det er grunnleggende vanskelig å spå været flere dager frem i tid. Yr viser hva været blir på turdagen på det aktuelle stedet, slik værmeldingen ser ut nå. Men siden værmelding forandrer seg hver dag er det mye informasjon i å følge med utviklingen flere dager før en eventuell avlysning.",
+          "Windy viser bedre hvordan værsystemene beveger seg, og det går noen ganger an å se lavtrykkene som nærmer seg, og gjøre seg opp en mening om hva som skjer med turværet dersom lavtrykket går litt fortere eller seinere enn værmeldinga sier.",
+          "Et godt alternativ til avlysning kan være å aktivere en plan B, som er mindre værutsatt.",
+          "Uansett beslutning: si tydelig fra til deltakerne hva du bestemmer deg for."
+        ]
+      },
+      {
+        "titleNo": "Risikovurderingsskjema til havsjef like før avreise",
+        "bodyNo": [
+          "Send risikovurderingsskjema til havsjef når værforholdene under turen er rimelig godt kjent. Havsjefen vil se gjennom risikovurderingen og godkjenne, og også ta vare på vurderingen.",
+          "Risikovurderingen har to formål:",
+          "Oppfylle juridiske krav til klubben som arrangør av fellesturer",
+          "Være en sjekkliste for ting turlederen må ha et gjennomtenkt forhold til for at turen skal gjennomføres trygt."
+        ]
+      },
+      {
+        "titleNo": "Turledelse underveis",
+        "bodyNo": [
+          "### En runde før avreise",
+          "Er det noe turfølget må ta hensyn til: navn, erfaring (når folk ikke kjenner hverandre), fysisk form, mental form, utstyr",
+          "### Pauser",
+          "En felles teknisk stopp 5-10 min etter padlestart, for å fikse sittestilling, pedaler, bekledning, osv.",
+          "Drikke og hvile i båten et par minutt hver halvtime, og/eller når du kommer i le etter eksponert strekk",
+          "Beinstrekk i land hver time (omtrent)",
+          "Mat hver 2 timer (omtrent)",
+          "### En god plan B",
+          "Hvis du vurderer plan A til å være for farlig (gitt kompetanse og forhold), så må reserveplanen B være så morsom at folk blir like fornøyd med den.",
+          "Hvis plan B involverer kafe-besøk så blir lykken fullkommen.",
+          "### Juster ambisjonsnivået",
+          "Turer som er for lange, for tunge eller har for mye vær blir alltid mislykket.",
+          "Ta hensyn til info om dagsform fra runden ved turstart.",
+          "Dimensjoner turen ut fra de svakeste i gruppa (det vil være de som får problemer)",
+          "Vurder turen, både helheten og hvert enkelt strekk underveis, ut fra om kompetansen passer til forholdene.",
+          "Begynn i motvind, avslutt i medvind"
+        ]
+      },
+      {
+        "titleNo": "Etter turen",
+        "bodyNo": [
+          "Klubben samler turrapporter på [tkk.no/padling/hav/turrapporter](/padling/hav/turrapporter).",
+          "Send turrapport til havsjef for publisering på nettsida.",
+          "Turrapporten bør fylle to funksjoner:",
+          "Inspirasjon for klubbmedlemmer som ikke var med på turen: pene bilder, gode historier",
+          "Informasjon til turledere som kan gjenta turen: kart med ruter, overnattingsplasser, logistikk, erfaringer med vær og forhold i området."
+        ]
+      }
+    ]
+  }
+]

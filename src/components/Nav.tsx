@@ -12,24 +12,39 @@ const disciplinePaths: Record<string, string> = {
   surfski: "/padling/surfski", polo: "/padling/polo", junior: "/padling/junior",
   pirbadet: "/padling/pirbadet",
 };
-const hmsItems = ["hms_main", "hms_generelt", "hms_hav", "hms_elv", "mitt_varsel", "hendelsesrapporter", "politiattest"] as const;
+const hmsItems = [
+  "hms_main", "hms_generelt",
+  "mitt_varsel", "hendelsesrapporter", "politiattest",
+] as const;
 const hmsPaths: Record<string, string> = {
   hms_main: "/hms",
   hms_generelt: "/hms/generelt",
-  hms_hav: "/hms/hav",
-  hms_elv: "/hms/elv",
   mitt_varsel: "/hms/mitt-varsel",
   hendelsesrapporter: "/hms/hendelsesrapporter",
   politiattest: "/hms/politiattest",
 };
-const klubbenItems = ["about_main", "administrasjon", "klubbhus", "sosialgruppe", "stotteordninger", "refusjon"] as const;
+const membershipItems = ["bli_medlem", "kom_i_gang"] as const;
+const membershipPaths: Record<string, string> = {
+  bli_medlem: "/medlemskap",
+  kom_i_gang: "/kom-i-gang",
+};
+const klubbenItems = [
+  "about_main", "administrasjon", "klubbhus",
+  "sosialgruppe", "sosialgruppa", "utmerkelser",
+  "stotteordninger", "kjoregodtgjorelse", "vedtektene",
+  "contact",
+] as const;
 const klubbenPaths: Record<string, string> = {
   about_main: "/om-klubben",
   administrasjon: "/om-klubben/administrasjon",
   klubbhus: "/om-klubben/klubbhus",
   sosialgruppe: "/om-klubben/sosialgruppe",
+  sosialgruppa: "/om-klubben/sosialgruppe/sosialgruppa",
+  utmerkelser: "/om-klubben/sosialgruppe/utmerkelser",
   stotteordninger: "/om-klubben/stotteordninger",
-  refusjon: "/om-klubben/refusjon",
+  kjoregodtgjorelse: "/om-klubben/kjoregodtgjorelse",
+  vedtektene: "/om-klubben/vedtektene",
+  contact: "/kontakt",
 };
 
 function useDropdown() {
@@ -47,6 +62,7 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const padling = useDropdown();
+  const membership = useDropdown();
   const hms = useDropdown();
   const klubben = useDropdown();
 
@@ -91,7 +107,21 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
             </Dropdown>
 
             <NavLink href={href("/aktiviteter")} active={isActive("/aktiviteter")}>{t("events")}</NavLink>
-            <NavLink href={href("/medlemskap")} active={isActive("/medlemskap")}>{t("membership")}</NavLink>
+
+            {/* Medlemskap dropdown */}
+            <Dropdown
+              label={t("membership")}
+              active={isActive("/medlemskap") || isActive("/kom-i-gang")}
+              open={membership.open}
+              onEnter={membership.onEnter}
+              onLeave={membership.onLeave}
+            >
+              {membershipItems.map((key) => (
+                <DropdownLink key={key} href={href(membershipPaths[key])} onClick={membership.close}>
+                  {t(key)}
+                </DropdownLink>
+              ))}
+            </Dropdown>
 
             {/* HMS dropdown */}
             <Dropdown
@@ -122,9 +152,6 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
                 </DropdownLink>
               ))}
             </Dropdown>
-
-            <NavLink href={href("/blogg")} active={isActive("/blogg")}>{t("blog")}</NavLink>
-            <NavLink href={href("/kontakt")} active={isActive("/kontakt")}>{t("contact")}</NavLink>
 
             {sessionUser ? (
               <>
@@ -179,7 +206,10 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
               <MobileLink key={d} href={href(disciplinePaths[d])} onClick={() => setMenuOpen(false)} indent>{t(d)}</MobileLink>
             ))}
             <MobileLink href={href("/aktiviteter")} onClick={() => setMenuOpen(false)}>{t("events")}</MobileLink>
-            <MobileLink href={href("/medlemskap")} onClick={() => setMenuOpen(false)}>{t("membership")}</MobileLink>
+            <MobileSectionLabel>{t("membership")}</MobileSectionLabel>
+            {membershipItems.map((key) => (
+              <MobileLink key={key} href={href(membershipPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
+            ))}
             <MobileSectionLabel>{t("hms")}</MobileSectionLabel>
             {hmsItems.map((key) => (
               <MobileLink key={key} href={href(hmsPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
@@ -188,8 +218,6 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
             {klubbenItems.map((key) => (
               <MobileLink key={key} href={href(klubbenPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
             ))}
-            <MobileLink href={href("/blogg")} onClick={() => setMenuOpen(false)}>{t("blog")}</MobileLink>
-            <MobileLink href={href("/kontakt")} onClick={() => setMenuOpen(false)}>{t("contact")}</MobileLink>
             <div className="border-t border-white/10 pt-2 mt-1">
               {sessionUser ? (
                 <>

@@ -11,7 +11,7 @@ export default defineConfig({
   title: "TKK Studio",
   projectId,
   dataset,
-  apiHost: "https://api.eu.sanity.io",
+  basePath: "/studio",
   plugins: [structureTool(), visionTool()],
   schema: {
     types: schemaTypes,

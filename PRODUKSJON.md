@@ -3,7 +3,7 @@
 ## 1. Sanity CMS (gjør dette FØRST — prosjekt-ID trengs overalt)
 
 - [ ] Gå til [manage.sanity.io](https://manage.sanity.io) og opprett nytt prosjekt
-  - **Velg EU-region (eu1 / Amsterdam)** — dette kan IKKE endres etterpå
+  - Sanity lagrer all data i EU (Belgia) som standard — ingen regionvalg nødvendig
   - Dataset-navn: `production`
 - [ ] Kopier **Project ID** og oppdater `NEXT_PUBLIC_SANITY_PROJECT_ID` i hosting-miljøvariablene
 - [ ] Opprett et **read token** (Settings → API → Tokens → Add API token → Viewer)
@@ -116,7 +116,7 @@
 - [ ] Vurder rate-limiting på `/api/auth/register` og `/api/auth/login` for å hindre brute-force
   - Vercel Edge Middleware eller Upstash Ratelimit
 - [ ] Vurder å aktivere Content Security Policy (CSP)-header i `next.config.ts`
-- [ ] Bekreft at Sanity-prosjektet bruker EU-region (eu1) — kan verifiseres under Settings → API i Sanity-dashboardet
+- [ ] Sanity lagrer data i EU (Belgia) som standard — ingen ekstra konfigurasjon nødvendig for GDPR
 
 ---
 

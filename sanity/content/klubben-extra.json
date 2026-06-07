@@ -1,0 +1,102 @@
+[
+  {
+    "id": "klubben-sosialgruppe-sosialgruppa",
+    "titleNo": "Sosialgruppa",
+    "introNo": "Sosialgruppa sin oppgave er å bidra til trivsel for medlemmene i kajakklubben. Vi arrangerer fester og tilstelninger gjennom året.",
+    "sections": [
+      {
+        "titleNo": "Tradisjoner",
+        "bodyNo": [
+          "Noen arrangementer er blitt en tradisjon, f.eks. åpning av padlesesongen med Avplask 1. mai og Adventspadling første søndag i advent.",
+          "Vi kan impulsivt invitere til frokostpadling tidlig en sommermorgen. Det er fantastisk å sitte på Munkholmen å se byen våkne mens vi inntar frokosten og en god kopp kaffe.",
+          "Høst og vinter er det eksotisk å padle en kveldsstund i skinnet fra fullmånen.",
+          "På høsten har vi krabbefest, og når det lakker mot jul er det tid for lutefiskaften."
+        ]
+      },
+      {
+        "titleNo": "Kontakt og oppdateringer",
+        "bodyNo": [
+          "Meld deg inn i kajakklubbens gruppe på Facebook. Her legges det ut meldinger om spontane turer ut fra Skansen og når vi tar en pubtur."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "klubben-sosialgruppe-utmerkelser",
+    "titleNo": "Utmerkelser",
+    "introNo": "Krabbeklo er en utmerkelse som gis til et medlem som har gjort noe ekstraordinært for klubben, klubbens medlemmer eller klubbhuset.",
+    "sections": [
+      {
+        "titleNo": "Medlemmer som har mottatt Krabbeklo",
+        "bodyNo": [
+          "Ca. 1997 — Bent Kittelsen",
+          "1999 — Sturla Gabrielsen",
+          "Ca. 2000 — Leif Tofte",
+          "Ca. 2003 — Ketil Hansen",
+          "2005 — Trond Eri",
+          "2008 — Frank Vihovde Johnsen",
+          "2010 — Leif Tofte",
+          "2010 — Toralf Domaas",
+          "2012 — Sigurd Lyng Edvardsen",
+          "2012 — Anna Ølnes",
+          "2012 — Dan Östling",
+          "2014 — Bernt Marius Johnsen",
+          "2014 — Kari Li Johnsen",
+          "2014 — Jens Petter Dahle",
+          "2015 — Peter Boros",
+          "2015 — Capucine Thomas-Lépine",
+          "2016 — Trine Bjørhusdal",
+          "2016 — Ola Bråten",
+          "2016 — Sofie Gradmann",
+          "2017 — Audun Sletten",
+          "2017 — Håvard Engen",
+          "2018 — Sverre Arne Rognstad",
+          "2019 — Hans Nissen",
+          "2020 — Ulf Stordalmo",
+          "2021 — Frode Vassenden",
+          "2022 — Leiv Budal",
+          "2023 — Hilde Mailen Domaas",
+          "2024 — Arne Røyset",
+          "Listen er ikke komplett. Den som har mer informasjon om mottakere, kan sende det til styret i TKK."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "klubben-vedtektene",
+    "titleNo": "Vedtektene",
+    "introNo": "Vedtektene for Trondhjems Kajakklubb, sist endret 14.03.2023.",
+    "sections": [
+      {
+        "titleNo": "I. Innledende bestemmelser",
+        "bodyNo": [
+          "Klubbens formål er å drive idrett organisert i Norges idrettsforbund med vekt på frivillighet, demokrati og likeverd. Klubben er medlem av Norges Padleforbund og NIF."
+        ]
+      },
+      {
+        "titleNo": "II. Tillitsvalgte",
+        "bodyNo": [
+          "Styret består av leder, nestleder, kasserer, tre styremedlemmer og to varamedlemmer. Årsmøtet er klubbens høyeste myndighet og avholdes innen utgangen av mars."
+        ]
+      },
+      {
+        "titleNo": "III. Økonomi",
+        "bodyNo": [
+          "Klubben må følge regler for regnskap, revisjon og økonomistyring iht. NIFs lov."
+        ]
+      },
+      {
+        "titleNo": "IV. Årsmøte, Styre og Utvalg",
+        "bodyNo": [
+          "Årsmøtet skal behandle beretninger, regnskap, velge styre og kontrollutvalg. Medlemskontingenten fastsettes til minimum 50 kroner."
+        ]
+      },
+      {
+        "titleNo": "V. Øvrige bestemmelser",
+        "bodyNo": [
+          "Oppløsning krever enten enstemmig vedtak eller 2/3 flertall på to påfølgende årsmøter."
+        ]
+      }
+    ]
+  }
+]

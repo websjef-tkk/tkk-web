@@ -6,8 +6,12 @@ import BlogCard from "@/components/BlogCard";
 import Link from "next/link";
 import { getUpcomingEvents } from "@/lib/queries/events";
 import { getAllBlogPosts } from "@/lib/queries/blog";
+import { getAllRecurringEvents } from "@/lib/queries/recurringEvents";
+import { getSiteSettings } from "@/lib/queries/settings";
 import type { SanityEvent } from "@/lib/queries/events";
 import type { BlogPostSummary } from "@/lib/queries/blog";
+import type { RecurringEvent } from "@/lib/queries/recurringEvents";
+import type { Partner } from "@/lib/queries/settings";
 
 export const revalidate = 3600;
 
@@ -15,27 +19,45 @@ type PageProps = { params: Promise<{ locale: string }> };
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
-  const [events, posts] = await Promise.all([
+  const [events, posts, recurringEvents, settings] = await Promise.all([
     getUpcomingEvents(),
     getAllBlogPosts(),
+    getAllRecurringEvents(),
+    getSiteSettings(),
   ]);
   return (
     <HomeContent
       locale={locale}
       events={events.slice(0, 3)}
       posts={posts.slice(0, 3)}
+      recurringEvents={recurringEvents}
+      partners={settings?.partners ?? []}
     />
   );
 }
+
+const DAY_LABELS: Record<string, { no: string; en: string }> = {
+  monday: { no: "Mandag", en: "Monday" },
+  tuesday: { no: "Tirsdag", en: "Tuesday" },
+  wednesday: { no: "Onsdag", en: "Wednesday" },
+  thursday: { no: "Torsdag", en: "Thursday" },
+  friday: { no: "Fredag", en: "Friday" },
+  saturday: { no: "Lørdag", en: "Saturday" },
+  sunday: { no: "Søndag", en: "Sunday" },
+};
 
 function HomeContent({
   locale,
   events,
   posts,
+  recurringEvents,
+  partners,
 }: {
   locale: string;
   events: SanityEvent[];
   posts: BlogPostSummary[];
+  recurringEvents: RecurringEvent[];
+  partners: Partner[];
 }) {
   const t = useTranslations("home");
   const td = useTranslations("disciplines");
@@ -131,6 +153,58 @@ function HomeContent({
           </div>
         </div>
       </section>
+
+      {recurringEvents.length > 0 && (
+        <section className="bg-slate-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-8 border-t-2 border-teal mb-2" />
+            <h2 className="font-display font-bold text-navy text-3xl mb-8">
+              {locale === "no" ? "Faste turer og trening" : "Regular tours and training"}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {recurringEvents.map((re) => {
+                const title = locale === "no" ? re.title.no : (re.title.en ?? re.title.no);
+                const desc = locale === "no" ? re.description?.no : (re.description?.en ?? re.description?.no);
+                const day = DAY_LABELS[re.dayOfWeek]?.[locale === "no" ? "no" : "en"] ?? re.dayOfWeek;
+                return (
+                  <div key={re._id} className="bg-white border border-slate-200 rounded-lg p-6">
+                    <div className="text-teal text-xs font-semibold uppercase tracking-wider mb-1">
+                      {day}{re.time ? ` kl. ${re.time}` : ""}
+                    </div>
+                    <h3 className="font-display font-bold text-navy text-lg mb-2">{title}</h3>
+                    {re.location && <div className="text-slate text-sm mb-2">📍 {re.location}</div>}
+                    {desc && <p className="text-slate text-sm leading-relaxed">{desc}</p>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {partners.length > 0 && (
+        <section className="py-14">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-8 border-t-2 border-teal mb-2" />
+            <h2 className="font-display font-bold text-navy text-2xl mb-8">
+              {locale === "no" ? "Samarbeidspartnere" : "Partners"}
+            </h2>
+            <div className="flex flex-wrap gap-6">
+              {partners.map((p, i) => (
+                <a
+                  key={i}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-white border border-slate-200 rounded-lg px-6 py-4 hover:border-teal hover:shadow-md transition-all"
+                >
+                  <span className="font-semibold text-navy">{p.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="w-8 border-t-2 border-teal mb-2" />

@@ -2,6 +2,16 @@ import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import type { FlexiblePage } from "@/lib/queries/page";
 
+const portableTextComponents = {
+  marks: {
+    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
+      <a href={value?.href} className="text-teal underline hover:text-navy" target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    ),
+  },
+};
+
 type Props = {
   page: FlexiblePage;
   locale: string;
@@ -41,7 +51,7 @@ export default function FlexiblePageContent({ page, locale, backHref, backLabel,
               )}
               {sBody?.length ? (
                 <div className="prose prose-slate max-w-none text-slate leading-relaxed">
-                  <PortableText value={sBody} />
+                  <PortableText value={sBody} components={portableTextComponents} />
                 </div>
               ) : null}
             </div>

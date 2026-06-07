@@ -1,5 +1,12 @@
 import { defineField, defineType } from "sanity";
 
+const linkAnnotation = {
+  type: "object" as const,
+  name: "link",
+  title: "Lenke",
+  fields: [{ name: "href", type: "url", title: "URL" }],
+};
+
 export const disciplinePage = defineType({
   name: "disciplinePage",
   title: "Disiplinside",
@@ -17,7 +24,7 @@ export const disciplinePage = defineType({
           { title: "Surfski", value: "surfski" },
           { title: "Kajakkpolo", value: "polo" },
           { title: "Junior", value: "junior" },
-          { title: "Roing", value: "roing" },
+          { title: "Pirbadet", value: "pirbadet" },
         ],
       },
       validation: (r) => r.required(),
@@ -54,8 +61,52 @@ export const disciplinePage = defineType({
       title: "Innhold",
       type: "object",
       fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }] }),
-        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }] }),
+        defineField({
+          name: "no",
+          title: "Norsk",
+          type: "array",
+          of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
+        }),
+        defineField({
+          name: "en",
+          title: "English",
+          type: "array",
+          of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
+        }),
+      ],
+    }),
+    defineField({
+      name: "subPageLinks",
+      title: "Undersider",
+      description: "Lenker til undersider som vises som kort-grid nederst på siden",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Tittel",
+              type: "object",
+              fields: [
+                defineField({ name: "no", title: "Norsk", type: "string" }),
+                defineField({ name: "en", title: "English", type: "string" }),
+              ],
+            }),
+            defineField({
+              name: "href",
+              title: "Lenke (relativ sti)",
+              type: "string",
+              description: "F.eks. /padling/hav/reolplasser",
+            }),
+          ],
+          preview: {
+            select: { title: "title.no", subtitle: "href" },
+            prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+              return { title: title ?? "Underside", subtitle };
+            },
+          },
+        },
       ],
     }),
     defineField({
@@ -68,7 +119,7 @@ export const disciplinePage = defineType({
   ],
   preview: {
     select: { title: "title.no", subtitle: "discipline" },
-    prepare({ title, subtitle }) {
+    prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
       return { title: title ?? "Uten tittel", subtitle };
     },
   },

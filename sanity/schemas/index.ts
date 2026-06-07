@@ -5,6 +5,7 @@ import { siteSettings } from "./siteSettings";
 import { disciplinePage } from "./disciplinePage";
 import { flexiblePage } from "./flexiblePage";
 import { navLabels } from "./navLabels";
+import { recurringEvent } from "./recurringEvent";
 
 export const schemaTypes = [
   blogPost,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   disciplinePage,
   flexiblePage,
   navLabels,
+  recurringEvent,
 ];
