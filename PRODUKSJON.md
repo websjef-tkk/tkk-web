@@ -1,5 +1,9 @@
 # Huskeliste: Produksjonssetting
 
+> **Status:** Siden kjører som testversjon på Vercel: https://tkk-web-seven.vercel.app/no
+> Medlemsfunksjoner (innlogging, registrering, profil, admin) er foreløpig skjult bak `ENABLE_MEMBERS=false` — sett denne til `true` (og `NEXT_PUBLIC_ENABLE_MEMBERS=true`) når database og e-post er på plass.
+> Databasen er fortsatt SQLite (kun til utvikling) — **må** byttes til ekstern Postgres før medlemsfunksjoner kan skrus på i produksjon, se punkt 4.
+
 ## 1. Sanity CMS (gjør dette FØRST — prosjekt-ID trengs overalt)
 
 - [ ] Gå til [manage.sanity.io](https://manage.sanity.io) og opprett nytt prosjekt
@@ -44,10 +48,12 @@
 
 ## 3. Hosting og domene
 
-- [ ] Velg hostingplattform (**Vercel** anbefales for Next.js — gratis plan holder til en liten klubb)
-- [ ] Koble domenet `tkk.no` til hostingplattformen
-- [ ] Sett opp HTTPS (skjer automatisk på Vercel/Netlify)
+- [x] Velg hostingplattform — **Vercel** er valgt og prosjektet kjører allerede som testversjon på `tkk-web-seven.vercel.app`
+- [ ] Koble domenet `tkk.no` til Vercel-prosjektet (Vercel-dashboard → Settings → Domains)
+- [ ] Sett opp HTTPS (skjer automatisk på Vercel når domenet er koblet til)
 - [ ] Verifiser at `www.tkk.no` og `tkk.no` begge virker (redirect én til den andre)
+- [ ] Oppdater `NEXT_PUBLIC_APP_URL` i Vercel-miljøvariablene til `https://tkk.no` når domenet er live (i dag peker den sannsynligvis mot Vercel-URL-en)
+- [ ] Sett `ENABLE_MEMBERS=true` og `NEXT_PUBLIC_ENABLE_MEMBERS=true` i Vercel når database (punkt 4) og e-post (punkt 6) er klare
 
 ---
 
@@ -65,14 +71,18 @@
 
 ---
 
-## 5. Miljøvariabler (sett disse i hosting-dashboardet, IKKE i kode)
+## 5. Miljøvariabler (sett disse i Vercel-dashboardet, IKKE i kode)
+
+Vercel → Project Settings → Environment Variables. Husk å sette de samme variablene for både **Production** og **Preview** (preview brukes f.eks. ved branch-deploys), og kjør en ny deploy etter endring.
 
 ### Database
 - [ ] `DATABASE_URL` — produksjons-URL til PostgreSQL
 
 ### App
-- [ ] `NEXT_PUBLIC_APP_URL` — f.eks. `https://tkk.no`
+- [ ] `NEXT_PUBLIC_APP_URL` — f.eks. `https://tkk.no` (sett til Vercel-URL-en til domenet er koblet til)
 - [ ] `SESSION_SECRET` — lang, tilfeldig streng (generer med `openssl rand -hex 32`)
+- [ ] `ENABLE_MEMBERS` — `true` for å skru på medlemsfunksjoner (server-side gate i `next.config.ts`)
+- [ ] `NEXT_PUBLIC_ENABLE_MEMBERS` — `true`, samme verdi som over (styrer synlighet av lenker i `Nav.tsx`)
 
 ### E-post
 - [ ] `SMTP_HOST`
@@ -161,10 +171,13 @@
 
 ## Rask prioritert rekkefølge
 
+> Hosting (Vercel) er allerede satt opp og kjører som testversjon — gjenstående arbeid er innhold, database og domene før medlemsfunksjoner og `tkk.no` kan skrus på.
+
 1. **Sanity CMS** — opprett prosjekt (EU), kopier Project ID, fyll inn innhold
-2. **Database** (PostgreSQL i EU) + **miljøvariabler** → uten dette kan ikke autentisering kjøre
+2. **Database** (PostgreSQL i EU) + **miljøvariabler i Vercel** → uten dette kan ikke autentisering kjøre
 3. **E-post** (SMTP + DNS) → uten dette kan ikke brukere bekrefte kontoen sin
 4. **Admin-bruker** — kjør `npm run seed`, klikk verifiseringslenke
-5. **Hosting + domene** → koble alt sammen og sett miljøvariabler i dashboardet
-6. **NIF API** → søk om tilgang tidlig, det kan ta tid å få svar
-7. **Innhold** → legg inn alt i Sanity Studio
+5. **Domene** — koble `tkk.no` til Vercel-prosjektet, oppdater `NEXT_PUBLIC_APP_URL`
+6. **Skru på medlemsfunksjoner** — sett `ENABLE_MEMBERS=true` / `NEXT_PUBLIC_ENABLE_MEMBERS=true` i Vercel
+7. **NIF API** → søk om tilgang tidlig, det kan ta tid å få svar
+8. **Innhold** → legg inn alt i Sanity Studio
