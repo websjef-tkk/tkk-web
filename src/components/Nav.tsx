@@ -55,6 +55,8 @@ function useDropdown() {
   return { open, onEnter, onLeave, close: () => setOpen(false) };
 }
 
+const membersEnabled = process.env.NEXT_PUBLIC_ENABLE_MEMBERS === "true";
+
 type SessionUser = { firstName: string | null; lastName: string | null; email: string; isAdmin: boolean } | null;
 
 export default function Nav({ locale, sessionUser }: { locale: string; sessionUser: SessionUser }) {
@@ -153,27 +155,29 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
               ))}
             </Dropdown>
 
-            {sessionUser ? (
-              <>
-                {sessionUser.isAdmin && (
-                  <Link href={href("/admin/members")}
-                    className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded transition-colors ${isActive("/admin") ? "bg-sand text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
-                    Admin
+            {membersEnabled && (
+              sessionUser ? (
+                <>
+                  {sessionUser.isAdmin && (
+                    <Link href={href("/admin/members")}
+                      className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded transition-colors ${isActive("/admin") ? "bg-sand text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
+                      Admin
+                    </Link>
+                  )}
+                  <Link href={href("/profil")}
+                    className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded flex items-center gap-1.5 transition-colors ${isActive("/profil") ? "bg-tkk-blue text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
                   </Link>
-                )}
-                <Link href={href("/profil")}
-                  className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded flex items-center gap-1.5 transition-colors ${isActive("/profil") ? "bg-tkk-blue text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
+                </>
+              ) : (
+                <Link href={href("/logg-inn")}
+                  className="ml-1 px-3 py-1.5 text-xs font-semibold border border-tkk-blue text-tkk-blue rounded hover:bg-tkk-blue hover:text-navy transition-colors">
+                  {t("log_in")}
                 </Link>
-              </>
-            ) : (
-              <Link href={href("/logg-inn")}
-                className="ml-1 px-3 py-1.5 text-xs font-semibold border border-tkk-blue text-tkk-blue rounded hover:bg-tkk-blue hover:text-navy transition-colors">
-                {t("log_in")}
-              </Link>
+              )
             )}
 
             <Link href={switchPath}
@@ -218,24 +222,26 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
             {klubbenItems.map((key) => (
               <MobileLink key={key} href={href(klubbenPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
             ))}
-            <div className="border-t border-white/10 pt-2 mt-1">
-              {sessionUser ? (
-                <>
-                  {sessionUser.isAdmin && (
-                    <MobileLink href={href("/admin/members")} onClick={() => setMenuOpen(false)}>
-                      ⚙ Admin
+            {membersEnabled && (
+              <div className="border-t border-white/10 pt-2 mt-1">
+                {sessionUser ? (
+                  <>
+                    {sessionUser.isAdmin && (
+                      <MobileLink href={href("/admin/members")} onClick={() => setMenuOpen(false)}>
+                        ⚙ Admin
+                      </MobileLink>
+                    )}
+                    <MobileLink href={href("/profil")} onClick={() => setMenuOpen(false)}>
+                      👤 {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
                     </MobileLink>
-                  )}
-                  <MobileLink href={href("/profil")} onClick={() => setMenuOpen(false)}>
-                    👤 {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
+                  </>
+                ) : (
+                  <MobileLink href={href("/logg-inn")} onClick={() => setMenuOpen(false)}>
+                    {t("log_in")}
                   </MobileLink>
-                </>
-              ) : (
-                <MobileLink href={href("/logg-inn")} onClick={() => setMenuOpen(false)}>
-                  {t("log_in")}
-                </MobileLink>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </nav>
