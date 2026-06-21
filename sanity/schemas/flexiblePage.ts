@@ -64,6 +64,20 @@ export const flexiblePage = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "section",
+      title: "Seksjon (for redigeringsmenyen)",
+      type: "string",
+      options: {
+        list: [
+          { title: "Padling-innhold", value: "padling" },
+          { title: "Klubbinformasjon", value: "klubb" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "klubb",
+      validation: (r) => r.required(),
+    }),
+    defineField({
       name: "title",
       title: "Tittel",
       type: "object",

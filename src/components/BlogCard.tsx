@@ -22,7 +22,7 @@ export default function BlogCard({ post, locale, readMoreLabel, byLabel, categor
     <Link href={`/${locale}/blogg/${post.slug}`} className="group block bg-white rounded-xl shadow-sm border border-mist overflow-hidden hover:shadow-md transition-shadow">
       {imageUrl && (
         <div className="relative h-48 overflow-hidden">
-          <Image src={imageUrl} alt={post.image?.alt ?? title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Image src={imageUrl} alt={post.image?.alt ?? title} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
           <div className="absolute inset-0 bg-navy/30" />
           <span className="absolute top-3 left-3 bg-tkk-blue text-navy text-xs font-semibold px-2 py-0.5 rounded">
             {catLabel}

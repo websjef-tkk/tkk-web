@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getSession } from "@/lib/auth";
+import { getMainMenu } from "@/lib/queries/menu";
 
 export default async function LocaleLayout({
   children,
@@ -16,7 +17,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const [messages, session] = await Promise.all([getMessages(), getSession()]);
+  const [messages, session, menu] = await Promise.all([getMessages(), getSession(), getMainMenu()]);
 
   const sessionUser = session
     ? { firstName: session.firstName, lastName: session.lastName, email: session.email, isAdmin: session.isAdmin }
@@ -24,7 +25,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Nav locale={locale} sessionUser={sessionUser} />
+      <Nav locale={locale} sessionUser={sessionUser} menu={menu} />
       <main className="flex-1">{children}</main>
       <Footer />
     </NextIntlClientProvider>

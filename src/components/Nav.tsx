@@ -5,47 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-
-const disciplines = ["hav", "elv", "flattvann", "surfski", "polo", "junior", "pirbadet"] as const;
-const disciplinePaths: Record<string, string> = {
-  hav: "/padling/hav", elv: "/padling/elv", flattvann: "/padling/flattvann",
-  surfski: "/padling/surfski", polo: "/padling/polo", junior: "/padling/junior",
-  pirbadet: "/padling/pirbadet",
-};
-const hmsItems = [
-  "hms_main", "hms_generelt",
-  "mitt_varsel", "hendelsesrapporter", "politiattest",
-] as const;
-const hmsPaths: Record<string, string> = {
-  hms_main: "/hms",
-  hms_generelt: "/hms/generelt",
-  mitt_varsel: "/hms/mitt-varsel",
-  hendelsesrapporter: "/hms/hendelsesrapporter",
-  politiattest: "/hms/politiattest",
-};
-const membershipItems = ["bli_medlem", "kom_i_gang"] as const;
-const membershipPaths: Record<string, string> = {
-  bli_medlem: "/medlemskap",
-  kom_i_gang: "/kom-i-gang",
-};
-const klubbenItems = [
-  "about_main", "administrasjon", "klubbhus",
-  "sosialgruppe", "sosialgruppa", "utmerkelser",
-  "stotteordninger", "kjoregodtgjorelse", "vedtektene",
-  "contact",
-] as const;
-const klubbenPaths: Record<string, string> = {
-  about_main: "/om-klubben",
-  administrasjon: "/om-klubben/administrasjon",
-  klubbhus: "/om-klubben/klubbhus",
-  sosialgruppe: "/om-klubben/sosialgruppe",
-  sosialgruppa: "/om-klubben/sosialgruppe/sosialgruppa",
-  utmerkelser: "/om-klubben/sosialgruppe/utmerkelser",
-  stotteordninger: "/om-klubben/stotteordninger",
-  kjoregodtgjorelse: "/om-klubben/kjoregodtgjorelse",
-  vedtektene: "/om-klubben/vedtektene",
-  contact: "/kontakt",
-};
+import type { ResolvedMenuItem } from "@/lib/queries/menu";
 
 function useDropdown() {
   const [open, setOpen] = useState(false);
@@ -59,14 +19,22 @@ const membersEnabled = process.env.NEXT_PUBLIC_ENABLE_MEMBERS === "true";
 
 type SessionUser = { firstName: string | null; lastName: string | null; email: string; isAdmin: boolean } | null;
 
-export default function Nav({ locale, sessionUser }: { locale: string; sessionUser: SessionUser }) {
+function menuLabel(label: { no: string; en?: string }, locale: string) {
+  return locale === "no" ? label.no : (label.en ?? label.no);
+}
+
+export default function Nav({
+  locale,
+  sessionUser,
+  menu,
+}: {
+  locale: string;
+  sessionUser: SessionUser;
+  menu: ResolvedMenuItem[];
+}) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const padling = useDropdown();
-  const membership = useDropdown();
-  const hms = useDropdown();
-  const klubben = useDropdown();
 
   const otherLocale = locale === "no" ? "en" : "no";
   const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`);
@@ -89,71 +57,15 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center gap-0.5">
-            <NavLink href={href("/")} active={pathname === `/${locale}` || pathname === `/${locale}/`}>
-              {t("home")}
-            </NavLink>
-
-            {/* Padling dropdown */}
-            <Dropdown
-              label={t("paddling")}
-              active={isActive("/padling")}
-              open={padling.open}
-              onEnter={padling.onEnter}
-              onLeave={padling.onLeave}
-            >
-              {disciplines.map((d) => (
-                <DropdownLink key={d} href={href(disciplinePaths[d])} onClick={padling.close}>
-                  {t(d)}
-                </DropdownLink>
-              ))}
-            </Dropdown>
-
-            <NavLink href={href("/aktiviteter")} active={isActive("/aktiviteter")}>{t("events")}</NavLink>
-
-            {/* Medlemskap dropdown */}
-            <Dropdown
-              label={t("membership")}
-              active={isActive("/medlemskap") || isActive("/kom-i-gang")}
-              open={membership.open}
-              onEnter={membership.onEnter}
-              onLeave={membership.onLeave}
-            >
-              {membershipItems.map((key) => (
-                <DropdownLink key={key} href={href(membershipPaths[key])} onClick={membership.close}>
-                  {t(key)}
-                </DropdownLink>
-              ))}
-            </Dropdown>
-
-            {/* HMS dropdown */}
-            <Dropdown
-              label={t("hms")}
-              active={isActive("/hms")}
-              open={hms.open}
-              onEnter={hms.onEnter}
-              onLeave={hms.onLeave}
-            >
-              {hmsItems.map((key) => (
-                <DropdownLink key={key} href={href(hmsPaths[key])} onClick={hms.close}>
-                  {t(key)}
-                </DropdownLink>
-              ))}
-            </Dropdown>
-
-            {/* Klubben dropdown */}
-            <Dropdown
-              label={t("about")}
-              active={isActive("/om-klubben")}
-              open={klubben.open}
-              onEnter={klubben.onEnter}
-              onLeave={klubben.onLeave}
-            >
-              {klubbenItems.map((key) => (
-                <DropdownLink key={key} href={href(klubbenPaths[key])} onClick={klubben.close}>
-                  {t(key)}
-                </DropdownLink>
-              ))}
-            </Dropdown>
+            {menu.map((item, i) =>
+              item.itemType === "dropdown" ? (
+                <DesktopDropdownItem key={i} item={item} locale={locale} href={href} isActive={isActive} />
+              ) : (
+                <NavLink key={i} href={href(item.href!)} active={isActive(item.href!)}>
+                  {menuLabel(item.label, locale)}
+                </NavLink>
+              )
+            )}
 
             {membersEnabled && (
               sessionUser ? (
@@ -204,24 +116,22 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
         {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden border-t border-white/10 py-2 space-y-0.5 pb-4">
-            <MobileLink href={href("/")} onClick={() => setMenuOpen(false)}>{t("home")}</MobileLink>
-            <MobileSectionLabel>{t("paddling")}</MobileSectionLabel>
-            {disciplines.map((d) => (
-              <MobileLink key={d} href={href(disciplinePaths[d])} onClick={() => setMenuOpen(false)} indent>{t(d)}</MobileLink>
-            ))}
-            <MobileLink href={href("/aktiviteter")} onClick={() => setMenuOpen(false)}>{t("events")}</MobileLink>
-            <MobileSectionLabel>{t("membership")}</MobileSectionLabel>
-            {membershipItems.map((key) => (
-              <MobileLink key={key} href={href(membershipPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
-            ))}
-            <MobileSectionLabel>{t("hms")}</MobileSectionLabel>
-            {hmsItems.map((key) => (
-              <MobileLink key={key} href={href(hmsPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
-            ))}
-            <MobileSectionLabel>{t("about")}</MobileSectionLabel>
-            {klubbenItems.map((key) => (
-              <MobileLink key={key} href={href(klubbenPaths[key])} onClick={() => setMenuOpen(false)} indent>{t(key)}</MobileLink>
-            ))}
+            {menu.map((item, i) =>
+              item.itemType === "dropdown" ? (
+                <div key={i}>
+                  <MobileSectionLabel>{menuLabel(item.label, locale)}</MobileSectionLabel>
+                  {item.children!.map((child, j) => (
+                    <MobileLink key={j} href={href(child.href)} onClick={() => setMenuOpen(false)} indent>
+                      {menuLabel(child.label, locale)}
+                    </MobileLink>
+                  ))}
+                </div>
+              ) : (
+                <MobileLink key={i} href={href(item.href!)} onClick={() => setMenuOpen(false)}>
+                  {menuLabel(item.label, locale)}
+                </MobileLink>
+              )
+            )}
             {membersEnabled && (
               <div className="border-t border-white/10 pt-2 mt-1">
                 {sessionUser ? (
@@ -246,6 +156,34 @@ export default function Nav({ locale, sessionUser }: { locale: string; sessionUs
         )}
       </nav>
     </header>
+  );
+}
+
+function DesktopDropdownItem({
+  item, locale, href, isActive,
+}: {
+  item: ResolvedMenuItem;
+  locale: string;
+  href: (path: string) => string;
+  isActive: (path: string) => boolean;
+}) {
+  const dropdown = useDropdown();
+  const active = item.children!.some((c) => isActive(c.href));
+
+  return (
+    <Dropdown
+      label={menuLabel(item.label, locale)}
+      active={active}
+      open={dropdown.open}
+      onEnter={dropdown.onEnter}
+      onLeave={dropdown.onLeave}
+    >
+      {item.children!.map((child, i) => (
+        <DropdownLink key={i} href={href(child.href)} onClick={dropdown.close}>
+          {menuLabel(child.label, locale)}
+        </DropdownLink>
+      ))}
+    </Dropdown>
   );
 }
 
