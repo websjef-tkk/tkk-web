@@ -45,7 +45,6 @@ export default function PaddlingPageLayout({
         <div className="space-y-10">
           {sections.map((s, i) => (
             <div key={i}>
-              <div className="w-8 border-t-2 border-teal mb-2" />
               <h2 className="font-display font-bold text-navy text-2xl mb-3">{s.title}</h2>
               <p className="text-slate leading-relaxed">{s.text}</p>
             </div>

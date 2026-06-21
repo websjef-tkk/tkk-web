@@ -17,6 +17,7 @@ export interface SiteSettings {
   postalAddress?: string;
   phone?: string;
   orgNr?: string;
+  stats?: { label: { no: string; en?: string } }[];
   partners?: Partner[];
 }
 
@@ -33,6 +34,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         postalAddress,
         phone,
         orgNr,
+        stats[] { label },
         partners[] { name, url, description, logo }
       }`
     );

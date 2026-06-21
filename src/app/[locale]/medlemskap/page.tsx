@@ -51,7 +51,6 @@ export default async function MedlemskapPage({ params }: PageProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-4">{title}</h1>
       {intro && (
         <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">{intro}</p>
@@ -60,7 +59,6 @@ export default async function MedlemskapPage({ params }: PageProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
         {/* Pricing table */}
         <div>
-          <div className="w-8 border-t-2 border-teal mb-2" />
           <h2 className="font-display font-bold text-navy text-2xl mb-4">{secTitle(0)}</h2>
           <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm">
             <table className="w-full text-sm">
@@ -93,7 +91,6 @@ export default async function MedlemskapPage({ params }: PageProps) {
 
         {/* Benefits list */}
         <div>
-          <div className="w-8 border-t-2 border-teal mb-2" />
           <h2 className="font-display font-bold text-navy text-2xl mb-4">{secTitle(1)}</h2>
           <ul className="space-y-3">
             {benefits.map((b, i) => (

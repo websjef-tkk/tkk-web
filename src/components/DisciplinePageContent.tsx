@@ -64,7 +64,6 @@ export default function DisciplinePageContent({ page, locale }: Props) {
       {page.subPageLinks && page.subPageLinks.length > 0 && (
         <div className="bg-slate-50 border-t border-slate-200 py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="w-8 border-t-2 border-teal mb-2" />
             <h2 className="font-display font-bold text-navy text-2xl mb-8">
               {isNo ? "Mer om dette" : "Learn more"}
             </h2>

@@ -15,6 +15,13 @@ export const event = defineType({
       ],
     }),
     defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title.no" },
+      validation: (r) => r.required(),
+    }),
+    defineField({
       name: "description",
       title: "Beskrivelse",
       type: "object",
@@ -23,8 +30,75 @@ export const event = defineType({
         defineField({ name: "en", title: "English", type: "text", rows: 4 }),
       ],
     }),
-    defineField({ name: "date", title: "Startdato", type: "datetime", validation: (r) => r.required() }),
-    defineField({ name: "endDate", title: "Sluttdato (valgfritt)", type: "datetime" }),
+    defineField({
+      name: "body",
+      title: "Utfyllende innhold (hvordan delta)",
+      type: "object",
+      fields: [
+        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }] }),
+        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }] }),
+      ],
+    }),
+    defineField({
+      name: "isRecurring",
+      title: "Gjentakende aktivitet?",
+      description: "Av = engangshendelse (bruker dato). På = gjentakende (bruker ukedag/klokkeslett).",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "date",
+      title: "Startdato",
+      type: "datetime",
+      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring === true,
+      validation: (r) =>
+        r.custom((val, ctx) => {
+          const parent = ctx.parent as { isRecurring?: boolean } | undefined;
+          if (parent?.isRecurring) return true;
+          return val ? true : "Startdato er påkrevd for engangshendelser";
+        }),
+    }),
+    defineField({
+      name: "endDate",
+      title: "Sluttdato (valgfritt)",
+      type: "datetime",
+      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring === true,
+    }),
+    defineField({
+      name: "dayOfWeek",
+      title: "Ukedag",
+      type: "string",
+      options: {
+        list: [
+          { title: "Mandag", value: "monday" },
+          { title: "Tirsdag", value: "tuesday" },
+          { title: "Onsdag", value: "wednesday" },
+          { title: "Torsdag", value: "thursday" },
+          { title: "Fredag", value: "friday" },
+          { title: "Lørdag", value: "saturday" },
+          { title: "Søndag", value: "sunday" },
+        ],
+      },
+      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring !== true,
+      validation: (r) =>
+        r.custom((val, ctx) => {
+          const parent = ctx.parent as { isRecurring?: boolean } | undefined;
+          if (!parent?.isRecurring) return true;
+          return val ? true : "Ukedag er påkrevd for gjentakende aktiviteter";
+        }),
+    }),
+    defineField({
+      name: "time",
+      title: "Klokkeslett",
+      type: "string",
+      description: "F.eks. 18:00",
+      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring !== true,
+    }),
+    defineField({
+      name: "location",
+      title: "Møteplass",
+      type: "string",
+    }),
     defineField({
       name: "category",
       title: "Kategori",
@@ -67,13 +141,18 @@ export const event = defineType({
       },
     }),
     defineField({ name: "registerUrl", title: "Påmeldingslenke", type: "url" }),
+    defineField({
+      name: "sortOrder",
+      title: "Sorteringsrekkefølge (for gjentakende)",
+      type: "number",
+    }),
   ],
   orderings: [{ title: "Dato (stigende)", name: "dateAsc", by: [{ field: "date", direction: "asc" }] }],
   preview: {
-    select: { title: "title.no", subtitle: "date" },
-    prepare({ title, subtitle }) {
-      const dateStr = subtitle ? new Date(subtitle).toLocaleDateString("no-NO") : "";
-      return { title: title ?? "Uten tittel", subtitle: dateStr };
+    select: { title: "title.no", subtitle: "date", dayOfWeek: "dayOfWeek", isRecurring: "isRecurring" },
+    prepare({ title, subtitle, dayOfWeek, isRecurring }: { title?: string; subtitle?: string; dayOfWeek?: string; isRecurring?: boolean }) {
+      const sub = isRecurring ? dayOfWeek : subtitle ? new Date(subtitle).toLocaleDateString("no-NO") : "";
+      return { title: title ?? "Uten tittel", subtitle: sub };
     },
   },
 });

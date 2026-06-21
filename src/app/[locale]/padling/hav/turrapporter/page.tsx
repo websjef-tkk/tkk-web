@@ -20,7 +20,6 @@ export default async function TurrapporterPage({ params }: PageProps) {
       >
         ← {isNo ? "Tilbake til Havpadling" : "Back to Sea Kayaking"}
       </Link>
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-10">
         {isNo ? "Turrapporter" : "Trip Reports"}
       </h1>

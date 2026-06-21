@@ -88,7 +88,6 @@ function RegisterContent({ paramsPromise }: { paramsPromise: Promise<{ locale: s
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
-        <div className="w-8 border-t-2 border-teal mb-2" />
         <h1 className="font-display font-bold text-navy text-3xl mb-2">{t("register_title")}</h1>
         <p className="text-slate text-sm mb-8">{t("register_intro")}</p>
 

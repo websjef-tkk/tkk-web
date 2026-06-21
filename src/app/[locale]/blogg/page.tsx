@@ -25,7 +25,6 @@ function BloggContent({ locale, posts }: { locale: string; posts: BlogPostSummar
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-10">{t("title")}</h1>
       {posts.length === 0 ? (
         <p className="text-slate">{locale === "no" ? "Ingen innlegg ennå." : "No posts yet."}</p>

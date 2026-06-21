@@ -34,7 +34,6 @@ export default async function AdminMembersPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-display font-bold text-navy text-4xl">Medlemsoversikt</h1>
         <span className="text-sm text-slate">{members.length} registrerte brukere</span>

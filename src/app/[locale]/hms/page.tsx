@@ -69,7 +69,6 @@ function HmsFallback({ locale }: { locale: string }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-4">{t("plan_title")}</h1>
       <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">{t("plan_intro")}</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

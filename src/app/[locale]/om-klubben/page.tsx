@@ -22,12 +22,10 @@ function OmKlubbenContent({ locale, people }: { locale: string; people: SanityPe
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-6">{t("title")}</h1>
       <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">{t("intro")}</p>
 
       <section className="mb-12">
-        <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-2xl mb-3">{t("values_title")}</h2>
         <p className="text-slate leading-relaxed">{t("values_text")}</p>
       </section>
@@ -37,7 +35,6 @@ function OmKlubbenContent({ locale, people }: { locale: string; people: SanityPe
       {others.length > 0 && <PersonTable title={isNo ? "Andre" : "Others"} people={others} isNo={isNo} />}
 
       <section className="mt-12">
-        <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-2xl mb-4">{t("partners_title")}</h2>
         <div className="flex flex-wrap gap-4">
           <a href="https://www.padlespesialisten.no" target="_blank" rel="noopener noreferrer"
@@ -58,7 +55,6 @@ function OmKlubbenContent({ locale, people }: { locale: string; people: SanityPe
 function PersonTable({ title, people, isNo }: { title: string; people: SanityPerson[]; isNo: boolean }) {
   return (
     <section className="mb-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h2 className="font-display font-bold text-navy text-2xl mb-5">{title}</h2>
       <div className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden">
         <table className="w-full text-sm">

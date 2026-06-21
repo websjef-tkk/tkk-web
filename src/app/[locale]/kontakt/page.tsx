@@ -22,7 +22,6 @@ function KontaktContent({ locale, people }: { locale: string; people: SanityPers
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h1 className="font-display font-bold text-navy text-4xl mb-10">{t("title")}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
@@ -72,7 +71,6 @@ function KontaktContent({ locale, people }: { locale: string; people: SanityPers
       {others.length > 0 && <ContactTable title={isNo ? "Andre" : "Others"} people={others} isNo={isNo} />}
 
       <section className="mt-4">
-        <div className="w-8 border-t-2 border-teal mb-2" />
         <h2 className="font-display font-bold text-navy text-2xl mb-4">{t("map_title")}</h2>
         <div className="rounded-xl overflow-hidden border border-mist shadow-sm">
           <iframe
@@ -95,7 +93,6 @@ function KontaktContent({ locale, people }: { locale: string; people: SanityPers
 function ContactTable({ title, people, isNo }: { title: string; people: SanityPerson[]; isNo: boolean }) {
   return (
     <section className="mb-10">
-      <div className="w-8 border-t-2 border-teal mb-2" />
       <h2 className="font-display font-bold text-navy text-2xl mb-5">{title}</h2>
       <div className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden">
         <table className="w-full text-sm">

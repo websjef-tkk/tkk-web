@@ -6,7 +6,6 @@ const EXPLICITLY_HANDLED_TYPES = new Set([
   "disciplinePage",
   "flexiblePage",
   "event",
-  "recurringEvent",
   "blogPost",
   "person",
   "mainMenu",
@@ -51,6 +50,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title("Padling-undersider")
+                    .apiVersion("2024-01-01")
                     .filter('_type == "flexiblePage" && section == $section')
                     .params({ section: "padling" })
                 ),
@@ -62,22 +62,14 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentList()
             .title("Klubbinformasjon")
+            .apiVersion("2024-01-01")
             .filter('_type == "flexiblePage" && section == $section')
             .params({ section: "klubb" })
         ),
 
       S.divider(),
 
-      S.listItem()
-        .title("Terminliste / Aktiviteter")
-        .child(
-          S.list()
-            .title("Terminliste / Aktiviteter")
-            .items([
-              S.documentTypeListItem("event").title("Aktiviteter / arrangement"),
-              S.documentTypeListItem("recurringEvent").title("Faste turer / treninger"),
-            ])
-        ),
+      S.documentTypeListItem("event").title("Terminliste / Aktiviteter"),
 
       S.documentTypeListItem("blogPost").title("Nyheter"),
       S.documentTypeListItem("person").title("Personer / kontakter"),

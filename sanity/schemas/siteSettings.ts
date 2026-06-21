@@ -41,6 +41,33 @@ export const siteSettings = defineType({
     defineField({ name: "phone", title: "Telefon", type: "string" }),
     defineField({ name: "orgNr", title: "Org.nr.", type: "string" }),
     defineField({
+      name: "stats",
+      title: "Jumbo-statistikk (forside)",
+      description: "Punktene som vises i den mørke stripen øverst på forsiden.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "stat",
+          fields: [
+            defineField({
+              name: "label",
+              title: "Tekst",
+              type: "object",
+              fields: [
+                defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
+                defineField({ name: "en", title: "English", type: "string" }),
+              ],
+            }),
+          ],
+          preview: {
+            select: { title: "label.no" },
+          },
+        },
+      ],
+      validation: (r) => r.max(4).warning("Mer enn 4 punkter kan se trangt ut i stripen"),
+    }),
+    defineField({
       name: "partners",
       title: "Samarbeidspartnere",
       type: "array",

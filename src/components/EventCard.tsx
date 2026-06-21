@@ -24,6 +24,16 @@ const categoryColour: Record<string, string> = {
   sosial: "bg-sand/30 text-navy",
 };
 
+const DAY_LABELS: Record<string, { no: string; en: string }> = {
+  monday: { no: "Mandag", en: "Monday" },
+  tuesday: { no: "Tirsdag", en: "Tuesday" },
+  wednesday: { no: "Onsdag", en: "Wednesday" },
+  thursday: { no: "Torsdag", en: "Thursday" },
+  friday: { no: "Fredag", en: "Friday" },
+  saturday: { no: "Lørdag", en: "Saturday" },
+  sunday: { no: "Søndag", en: "Sunday" },
+};
+
 function formatDate(dateStr: string, endDate?: string, locale?: string) {
   const fmt = (d: string) =>
     new Date(d).toLocaleDateString(locale === "no" ? "nb-NO" : "en-GB", {
@@ -45,10 +55,22 @@ export default function EventCard({ event, locale, labels }: Props) {
       ? labels.difficulty_erfaren
       : undefined;
 
+  const whenLabel = event.isRecurring
+    ? `${DAY_LABELS[event.dayOfWeek ?? ""]?.[locale === "no" ? "no" : "en"] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
+    : formatDate(event.date!, event.endDate, locale);
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col">
+    <Link
+      href={`/${locale}/aktiviteter/${event.slug}`}
+      className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
+    >
       <div className="border-l-4 border-tkk-blue px-5 py-4 flex-1">
         <div className="flex flex-wrap gap-2 mb-2">
+          {event.isRecurring && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-tkk-blue/20 text-navy">
+              {locale === "no" ? "FAST" : "RECURRING"}
+            </span>
+          )}
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${categoryColour[event.category] ?? ""}`}>
             {event.category.toUpperCase()}
           </span>
@@ -58,24 +80,14 @@ export default function EventCard({ event, locale, labels }: Props) {
             </span>
           )}
         </div>
-        <p className="text-xs text-slate font-medium mb-1">
-          {formatDate(event.date, event.endDate, locale)}
-        </p>
+        <p className="text-xs text-slate font-medium mb-1">{whenLabel}</p>
         <h3 className="font-display font-bold text-navy text-lg leading-snug mb-2">{title}</h3>
+        {event.location && <p className="text-slate text-sm mb-1">📍 {event.location}</p>}
         {desc && <p className="text-slate text-sm leading-relaxed">{desc}</p>}
       </div>
-      {event.registerUrl && (
-        <div className="px-5 py-3 bg-mist border-t border-mist">
-          <Link
-            href={event.registerUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-teal text-sm font-semibold hover:underline"
-          >
-            {labels.register} →
-          </Link>
-        </div>
-      )}
-    </div>
+      <div className="px-5 py-3 bg-mist border-t border-mist">
+        <span className="text-teal text-sm font-semibold">{labels.register} →</span>
+      </div>
+    </Link>
   );
 }
