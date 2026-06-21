@@ -30,8 +30,6 @@ const nextConfig: NextConfig = {
     if (membersEnabled) return permanentRedirects;
 
     const gatedRedirects = [
-      { source: "/studio", destination: "/no", permanent: false },
-      { source: "/studio/:path*", destination: "/no", permanent: false },
       ...GATED_PATHS.map((path) => ({
         source: `/:locale(no|en)/${path}`,
         destination: "/:locale",
