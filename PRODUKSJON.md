@@ -104,6 +104,14 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 - [ ] `NIF_ORG_ID` — TKKs organisasjons-ID i NIF
 - [ ] `NIF_MOCK_ALWAYS_FOUND` — sett til `false` i produksjon
 
+### NIF Activity API (iSonen-synk)
+- [ ] `NIF_ACTIVITY_API_BASE_URL` — base-URL for data.nif.no activity-API (fyll inn når tilgang er innvilget)
+- [ ] `NIF_ACTIVITY_CLIENT_ID` — OAuth2 client id
+- [ ] `NIF_ACTIVITY_CLIENT_SECRET` — OAuth2 client secret
+- [ ] `NIF_ACTIVITY_MOCK` — sett til `false` i produksjon (kun `true` for lokal testing uten reell tilgang)
+- [ ] `CRON_SECRET` — beskytter `/api/sync-isonen`-endepunktet mot uautorisert kjøring
+- [ ] `SANITY_WRITE_TOKEN` — Sanity-token med skriverettigheter (Settings → API → Tokens → Add API token → Editor), brukes av synk-ruten
+
 ---
 
 ## 6. E-post
@@ -123,6 +131,16 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 - [ ] Oppdater `src/lib/nif.ts` hvis endepunkt-URL eller responsformat avviker fra stubben
 - [ ] Test oppslaget mot NIF staging-miljø før produksjon
 - [ ] Verifiser at feltene (`personId`, `firstName`, `lastName`, `birthDate`, `primaryEmail`, `primaryPhoneMobile`) stemmer med faktisk API-respons
+
+### 7b. NIF Activity API — daglig import av aktiviteter fra iSonen
+
+- [ ] Søk om API-tilgang til `data.nif.no` sitt activity-API (scope `data_activity_read`) — egen søknad, separat fra PersonInfo-tilgangen i 7
+- [ ] Be om OAuth2 client-ID/secret når tilgang er innvilget
+- [ ] Verifiser faktisk responsformat fra `EventsForOrg/Schedule` mot antagelsene i `src/lib/isonen.ts` (feltnavn er ikke bekreftet — se kommentar i filen) og juster mapping om nødvendig
+- [ ] Test synk-ruten (`/api/sync-isonen`) manuelt mot reelle data før cron skrus på i produksjon
+- [ ] Bekreft at kun aktiviteter fra "Trondhjems Kajakklubb" og "Trondhjems Kajakklubb - Padling" dukker opp som kladder i Sanity
+- [ ] Sett `NIF_ACTIVITY_MOCK=false` i produksjon
+- [ ] Bekreft at cron-jobben i `vercel.json` faktisk kjører daglig (Vercel-dashboard → Deployments → Cron Jobs)
 
 ---
 

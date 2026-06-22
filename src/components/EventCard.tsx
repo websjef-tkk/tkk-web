@@ -64,8 +64,13 @@ export default function EventCard({ event, locale, labels }: Props) {
       href={`/${locale}/aktiviteter/${event.slug}`}
       className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
     >
-      <div className="border-l-4 border-tkk-blue px-5 py-4 flex-1">
+      <div className={`border-l-4 px-5 py-4 flex-1 ${event.cancelled ? "border-red-500" : "border-tkk-blue"}`}>
         <div className="flex flex-wrap gap-2 mb-2">
+          {event.cancelled && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-800">
+              {locale === "no" ? "AVLYST" : "CANCELLED"}
+            </span>
+          )}
           {event.isRecurring && (
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-tkk-blue/20 text-navy">
               {locale === "no" ? "FAST" : "RECURRING"}

@@ -16,6 +16,9 @@ export interface SanityEvent {
   discipline?: string;
   difficulty?: string;
   registerUrl?: string;
+  cancelled?: boolean;
+  externalSource?: string;
+  externalId?: string;
 }
 
 const eventProjection = `
@@ -33,7 +36,10 @@ const eventProjection = `
   category,
   discipline,
   difficulty,
-  registerUrl
+  registerUrl,
+  cancelled,
+  externalSource,
+  externalId
 `;
 
 export async function getUpcomingEvents(): Promise<SanityEvent[]> {
