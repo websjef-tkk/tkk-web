@@ -57,7 +57,22 @@ function BlogPostContent({ locale, post }: { locale: string; post: BlogPostFull 
 
       {body?.length ? (
         <div className="prose prose-slate max-w-none leading-relaxed">
-          <PortableText value={body} />
+          <PortableText
+            value={body}
+            components={{
+              types: {
+                image: ({ value }) => (
+                  <Image
+                    src={urlFor(value).width(1000).url()}
+                    alt={value.alt ?? ""}
+                    width={1000}
+                    height={700}
+                    className="rounded-lg w-full h-auto my-6"
+                  />
+                ),
+              },
+            }}
+          />
         </div>
       ) : null}
 

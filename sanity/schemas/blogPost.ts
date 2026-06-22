@@ -41,8 +41,8 @@ export const blogPost = defineType({
       title: "Innhold",
       type: "object",
       fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }] }),
-        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }] }),
+        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }, { type: "image", options: { hotspot: true } }] }),
+        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }, { type: "image", options: { hotspot: true } }] }),
       ],
     }),
     defineField({
@@ -52,6 +52,7 @@ export const blogPost = defineType({
       options: {
         list: [
           { title: "Tur", value: "tur" },
+          { title: "Turrapport", value: "turrapport" },
           { title: "Info", value: "info" },
           { title: "Klubb", value: "klubb" },
           { title: "Sosialt", value: "sosial" },
