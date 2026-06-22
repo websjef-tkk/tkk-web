@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -35,6 +35,13 @@ export default function Nav({
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const otherLocale = locale === "no" ? "en" : "no";
   const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`);
@@ -115,7 +122,7 @@ export default function Nav({
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-white/10 py-2 space-y-0.5 pb-4">
+          <div className="md:hidden border-t border-white/10 py-2 space-y-0.5 pb-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
             {menu.map((item, i) =>
               item.itemType === "dropdown" ? (
                 <div key={i}>
