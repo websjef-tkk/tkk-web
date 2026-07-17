@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,10 +7,18 @@ import { PortableText } from "@portabletext/react";
 import { getBlogPost } from "@/lib/queries/blog";
 import { urlFor } from "@/lib/sanity";
 import type { BlogPostFull } from "@/lib/queries/blog";
+import { richTextComponents } from "@/components/portableText/richTextComponents";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string; slug: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const post = await getBlogPost(slug);
+  return buildPageMetadata(post, locale);
+}
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params;
@@ -57,22 +66,7 @@ function BlogPostContent({ locale, post }: { locale: string; post: BlogPostFull 
 
       {body?.length ? (
         <div className="prose prose-slate max-w-none leading-relaxed">
-          <PortableText
-            value={body}
-            components={{
-              types: {
-                image: ({ value }) => (
-                  <Image
-                    src={urlFor(value).width(1000).url()}
-                    alt={value.alt ?? ""}
-                    width={1000}
-                    height={700}
-                    className="rounded-lg w-full h-auto my-6"
-                  />
-                ),
-              },
-            }}
-          />
+          <PortableText value={body} components={richTextComponents} />
         </div>
       ) : null}
 

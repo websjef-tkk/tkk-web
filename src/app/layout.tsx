@@ -3,7 +3,7 @@ import "./globals.css";
 import { getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: "Trondhjems Kajakklubb",
+  title: { default: "Trondhjems Kajakklubb", template: "%s | Trondhjems Kajakklubb" },
   description: "En aktiv kajakklub i Trondheim med ~500 medlemmer og seks disipliner.",
 };
 

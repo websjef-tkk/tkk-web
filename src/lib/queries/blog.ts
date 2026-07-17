@@ -1,4 +1,5 @@
 import { sanityClient } from "../sanity";
+import { bodyProjection, type SeoField } from "./shared";
 
 export interface BlogPostSummary {
   _id: string;
@@ -9,6 +10,7 @@ export interface BlogPostSummary {
   category: string;
   author?: string;
   image?: { asset: { _ref: string }; alt?: string };
+  seo?: SeoField;
 }
 
 export interface BlogPostFull extends BlogPostSummary {
@@ -26,7 +28,8 @@ export async function getAllBlogPosts(): Promise<BlogPostSummary[]> {
         summary,
         category,
         author,
-        image
+        image,
+        seo
       }`
     );
   } catch {
@@ -43,10 +46,11 @@ export async function getBlogPost(slug: string): Promise<BlogPostFull | null> {
         publishedAt,
         title,
         summary,
-        body,
+        ${bodyProjection},
         category,
         author,
-        image
+        image,
+        seo
       }`,
       { slug }
     );

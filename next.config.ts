@@ -23,9 +23,7 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    const permanentRedirects = [
-      { source: "/:locale/om-klubben/refusjon", destination: "/:locale/om-klubben/kjoregodtgjorelse", permanent: true },
-    ];
+    const permanentRedirects: { source: string; destination: string; permanent: boolean }[] = [];
 
     if (membersEnabled) return permanentRedirects;
 

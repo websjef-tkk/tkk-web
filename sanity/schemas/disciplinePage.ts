@@ -1,11 +1,6 @@
 import { defineField, defineType } from "sanity";
-
-const linkAnnotation = {
-  type: "object" as const,
-  name: "link",
-  title: "Lenke",
-  fields: [{ name: "href", type: "url", title: "URL" }],
-};
+import { bodyBlockOf } from "./objects/blockContent";
+import { seoField } from "./objects/seo";
 
 export const disciplinePage = defineType({
   name: "disciplinePage",
@@ -27,7 +22,17 @@ export const disciplinePage = defineType({
           { title: "Pirbadet", value: "pirbadet" },
         ],
       },
-      validation: (r) => r.required(),
+      validation: (r) =>
+        r.required().custom(async (value, ctx) => {
+          if (!value) return true;
+          const client = ctx.getClient({ apiVersion: "2024-01-01" });
+          const id = (ctx.document?._id ?? "").replace(/^drafts\./, "");
+          const other = await client.fetch(
+            `count(*[_type == "disciplinePage" && discipline == $value && !(_id in [$id, "drafts." + $id])])`,
+            { value, id }
+          );
+          return other === 0 ? true : "Denne disiplinen er allerede i bruk av en annen side";
+        }),
     }),
     defineField({
       name: "title",
@@ -65,13 +70,13 @@ export const disciplinePage = defineType({
           name: "no",
           title: "Norsk",
           type: "array",
-          of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
+          of: bodyBlockOf("no"),
         }),
         defineField({
           name: "en",
           title: "English",
           type: "array",
-          of: [{ type: "block", marks: { annotations: [linkAnnotation] } }],
+          of: bodyBlockOf("en"),
         }),
       ],
     }),
@@ -114,8 +119,9 @@ export const disciplinePage = defineType({
       title: "Bilde",
       type: "image",
       options: { hotspot: true },
-      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string" })],
+      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],
     }),
+    seoField,
   ],
   preview: {
     select: { title: "title.no", subtitle: "discipline" },

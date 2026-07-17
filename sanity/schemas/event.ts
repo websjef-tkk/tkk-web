@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { bodyBlockOf } from "./objects/blockContent";
 
 export const event = defineType({
   name: "event",
@@ -35,8 +36,8 @@ export const event = defineType({
       title: "Utfyllende innhold (hvordan delta)",
       type: "object",
       fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }] }),
-        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }] }),
+        defineField({ name: "no", title: "Norsk", type: "array", of: bodyBlockOf("no") }),
+        defineField({ name: "en", title: "English", type: "array", of: bodyBlockOf("en") }),
       ],
     }),
     defineField({

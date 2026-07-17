@@ -1,24 +1,7 @@
-import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import type { FlexiblePage } from "@/lib/queries/page";
-
-const portableTextComponents: PortableTextComponents = {
-  marks: {
-    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
-      <a href={value?.href} className="text-teal underline hover:text-navy" target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    ),
-  },
-  block: {
-    h2: ({ children }) => (
-      <h2 className="font-display font-bold text-navy text-2xl mb-3 mt-8">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="font-display font-semibold text-navy text-xl mb-2 mt-6">{children}</h3>
-    ),
-  },
-};
+import { richTextComponents } from "@/components/portableText/richTextComponents";
 
 type Props = {
   page: FlexiblePage;
@@ -47,7 +30,7 @@ export default function FlexiblePageContent({ page, locale, backHref, backLabel,
       {body?.length ? (
         <div className="prose prose-slate max-w-none text-slate leading-relaxed mb-10">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <PortableText value={body as any} components={portableTextComponents} />
+          <PortableText value={body as any} components={richTextComponents} />
         </div>
       ) : null}
       {extra}

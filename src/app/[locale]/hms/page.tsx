@@ -1,11 +1,19 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { getFlexiblePage } from "@/lib/queries/page";
 import FlexiblePageContent from "@/components/FlexiblePageContent";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const page = await getFlexiblePage("hms");
+  return buildPageMetadata(page, locale);
+}
 
 export default async function HmsPage({ params }: PageProps) {
   const { locale } = await params;

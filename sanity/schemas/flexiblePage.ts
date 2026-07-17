@@ -1,11 +1,6 @@
 import { defineField, defineType } from "sanity";
-
-const linkAnnotation = {
-  type: "object" as const,
-  name: "link",
-  title: "Lenke",
-  fields: [{ name: "href", type: "url", title: "URL" }],
-};
+import { bodyBlockOf } from "./objects/blockContent";
+import { seoField } from "./objects/seo";
 
 export const flexiblePage = defineType({
   name: "flexiblePage",
@@ -65,7 +60,17 @@ export const flexiblePage = defineType({
           { title: "Medlemskap", value: "medlemskap" },
         ],
       },
-      validation: (r) => r.required(),
+      validation: (r) =>
+        r.required().custom(async (value, ctx) => {
+          if (!value) return true;
+          const client = ctx.getClient({ apiVersion: "2024-01-01" });
+          const id = (ctx.document?._id ?? "").replace(/^drafts\./, "");
+          const other = await client.fetch(
+            `count(*[_type == "flexiblePage" && pageId == $value && !(_id in [$id, "drafts." + $id])])`,
+            { value, id }
+          );
+          return other === 0 ? true : "Denne Side-IDen er allerede i bruk av en annen side";
+        }),
     }),
     defineField({
       name: "section",
@@ -108,29 +113,28 @@ export const flexiblePage = defineType({
           name: "no",
           title: "Norsk",
           type: "array",
-          of: [{ type: "block", styles: [
-            { title: "Normal", value: "normal" },
-            { title: "Overskrift 2", value: "h2" },
-            { title: "Overskrift 3", value: "h3" },
-          ], marks: { annotations: [linkAnnotation] } }],
+          of: bodyBlockOf("no"),
         }),
         defineField({
           name: "en",
           title: "English",
           type: "array",
-          of: [{ type: "block", styles: [
-            { title: "Normal", value: "normal" },
-            { title: "Heading 2", value: "h2" },
-            { title: "Heading 3", value: "h3" },
-          ], marks: { annotations: [linkAnnotation] } }],
+          of: bodyBlockOf("en"),
         }),
       ],
     }),
+    seoField,
   ],
   preview: {
-    select: { title: "title.no", subtitle: "pageId" },
-    prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
-      return { title: title ?? "Uten tittel", subtitle };
+    select: { title: "title.no", subtitle: "pageId", updatedAt: "_updatedAt" },
+    prepare({ title, subtitle, updatedAt }: { title?: string; subtitle?: string; updatedAt?: string }) {
+      const updated = updatedAt
+        ? new Date(updatedAt).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })
+        : undefined;
+      return {
+        title: title ?? "Uten tittel",
+        subtitle: updated ? `${subtitle} · sist oppdatert ${updated}` : subtitle,
+      };
     },
   },
 });

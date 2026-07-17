@@ -1,4 +1,5 @@
 import { sanityClient } from "../sanity";
+import { bodyProjection, type SeoField } from "./shared";
 
 export interface FlexiblePage {
   _id: string;
@@ -6,6 +7,7 @@ export interface FlexiblePage {
   title: { no: string; en?: string };
   intro?: { no?: string; en?: string };
   body?: { no?: unknown[]; en?: unknown[] };
+  seo?: SeoField;
 }
 
 export interface SubPageLink {
@@ -22,6 +24,7 @@ export interface DisciplinePage {
   body?: { no?: unknown[]; en?: unknown[] };
   heroImage?: { asset: { _ref: string }; alt?: string };
   subPageLinks?: SubPageLink[];
+  seo?: SeoField;
 }
 
 export async function getFlexiblePage(pageId: string): Promise<FlexiblePage | null> {
@@ -32,7 +35,8 @@ export async function getFlexiblePage(pageId: string): Promise<FlexiblePage | nu
         pageId,
         title,
         intro,
-        body
+        ${bodyProjection},
+        seo
       }`,
       { pageId }
     );
@@ -50,9 +54,10 @@ export async function getDisciplinePage(discipline: string): Promise<DisciplineP
         title,
         tagline,
         intro,
-        body,
+        ${bodyProjection},
         heroImage,
-        subPageLinks[] { title, href }
+        subPageLinks[] { title, href },
+        seo
       }`,
       { discipline }
     );

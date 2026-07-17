@@ -3,16 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/lib/sanity";
 import type { DisciplinePage } from "@/lib/queries/page";
-
-const portableTextComponents = {
-  marks: {
-    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
-      <a href={value?.href} className="text-teal underline hover:text-navy" target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    ),
-  },
-};
+import { richTextComponents } from "@/components/portableText/richTextComponents";
 
 type Props = {
   page: DisciplinePage;
@@ -47,7 +38,7 @@ export default function DisciplinePageContent({ page, locale }: Props) {
 
         {body?.length ? (
           <div className="prose prose-slate max-w-none text-slate leading-relaxed mb-14">
-            <PortableText value={body} components={portableTextComponents} />
+            <PortableText value={body} components={richTextComponents} />
           </div>
         ) : null}
 

@@ -1,4 +1,6 @@
 import { defineField, defineType } from "sanity";
+import { bodyBlockOf } from "./objects/blockContent";
+import { seoField } from "./objects/seo";
 
 export const blogPost = defineType({
   name: "blogPost",
@@ -41,8 +43,8 @@ export const blogPost = defineType({
       title: "Innhold",
       type: "object",
       fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: [{ type: "block" }, { type: "image", options: { hotspot: true } }] }),
-        defineField({ name: "en", title: "English", type: "array", of: [{ type: "block" }, { type: "image", options: { hotspot: true } }] }),
+        defineField({ name: "no", title: "Norsk", type: "array", of: bodyBlockOf("no", { image: true }) }),
+        defineField({ name: "en", title: "English", type: "array", of: bodyBlockOf("en", { image: true }) }),
       ],
     }),
     defineField({
@@ -66,8 +68,9 @@ export const blogPost = defineType({
       title: "Bilde",
       type: "image",
       options: { hotspot: true },
-      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string" })],
+      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],
     }),
+    seoField,
   ],
   orderings: [{ title: "Nyeste først", name: "publishedAtDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
   preview: {

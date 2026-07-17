@@ -1,10 +1,18 @@
+import type { Metadata } from "next";
 import { getFlexiblePage } from "@/lib/queries/page";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const page = await getFlexiblePage("medlemskap");
+  return buildPageMetadata(page, locale);
+}
 
 type Block = { style?: string; children?: { text?: string }[] };
 

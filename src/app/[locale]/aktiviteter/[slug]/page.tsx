@@ -1,12 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { getEventBySlug } from "@/lib/queries/events";
 import type { SanityEvent } from "@/lib/queries/events";
+import { richTextComponents } from "@/components/portableText/richTextComponents";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string; slug: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const event = await getEventBySlug(slug);
+  return buildPageMetadata(event, locale);
+}
 
 const DAY_LABELS: Record<string, { no: string; en: string }> = {
   monday: { no: "Mandag", en: "Monday" },
@@ -71,7 +80,7 @@ function EventDetailContent({ locale, event }: { locale: string; event: SanityEv
 
       {body?.length ? (
         <div className="prose prose-slate max-w-none leading-relaxed mb-8">
-          <PortableText value={body} />
+          <PortableText value={body} components={richTextComponents} />
         </div>
       ) : null}
 

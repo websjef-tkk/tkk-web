@@ -1,4 +1,5 @@
 import { sanityClient } from "../sanity";
+import { bodyProjection } from "./shared";
 
 export interface SanityEvent {
   _id: string;
@@ -26,7 +27,7 @@ const eventProjection = `
   "slug": slug.current,
   title,
   description,
-  body,
+  ${bodyProjection},
   isRecurring,
   date,
   endDate,
