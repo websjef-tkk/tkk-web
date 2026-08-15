@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { getAllPeople } from "@/lib/queries/people";
 import type { SanityPerson } from "@/lib/queries/people";
 
@@ -28,6 +29,16 @@ function OmKlubbenContent({ locale, people }: { locale: string; people: SanityPe
       <section className="mb-12">
         <h2 className="font-display font-bold text-navy text-2xl mb-3">{t("values_title")}</h2>
         <p className="text-slate leading-relaxed">{t("values_text")}</p>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="font-display font-bold text-navy text-2xl mb-3">{t("governance_title")}</h2>
+        <p className="text-slate leading-relaxed">
+          {t("governance_text")}{" "}
+          <Link href={`/${locale}/om-klubben/organisasjonsplanen`} className="text-teal font-medium hover:underline">
+            {t("governance_link")}
+          </Link>
+        </p>
       </section>
 
       {board.length > 0 && <PersonTable title={t("board_title")} people={board} isNo={isNo} />}
