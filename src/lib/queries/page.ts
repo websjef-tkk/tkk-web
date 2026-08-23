@@ -4,24 +4,24 @@ import { bodyProjection, type SeoField } from "./shared";
 export interface FlexiblePage {
   _id: string;
   pageId: string;
-  title: { no: string; en?: string };
-  intro?: { no?: string; en?: string };
-  body?: { no?: unknown[]; en?: unknown[] };
+  title: { no: string };
+  intro?: { no?: string };
+  body?: { no?: unknown[] };
   seo?: SeoField;
 }
 
 export interface SubPageLink {
-  title: { no?: string; en?: string };
+  title: { no?: string };
   href: string;
 }
 
 export interface DisciplinePage {
   _id: string;
   discipline: string;
-  title: { no: string; en?: string };
-  tagline?: { no?: string; en?: string };
-  intro?: { no?: string; en?: string };
-  body?: { no?: unknown[]; en?: unknown[] };
+  title: { no: string };
+  tagline?: { no?: string };
+  intro?: { no?: string };
+  body?: { no?: unknown[] };
   heroImage?: { asset: { _ref: string }; alt?: string };
   subPageLinks?: SubPageLink[];
   seo?: SeoField;

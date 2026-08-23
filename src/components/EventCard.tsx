@@ -3,12 +3,10 @@ import type { SanityEvent } from "@/lib/queries/events";
 
 type Props = {
   event: SanityEvent;
-  locale: string;
   labels: {
     difficulty_nybegynner: string;
     difficulty_middels: string;
     difficulty_erfaren: string;
-    register: string;
   };
 };
 
@@ -24,28 +22,40 @@ const categoryColour: Record<string, string> = {
   sosial: "bg-sand/30 text-navy",
 };
 
-const DAY_LABELS: Record<string, { no: string; en: string }> = {
-  monday: { no: "Mandag", en: "Monday" },
-  tuesday: { no: "Tirsdag", en: "Tuesday" },
-  wednesday: { no: "Onsdag", en: "Wednesday" },
-  thursday: { no: "Torsdag", en: "Thursday" },
-  friday: { no: "Fredag", en: "Friday" },
-  saturday: { no: "Lørdag", en: "Saturday" },
-  sunday: { no: "Søndag", en: "Sunday" },
+export const DISCIPLINE_LABELS: Record<string, string> = {
+  hav: "Hav",
+  elv: "Elv",
+  flattvann: "Flattvann",
+  surfski: "Surfski",
+  polo: "Kajakkpolo",
+  junior: "Junior",
+  alle: "Alle grener",
 };
 
-function formatDate(dateStr: string, endDate?: string, locale?: string) {
+export const disciplineColour = "bg-navy/10 text-navy";
+
+const DAY_LABELS: Record<string, string> = {
+  monday: "Mandag",
+  tuesday: "Tirsdag",
+  wednesday: "Onsdag",
+  thursday: "Torsdag",
+  friday: "Fredag",
+  saturday: "Lørdag",
+  sunday: "Søndag",
+};
+
+function formatDate(dateStr: string, endDate?: string) {
   const fmt = (d: string) =>
-    new Date(d).toLocaleDateString(locale === "no" ? "nb-NO" : "en-GB", {
+    new Date(d).toLocaleDateString("nb-NO", {
       day: "numeric",
       month: "short",
     });
   return endDate ? `${fmt(dateStr)} – ${fmt(endDate)}` : fmt(dateStr);
 }
 
-export default function EventCard({ event, locale, labels }: Props) {
-  const title = locale === "no" ? event.title.no : (event.title.en ?? event.title.no);
-  const desc = locale === "no" ? event.description?.no : (event.description?.en ?? event.description?.no);
+export default function EventCard({ event, labels }: Props) {
+  const title = event.title.no;
+  const desc = event.description?.no;
   const diffLabel =
     event.difficulty === "nybegynner"
       ? labels.difficulty_nybegynner
@@ -55,30 +65,32 @@ export default function EventCard({ event, locale, labels }: Props) {
       ? labels.difficulty_erfaren
       : undefined;
 
+  const disciplineLabel = event.discipline ? DISCIPLINE_LABELS[event.discipline] : undefined;
+
   const whenLabel = event.isRecurring
-    ? `${DAY_LABELS[event.dayOfWeek ?? ""]?.[locale === "no" ? "no" : "en"] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
-    : formatDate(event.date!, event.endDate, locale);
+    ? `${DAY_LABELS[event.dayOfWeek ?? ""] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
+    : formatDate(event.date!, event.endDate);
 
   return (
     <Link
-      href={`/${locale}/aktiviteter/${event.slug}`}
+      href={`/aktiviteter/${event.slug}`}
       className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
     >
       <div className={`border-l-4 px-5 py-4 flex-1 ${event.cancelled ? "border-red-500" : "border-tkk-blue"}`}>
         <div className="flex flex-wrap gap-2 mb-2">
           {event.cancelled && (
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-800">
-              {locale === "no" ? "AVLYST" : "CANCELLED"}
-            </span>
-          )}
-          {event.isRecurring && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-tkk-blue/20 text-navy">
-              {locale === "no" ? "FAST" : "RECURRING"}
+              AVLYST
             </span>
           )}
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${categoryColour[event.category] ?? ""}`}>
             {event.category.toUpperCase()}
           </span>
+          {disciplineLabel && (
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${disciplineColour}`}>
+              {disciplineLabel.toUpperCase()}
+            </span>
+          )}
           {event.difficulty && diffLabel && (
             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${difficultyColour[event.difficulty] ?? ""}`}>
               {diffLabel}
@@ -91,7 +103,7 @@ export default function EventCard({ event, locale, labels }: Props) {
         {desc && <p className="text-slate text-sm leading-relaxed">{desc}</p>}
       </div>
       <div className="px-5 py-3 bg-mist border-t border-mist">
-        <span className="text-teal text-sm font-semibold">{labels.register} →</span>
+        <span className="text-teal text-sm font-semibold">Les mer →</span>
       </div>
     </Link>
   );

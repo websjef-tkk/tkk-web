@@ -1,4 +1,5 @@
 import { defineField } from "sanity";
+import { noString, noText } from "./localized";
 
 export const seoField = defineField({
   name: "seo",
@@ -8,45 +9,12 @@ export const seoField = defineField({
     "Valgfritt. Brukes i <title>/<meta description> i stedet for tittel/ingress. Se Googles veiledning for gode søkeresultat-snutter: https://developers.google.com/search/docs/appearance/snippet",
   options: { collapsible: true, collapsed: true },
   fields: [
-    defineField({
-      name: "metaTitle",
-      title: "Meta-tittel",
-      type: "object",
-      fields: [
-        defineField({
-          name: "no",
-          title: "Norsk",
-          type: "string",
-          validation: (r) => r.max(60).warning("Anbefalt maks 60 tegn — lengre titler kan bli kuttet i søkeresultater"),
-        }),
-        defineField({
-          name: "en",
-          title: "English",
-          type: "string",
-          validation: (r) => r.max(60).warning("Recommended max 60 characters — longer titles may get truncated in search results"),
-        }),
-      ],
+    noString("metaTitle", "Meta-tittel", {
+      maxWarning: { limit: 60, message: "Anbefalt maks 60 tegn — lengre titler kan bli kuttet i søkeresultater" },
     }),
-    defineField({
-      name: "metaDescription",
-      title: "Meta-beskrivelse",
-      type: "object",
-      fields: [
-        defineField({
-          name: "no",
-          title: "Norsk",
-          type: "text",
-          rows: 3,
-          validation: (r) => r.max(160).warning("Anbefalt maks 160 tegn — lengre tekst blir ofte kuttet i søkeresultater"),
-        }),
-        defineField({
-          name: "en",
-          title: "English",
-          type: "text",
-          rows: 3,
-          validation: (r) => r.max(160).warning("Recommended max 160 characters — longer text is often truncated in search results"),
-        }),
-      ],
+    noText("metaDescription", "Meta-beskrivelse", {
+      rows: 3,
+      maxWarning: { limit: 160, message: "Anbefalt maks 160 tegn — lengre tekst blir ofte kuttet i søkeresultater" },
     }),
     defineField({
       name: "ogImage",

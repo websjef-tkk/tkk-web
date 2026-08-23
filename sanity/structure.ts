@@ -2,7 +2,6 @@ import type { StructureResolver } from "sanity/structure";
 
 const EXPLICITLY_HANDLED_TYPES = new Set([
   "siteSettings",
-  "navLabels",
   "disciplinePage",
   "flexiblePage",
   "event",
@@ -25,10 +24,6 @@ export const structure: StructureResolver = (S) =>
                 .title("Nettstedinnstillinger")
                 .id("siteSettings")
                 .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
-              S.listItem()
-                .title("Navigasjonsetiketter")
-                .id("navLabels")
-                .child(S.document().schemaType("navLabels").documentId("navLabels")),
               S.listItem()
                 .title("Hovedmeny")
                 .id("mainMenu")

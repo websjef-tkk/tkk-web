@@ -4,9 +4,9 @@ import { bodyProjection } from "./shared";
 export interface SanityEvent {
   _id: string;
   slug: string;
-  title: { no: string; en?: string };
-  description?: { no?: string; en?: string };
-  body?: { no?: unknown[]; en?: unknown[] };
+  title: { no: string };
+  description?: { no?: string };
+  body?: { no?: unknown[] };
   isRecurring?: boolean;
   date?: string;
   endDate?: string;

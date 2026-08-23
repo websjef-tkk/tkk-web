@@ -1,20 +1,12 @@
 import { defineField, defineType } from "sanity";
-import { bodyBlockOf } from "./objects/blockContent";
+import { noString, noText, noBody } from "./objects/localized";
 
 export const event = defineType({
   name: "event",
   title: "Aktivitet / arrangement",
   type: "document",
   fields: [
-    defineField({
-      name: "title",
-      title: "Tittel",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
+    noString("title", "Tittel", { required: true }),
     defineField({
       name: "slug",
       title: "Slug",
@@ -22,24 +14,8 @@ export const event = defineType({
       options: { source: "title.no" },
       validation: (r) => r.required(),
     }),
-    defineField({
-      name: "description",
-      title: "Beskrivelse",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "text", rows: 4 }),
-        defineField({ name: "en", title: "English", type: "text", rows: 4 }),
-      ],
-    }),
-    defineField({
-      name: "body",
-      title: "Utfyllende innhold (hvordan delta)",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: bodyBlockOf("no") }),
-        defineField({ name: "en", title: "English", type: "array", of: bodyBlockOf("en") }),
-      ],
-    }),
+    noText("description", "Beskrivelse"),
+    noBody("body", "Utfyllende innhold (hvordan delta)"),
     defineField({
       name: "isRecurring",
       title: "Gjentakende aktivitet?",
@@ -116,6 +92,7 @@ export const event = defineType({
     defineField({
       name: "discipline",
       title: "Disiplin",
+      description: "Vises som merkelapp på aktivitetskortene. Fyll ut for at grenen skal synes.",
       type: "string",
       options: {
         list: [

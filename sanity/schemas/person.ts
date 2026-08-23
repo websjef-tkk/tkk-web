@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { noString } from "./objects/localized";
 
 export const person = defineType({
   name: "person",
@@ -6,15 +7,7 @@ export const person = defineType({
   type: "document",
   fields: [
     defineField({ name: "name", title: "Navn", type: "string", validation: (r) => r.required() }),
-    defineField({
-      name: "role",
-      title: "Rolle",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
+    noString("role", "Rolle", { required: true }),
     defineField({
       name: "group",
       title: "Gruppe",

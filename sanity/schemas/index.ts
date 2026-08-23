@@ -4,7 +4,6 @@ import { person } from "./person";
 import { siteSettings } from "./siteSettings";
 import { disciplinePage } from "./disciplinePage";
 import { flexiblePage } from "./flexiblePage";
-import { navLabels } from "./navLabels";
 import { mainMenu } from "./mainMenu";
 
 export const schemaTypes = [
@@ -14,6 +13,5 @@ export const schemaTypes = [
   siteSettings,
   disciplinePage,
   flexiblePage,
-  navLabels,
   mainMenu,
 ];

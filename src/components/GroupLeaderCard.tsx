@@ -1,5 +1,3 @@
-import { useTranslations } from "next-intl";
-
 type Props = {
   name: string;
   role: string;
@@ -8,13 +6,11 @@ type Props = {
 };
 
 export default function GroupLeaderCard({ name, role, phone, email }: Props) {
-  const t = useTranslations("leader");
-
   return (
     <div className="bg-white rounded-xl border border-mist shadow-sm p-5 flex items-start gap-4">
       {/* Photo placeholder */}
       <div className="shrink-0 w-16 h-16 rounded-full bg-mist border-2 border-tkk-blue flex items-center justify-center text-slate text-xs text-center leading-tight font-medium">
-        {t("photo_placeholder")}
+        Foto kommer
       </div>
 
       {/* Info */}

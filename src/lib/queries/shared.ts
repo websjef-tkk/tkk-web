@@ -1,6 +1,6 @@
 export interface SeoField {
-  metaTitle?: { no?: string; en?: string };
-  metaDescription?: { no?: string; en?: string };
+  metaTitle?: { no?: string };
+  metaDescription?: { no?: string };
   ogImage?: { asset?: { _ref: string } };
 }
 
@@ -13,7 +13,6 @@ const markDefsExpansion = `
 
 export const bodyProjection = `
   body {
-    no[]{ ..., ${markDefsExpansion} },
-    en[]{ ..., ${markDefsExpansion} }
+    no[]{ ..., ${markDefsExpansion} }
   }
 `;

@@ -1,4 +1,63 @@
 import { defineField, defineType } from "sanity";
+import { noString } from "./objects/localized";
+
+const heroButton = {
+  type: "object" as const,
+  name: "heroButton",
+  title: "Knapp",
+  fields: [
+    defineField({ name: "label", title: "Tekst", type: "string", validation: (r) => r.required() }),
+    defineField({
+      name: "href",
+      title: "Lenke",
+      type: "string",
+      description: 'Intern sti som starter med "/", eller en full adresse som starter med "https://".',
+      validation: (r) =>
+        r.required().custom((val: string | undefined) => {
+          if (!val) return "Lenke er påkrevd";
+          return val.startsWith("/") || val.startsWith("http") ? true : 'Lenken må starte med "/" eller "http"';
+        }),
+    }),
+  ],
+  preview: {
+    select: { title: "label", subtitle: "href" },
+  },
+};
+
+const heroSlide = {
+  type: "object" as const,
+  name: "heroSlide",
+  title: "Forsidebilde",
+  fields: [
+    defineField({
+      name: "image",
+      title: "Bilde",
+      type: "image",
+      options: { hotspot: true },
+      validation: (r) => r.required(),
+      fields: [
+        defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() }),
+      ],
+    }),
+    defineField({ name: "title", title: "Overskrift", type: "string", validation: (r) => r.required() }),
+    defineField({
+      name: "subtitle",
+      title: "Undertekst",
+      description: "Den mindre linjen under overskriften.",
+      type: "string",
+    }),
+    defineField({
+      name: "buttons",
+      title: "Knapper",
+      type: "array",
+      of: [heroButton],
+      validation: (r) => r.max(3).warning("Flere enn 3 knapper blir trangt på mobil"),
+    }),
+  ],
+  preview: {
+    select: { title: "title", subtitle: "subtitle", media: "image" },
+  },
+};
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -8,32 +67,15 @@ export const siteSettings = defineType({
   __experimental_actions: ["update", "publish"],
   fields: [
     defineField({
-      name: "heroTitle",
-      title: "Forsideoverskrift",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string" }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
+      name: "heroSlides",
+      title: "Forsidekarusell",
+      description:
+        "Bildene øverst på forsiden. Besøkende bytter mellom dem med strekene nederst i bildet. Med bare ett bilde vises ingen streker.",
+      type: "array",
+      of: [heroSlide],
+      validation: (r) => r.max(4).warning("Flere enn 2 bilder blir fort mye på forsiden"),
     }),
-    defineField({
-      name: "heroSubtitle",
-      title: "Forsideundertittel",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string" }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "footerText",
-      title: "Bunntekst-tagline",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string" }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
+    noString("footerText", "Bunntekst-tagline"),
     defineField({ name: "instagram", title: "Instagram URL", type: "url" }),
     defineField({ name: "facebook", title: "Facebook URL", type: "url" }),
     defineField({ name: "visitingAddress", title: "Besøksadresse", type: "text", rows: 2 }),
@@ -49,17 +91,7 @@ export const siteSettings = defineType({
         {
           type: "object",
           name: "stat",
-          fields: [
-            defineField({
-              name: "label",
-              title: "Tekst",
-              type: "object",
-              fields: [
-                defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-                defineField({ name: "en", title: "English", type: "string" }),
-              ],
-            }),
-          ],
+          fields: [noString("label", "Tekst", { required: true })],
           preview: {
             select: { title: "label.no" },
           },
@@ -70,29 +102,18 @@ export const siteSettings = defineType({
     defineField({
       name: "partners",
       title: "Samarbeidspartnere",
+      description: "Logoene nederst på forsiden. Alle logoene lenker til siden om medlemsfordeler.",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             defineField({ name: "name", title: "Navn", type: "string" }),
-            defineField({ name: "url", title: "Nettside", type: "url" }),
             defineField({ name: "logo", title: "Logo", type: "image", options: { hotspot: true } }),
-            defineField({
-              name: "description",
-              title: "Beskrivelse",
-              type: "object",
-              fields: [
-                defineField({ name: "no", title: "Norsk", type: "string" }),
-                defineField({ name: "en", title: "English", type: "string" }),
-              ],
-            }),
+            noString("description", "Beskrivelse"),
           ],
           preview: {
-            select: { title: "name", subtitle: "url" },
-            prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
-              return { title: title ?? "Partner", subtitle };
-            },
+            select: { title: "name", media: "logo" },
           },
         },
       ],

@@ -3,7 +3,6 @@ import Link from "next/link";
 type Section = { title: string; text: string };
 
 type Props = {
-  locale: string;
   title: string;
   intro: string;
   sections: Section[];
@@ -11,10 +10,10 @@ type Props = {
   extra?: React.ReactNode;
 };
 
-export default function HmsSubLayout({ locale, title, intro, sections, backLabel, extra }: Props) {
+export default function HmsSubLayout({ title, intro, sections, backLabel, extra }: Props) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link href={`/${locale}/hms`} className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
+      <Link href="/hms" className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
         {backLabel}
       </Link>
       <h1 className="font-display font-bold text-navy text-4xl mb-4">{title}</h1>

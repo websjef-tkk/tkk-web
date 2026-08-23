@@ -9,12 +9,12 @@ const linkProjection = `
 `;
 
 interface RawMenuChild {
-  label?: { no: string; en?: string };
+  label?: { no: string };
   link?: MenuLinkData;
 }
 
 interface RawMenuItem {
-  label?: { no: string; en?: string };
+  label?: { no: string };
   itemType?: "link" | "dropdown";
   link?: MenuLinkData;
   children?: RawMenuChild[];
@@ -25,12 +25,12 @@ interface RawMainMenu {
 }
 
 export interface ResolvedMenuChild {
-  label: { no: string; en?: string };
+  label: { no: string };
   href: string;
 }
 
 export interface ResolvedMenuItem {
-  label: { no: string; en?: string };
+  label: { no: string };
   itemType: "link" | "dropdown";
   href?: string;
   children?: ResolvedMenuChild[];

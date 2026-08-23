@@ -3,7 +3,7 @@ import { sanityClient } from "../sanity";
 export interface SanityPerson {
   _id: string;
   name: string;
-  role: { no: string; en?: string };
+  role: { no: string };
   group: "board" | "leaders" | "others";
   sortOrder?: number;
   phone?: string;

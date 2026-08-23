@@ -1,8 +1,8 @@
 # Huskeliste: Produksjonssetting
 
-> **Status:** Siden kjører som testversjon på Vercel: https://tkk-web-seven.vercel.app/no
-> Medlemsfunksjoner (innlogging, registrering, profil, admin) er foreløpig skjult bak `ENABLE_MEMBERS=false` — sett denne til `true` (og `NEXT_PUBLIC_ENABLE_MEMBERS=true`) når database og e-post er på plass.
-> Databasen er fortsatt SQLite (kun til utvikling) — **må** byttes til ekstern Postgres før medlemsfunksjoner kan skrus på i produksjon, se punkt 4.
+> **Status:** Siden kjører som testversjon på Vercel: https://tkk-web-seven.vercel.app/
+> Nettstedet er norskspråklig og har ingen innlogging eller medlemsdatabase — det er en
+> ren innholdsside drevet av Sanity CMS.
 
 ## 1. Sanity CMS (gjør dette FØRST — prosjekt-ID trengs overalt)
 
@@ -27,114 +27,52 @@
   - `--replace` (ikke `--missing`) brukes bare ved strukturelle endringer i skjemaet
   - `sanity/seed-content.ndjson` er gitignored og genereres lokalt
 - [ ] Logg inn på Studio (`/studio`) og legg inn innhold:
-  - `siteSettings` — heltetittel, bunntekst-tagline, sosiale lenker, adresse
+  - `siteSettings` — forsidekarusell, bunntekst-tagline, sosiale lenker, adresse, samarbeidspartnere
   - `person` — styre, gruppeledere og andre kontakter
   - `disciplinePage` — én per disiplin (hav, elv, flattvann, surfski, polo, junior); `body` er én sammenhengende Portable Text-editor der overskrifter brukes direkte
   - `flexiblePage` — alle HMS-sider + Klubben-sider + Medlemskap; `body` er én sammenhengende Portable Text-editor (h2 for seksjonsoverskrifter, h3 for underoverskrifter)
-  - `event` — kommende aktiviteter og turer
+  - `event` — kommende aktiviteter og turer. Husk feltet **Disiplin** — det styrer grenmerkelappen på aktivitetskortene
   - `blogPost` — blogginnlegg
 
 ---
 
-## 2. Admin-bruker (leder@tkk.no)
-
-- [ ] Kjør `npm run seed` i produksjonsmiljøet (eller lokalt mot prod-databasen)
-  - Scriptet oppretter `leder@tkk.no` med `isAdmin: true`, skriver ut engangspassord og e-postbekreftelseslenke til terminalen
-- [ ] Klikk bekreftelseslenken → e-post bekreftet
-- [ ] Logg inn på nettstedet med engangspassordet → bytt passord hvis ønskelig
-- [ ] Verifiser at Admin-lenken vises i navigasjonen og at `/admin/members` er tilgjengelig
-
----
-
-## 3. Hosting og domene
+## 2. Hosting og domene
 
 - [x] Velg hostingplattform — **Vercel** er valgt og prosjektet kjører allerede som testversjon på `tkk-web-seven.vercel.app`
 - [ ] Koble domenet `tkk.no` til Vercel-prosjektet (Vercel-dashboard → Settings → Domains)
 - [ ] Sett opp HTTPS (skjer automatisk på Vercel når domenet er koblet til)
 - [ ] Verifiser at `www.tkk.no` og `tkk.no` begge virker (redirect én til den andre)
-- [ ] Oppdater `NEXT_PUBLIC_APP_URL` i Vercel-miljøvariablene til `https://tkk.no` når domenet er live (i dag peker den sannsynligvis mot Vercel-URL-en)
-- [ ] Sett `ENABLE_MEMBERS=true` og `NEXT_PUBLIC_ENABLE_MEMBERS=true` i Vercel når database (punkt 4) og e-post (punkt 6) er klare
+- [ ] Oppdater `NEXT_PUBLIC_APP_URL` i Vercel-miljøvariablene til `https://tkk.no` når domenet er live
 
 ---
 
-## 4. Database
-
-- [ ] Bytt ut SQLite med en ekstern database — SQLite er kun egnet for utvikling
-  - Anbefalt: **Neon** (gratis PostgreSQL i skyen) eller **Supabase** — velg **EU-region** for GDPR
-  - Obs: persondata (navn, fødselsdato, telefon) lagres her — EU er påkrevd
-- [ ] Oppdater `prisma/schema.prisma`: endre `provider = "sqlite"` til `provider = "postgresql"`
-- [ ] Oppdater `prisma.config.ts` med ny connection URL
-- [ ] Fjern `@prisma/adapter-better-sqlite3` og `better-sqlite3` fra `package.json`; installer `@prisma/adapter-neon` eller tilsvarende
-- [ ] Oppdater `src/lib/prisma.ts` til å bruke riktig adapter for valgt database
-- [ ] Kjør `npx prisma migrate deploy` mot produksjonsdatabasen
-- [ ] Legg til `DATABASE_URL` i miljøvariablene på hostingplattformen
-
----
-
-## 5. Miljøvariabler (sett disse i Vercel-dashboardet, IKKE i kode)
+## 3. Miljøvariabler (sett disse i Vercel-dashboardet, IKKE i kode)
 
 Vercel → Project Settings → Environment Variables. Husk å sette de samme variablene for både **Production** og **Preview** (preview brukes f.eks. ved branch-deploys), og kjør en ny deploy etter endring.
 
-### Database
-- [ ] `DATABASE_URL` — produksjons-URL til PostgreSQL
-
 ### App
 - [ ] `NEXT_PUBLIC_APP_URL` — f.eks. `https://tkk.no` (sett til Vercel-URL-en til domenet er koblet til)
-- [ ] `SESSION_SECRET` — lang, tilfeldig streng (generer med `openssl rand -hex 32`)
-- [ ] `ENABLE_MEMBERS` — `true` for å skru på medlemsfunksjoner (server-side gate i `next.config.ts`)
-- [ ] `NEXT_PUBLIC_ENABLE_MEMBERS` — `true`, samme verdi som over (styrer synlighet av lenker i `Nav.tsx`)
-
-### E-post
-- [ ] `SMTP_HOST`
-- [ ] `SMTP_PORT` — vanligvis `587` (STARTTLS) eller `465` (SSL)
-- [ ] `SMTP_SECURE` — `true` hvis port 465, ellers `false`
-- [ ] `SMTP_USER`
-- [ ] `SMTP_PASS`
-- [ ] `SMTP_FROM` — f.eks. `Trondhjems Kajakklubb <noreply@tkk.no>`
 
 ### Sanity
-- [ ] `NEXT_PUBLIC_SANITY_PROJECT_ID` — fra manage.sanity.io (erstatt `placeholder`)
+- [ ] `NEXT_PUBLIC_SANITY_PROJECT_ID` — fra manage.sanity.io
 - [ ] `NEXT_PUBLIC_SANITY_DATASET` — `production`
 - [ ] `SANITY_API_READ_TOKEN` — Viewer-token fra Sanity
 - [ ] `SANITY_WEBHOOK_SECRET` — hemmelig token for ISR-webhook
-
-### NIF
-- [ ] `NIF_API_BASE_URL` — base-URL fra NIF (fyll inn når tilgang er innvilget)
-- [ ] `NIF_API_KEY` — API-nøkkel fra NIF
-- [ ] `NIF_ORG_ID` — TKKs organisasjons-ID i NIF
-- [ ] `NIF_MOCK_ALWAYS_FOUND` — sett til `false` i produksjon
+- [ ] `SANITY_WRITE_TOKEN` — Sanity-token med skriverettigheter (Settings → API → Tokens → Add API token → Editor), brukes av iSonen-synken
 
 ### NIF Activity API (iSonen-synk)
+- [ ] `NIF_ORG_ID` — TKKs organisasjons-ID i NIF
 - [ ] `NIF_ACTIVITY_API_BASE_URL` — base-URL for data.nif.no activity-API (fyll inn når tilgang er innvilget)
 - [ ] `NIF_ACTIVITY_CLIENT_ID` — OAuth2 client id
 - [ ] `NIF_ACTIVITY_CLIENT_SECRET` — OAuth2 client secret
 - [ ] `NIF_ACTIVITY_MOCK` — sett til `false` i produksjon (kun `true` for lokal testing uten reell tilgang)
 - [ ] `CRON_SECRET` — beskytter `/api/sync-isonen`-endepunktet mot uautorisert kjøring
-- [ ] `SANITY_WRITE_TOKEN` — Sanity-token med skriverettigheter (Settings → API → Tokens → Add API token → Editor), brukes av synk-ruten
 
 ---
 
-## 6. E-post
+## 4. NIF Activity API — daglig import av aktiviteter fra iSonen
 
-- [ ] Sett opp en e-posttjeneste for utgående e-post — vanlig webhotell-SMTP kan blokkeres av spamfiltre
-  - Anbefalt: **Resend** (enkel, rimelig, god leveringsrate) eller **Postmark**
-  - Alternativ: Gmail/Workspace SMTP hvis dere allerede bruker det
-- [ ] Verifiser at domenet `tkk.no` har riktige **SPF**, **DKIM** og **DMARC**-oppføringer i DNS
-- [ ] Test at bekreftelsesmail faktisk leveres og ikke havner i spam
-
----
-
-## 7. NIF API-integrasjon
-
-- [ ] Søk om API-tilgang hos Norges Idrettsforbund
-- [ ] Finn riktig endepunkt for PersonInfo-oppslag på e-post
-- [ ] Oppdater `src/lib/nif.ts` hvis endepunkt-URL eller responsformat avviker fra stubben
-- [ ] Test oppslaget mot NIF staging-miljø før produksjon
-- [ ] Verifiser at feltene (`personId`, `firstName`, `lastName`, `birthDate`, `primaryEmail`, `primaryPhoneMobile`) stemmer med faktisk API-respons
-
-### 7b. NIF Activity API — daglig import av aktiviteter fra iSonen
-
-- [ ] Søk om API-tilgang til `data.nif.no` sitt activity-API (scope `data_activity_read`) — egen søknad, separat fra PersonInfo-tilgangen i 7
+- [ ] Søk om API-tilgang til `data.nif.no` sitt activity-API (scope `data_activity_read`)
 - [ ] Be om OAuth2 client-ID/secret når tilgang er innvilget
 - [ ] Verifiser faktisk responsformat fra `EventsForOrg/Schedule` mot antagelsene i `src/lib/isonen.ts` (feltnavn er ikke bekreftet — se kommentar i filen) og juster mapping om nødvendig
 - [ ] Test synk-ruten (`/api/sync-isonen`) manuelt mot reelle data før cron skrus på i produksjon
@@ -144,44 +82,39 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 
 ---
 
-## 8. Sikkerhet
+## 5. Sikkerhet
 
-- [ ] Sjekk at `.env.local` **ikke** er committet til GitHub (det er det ikke — `.env*` er i `.gitignore`)
+- [ ] Sjekk at `.env` **ikke** er committet til GitHub (det er det ikke — `.env*` er i `.gitignore`)
 - [ ] Sett `NODE_ENV=production` på hostingplattformen (Vercel gjør dette automatisk)
-- [ ] Aktiver `SMTP_SECURE=true` og bruk port 465 hvis SMTP-leverandøren støtter det
-- [ ] Vurder rate-limiting på `/api/auth/register` og `/api/auth/login` for å hindre brute-force
-  - Vercel Edge Middleware eller Upstash Ratelimit
 - [ ] Vurder å aktivere Content Security Policy (CSP)-header i `next.config.ts`
 - [ ] Sanity lagrer data i EU (Belgia) som standard — ingen ekstra konfigurasjon nødvendig for GDPR
 
 ---
 
-## 9. Bilder og statiske filer
+## 6. Bilder og statiske filer
 
-- [ ] Last opp bilder til Sanity Studio (brukes av `disciplinePage` og `blogPost`)
+- [ ] Last opp bilder til Sanity Studio (brukes av forsidekarusellen, `disciplinePage` og `blogPost`)
 - [ ] Erstatt evt. gjenværende bilder under `public/images/` med egne bilder dere har rettigheter til
 - [ ] Legg til `favicon.ico` og evt. `apple-touch-icon.png` under `public/`
 
 ---
 
-## 10. Analytics og overvåking (valgfritt, men anbefalt)
+## 7. Analytics og overvåking (valgfritt, men anbefalt)
 
 - [ ] Sett opp **Plausible** eller **Fathom** for personvernvennlig statistikk (ingen cookie-banner nødvendig)
 - [ ] Sett opp feillogging, f.eks. **Sentry**, for å fange opp produksjonsfeil
 - [ ] Verifiser siden i **Google Search Console** for å overvåke synlighet
+  - Gamle `/no/…`- og `/en/…`-adresser sender nå 308 videre til adressen uten språkprefiks
 
 ---
 
-## 11. Sluttsjekk
+## 8. Sluttsjekk
 
-- [ ] Test hele registreringsflyt i produksjonsmiljø (registrer → e-post → NIF-samtykke → profil)
-- [ ] Test logg inn / logg ut
-- [ ] Test admin-tilgang: logg inn som `leder@tkk.no` → Admin-lenke vises → `/admin/members` laster
 - [ ] Bekreft at Sanity-innhold vises på alle sider (blogg, aktiviteter, disiplinside, HMS-sider, osv.)
 - [ ] Test Sanity-webhook: publiser en endring i Studio → vent ~10 sek → bekreft at siden oppdateres
 - [ ] Test at `/studio` laster og at du kan redigere innhold
-- [ ] Test at NIF-data hentes korrekt (eller at mock-modus er deaktivert)
-- [ ] Test språkbytte (norsk ↔ engelsk)
+- [ ] Test forsidekarusellen: at strekene nederst bytter bilde, og at knappene går dit de skal
+- [ ] Test at "Loggbok" i menyen åpner padleboken.no i ny fane
 - [ ] Test på mobil og nettbrett
 - [ ] Kjør Lighthouse (i Chrome DevTools) og sjekk ytelse, tilgjengelighet og SEO
 
@@ -189,13 +122,10 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 
 ## Rask prioritert rekkefølge
 
-> Hosting (Vercel) er allerede satt opp og kjører som testversjon — gjenstående arbeid er innhold, database og domene før medlemsfunksjoner og `tkk.no` kan skrus på.
+> Hosting (Vercel) er allerede satt opp og kjører som testversjon — gjenstående arbeid er innhold og domene.
 
 1. **Sanity CMS** — opprett prosjekt (EU), kopier Project ID, fyll inn innhold
-2. **Database** (PostgreSQL i EU) + **miljøvariabler i Vercel** → uten dette kan ikke autentisering kjøre
-3. **E-post** (SMTP + DNS) → uten dette kan ikke brukere bekrefte kontoen sin
-4. **Admin-bruker** — kjør `npm run seed`, klikk verifiseringslenke
-5. **Domene** — koble `tkk.no` til Vercel-prosjektet, oppdater `NEXT_PUBLIC_APP_URL`
-6. **Skru på medlemsfunksjoner** — sett `ENABLE_MEMBERS=true` / `NEXT_PUBLIC_ENABLE_MEMBERS=true` i Vercel
-7. **NIF API** → søk om tilgang tidlig, det kan ta tid å få svar
-8. **Innhold** → legg inn alt i Sanity Studio
+2. **Miljøvariabler i Vercel**
+3. **Domene** — koble `tkk.no` til Vercel-prosjektet, oppdater `NEXT_PUBLIC_APP_URL`
+4. **NIF Activity API** → søk om tilgang tidlig, det kan ta tid å få svar
+5. **Innhold** → legg inn alt i Sanity Studio
