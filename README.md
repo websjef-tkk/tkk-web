@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trondhjems Kajakklubb — nettside
 
-## Getting Started
+Nettsiden til Trondhjems Kajakklubb (tkk.no). Bygget med Next.js og [Sanity](https://www.sanity.io/) som CMS — alt redaksjonelt innhold (sider, arrangementer, blogginnlegg, kontaktpersoner) redigeres i Sanity Studio, ikke i kode.
 
-First, run the development server:
+## Teknologier
+
+- [Next.js](https://nextjs.org) (App Router) + React + TypeScript
+- [Sanity](https://www.sanity.io/) som headless CMS, innebygd i appen på `/studio`
+- Tailwind CSS
+- Hostes på Vercel
+
+## Komme i gang
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Åpne [http://localhost:3000](http://localhost:3000). Sanity Studio er tilgjengelig lokalt på [http://localhost:3000/studio](http://localhost:3000/studio).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Miljøvariabler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Kopier `.env` (eller be en annen utvikler om verdiene) og fyll inn følgende i en lokal `.env.local`:
 
-## Learn More
+| Variabel | Beskrivelse |
+|---|---|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity-prosjektets ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | Dataset-navn (`production`) |
+| `SANITY_API_READ_TOKEN` | Lesetoken, brukes til å hente innhold |
+| `SANITY_WRITE_TOKEN` | Skrivetoken, brukes av iSonen-synken (`/api/sync-isonen`) |
+| `SANITY_WEBHOOK_SECRET` | Beskytter `/api/revalidate`-webhooken fra Sanity |
+| `NEXT_PUBLIC_APP_URL` | Nettstedets URL (f.eks. `http://localhost:3000` lokalt) |
+| `NIF_ORG_ID`, `NIF_ACTIVITY_API_BASE_URL`, `NIF_ACTIVITY_CLIENT_ID`, `NIF_ACTIVITY_CLIENT_SECRET`, `NIF_ACTIVITY_MOCK` | Tilgang til NIFs Activity API (iSonen), se under |
+| `CRON_SECRET` | Beskytter `/api/sync-isonen` mot uautorisert kjøring |
 
-To learn more about Next.js, take a look at the following resources:
+Se [PRODUKSJON.md](PRODUKSJON.md) for full forklaring av hver variabel og oppsett i produksjon.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Innholdsredigering
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Alt redaksjonelt innhold ligger i Sanity, ikke i denne kodebasen — se `/studio`:
 
-## Deploy on Vercel
+- `siteSettings` — forsidekarusell, bunntekst, sosiale lenker, samarbeidspartnere
+- `person` — styret, gruppeledere og andre kontakter
+- `disciplinePage` — én side per padledisiplin (hav, elv, flattvann, surfski, polo, junior)
+- `flexiblePage` — HMS-sider, Klubben-sider, Medlemskap m.m.
+- `event` — kommende aktiviteter og turer (fylles delvis automatisk, se under)
+- `blogPost` — blogginnlegg og turrapporter
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Skjemaene for disse er definert i [sanity/schemas/](sanity/schemas/).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Automatisk aktivitetssynk (iSonen)
+
+`/api/sync-isonen` henter daglig (se cron i [vercel.json](vercel.json)) aktiviteter fra NIFs Activity API og oppretter dem som kladder (`event`-dokumenter) i Sanity for godkjenning. Logikken ligger i [src/lib/isonen.ts](src/lib/isonen.ts).
+
+## Prosjektstruktur
+
+```
+src/app/(site)/   Offentlige sider (App Router)
+src/app/studio/   Sanity Studio, montert på /studio
+src/components/   Delte React-komponenter
+src/lib/          Sanity-klient, GROQ-spørringer, hjelpefunksjoner
+sanity/schemas/   Sanity-skjemadefinisjoner
+sanity/structure.ts  Egendefinert desk-struktur for Studio
+```
+
+## Scripts
+
+```bash
+npm run dev     # Start utviklingsserver
+npm run build   # Produksjonsbygg
+npm run start   # Start produksjonsbygg lokalt
+npm run lint    # ESLint
+```
+
+## Produksjonssetting
+
+Se [PRODUKSJON.md](PRODUKSJON.md) for full sjekkliste (Sanity-prosjekt, domene, miljøvariabler, NIF-tilgang osv.).

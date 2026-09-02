@@ -41,6 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 
-# Sanity generated/exported files (regenerate with generate-ndjson.ts or dataset export)
-sanity/seed-content.ndjson
+# Sanity dataset export snapshots
 sanity/export.ndjson

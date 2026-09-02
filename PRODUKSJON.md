@@ -18,15 +18,8 @@
   - Trigger på: publish, unpublish, delete
   - Bruk samme token som `SANITY_WEBHOOK_SECRET`
 - [ ] Inviter `leder@tkk.no` som **Administrator** (Settings → Members → Invite)
-- [ ] Seede innhold til Sanity (kjør lokalt mot prod-prosjektet):
-  ```bash
-  npx tsx sanity/generate-ndjson.ts
-  npx sanity dataset import sanity/seed-content.ndjson --dataset production --missing
-  ```
-  - `--missing` legger kun til dokumenter som ikke finnes fra før — tryggt å kjøre på nytt
-  - `--replace` (ikke `--missing`) brukes bare ved strukturelle endringer i skjemaet
-  - `sanity/seed-content.ndjson` er gitignored og genereres lokalt
-- [ ] Logg inn på Studio (`/studio`) og legg inn innhold:
+- [ ] Innholdet er allerede seedet til `production`-datasettet (engangsimport er gjort og de tilhørende scriptene er fjernet fra repoet) — bekreft heller at alt vises korrekt i Studio (`/studio`)
+- [ ] Logg inn på Studio (`/studio`) og gå gjennom innholdet:
   - `siteSettings` — forsidekarusell, bunntekst-tagline, sosiale lenker, adresse, samarbeidspartnere
   - `person` — styre, gruppeledere og andre kontakter
   - `disciplinePage` — én per disiplin (hav, elv, flattvann, surfski, polo, junior); `body` er én sammenhengende Portable Text-editor der overskrifter brukes direkte
