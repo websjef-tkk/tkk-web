@@ -6,71 +6,53 @@ export const flexiblePage = defineType({
   name: "flexiblePage",
   title: "Fleksibel side",
   type: "document",
+  fieldsets: [
+    {
+      name: "advanced",
+      title: "Avansert (tilbake-lenke og viderekobling)",
+      options: { collapsible: true, collapsed: true },
+    },
+  ],
   fields: [
     defineField({
-      name: "pageId",
-      title: "Side-ID (nøkkel)",
-      type: "string",
+      name: "slug",
+      title: "Adresse (URL)",
+      type: "slug",
+      description:
+        'Full sti til siden, uten skråstrek foran (f.eks. "om-klubben/klubbhus"). Bestemmer både hvor siden vises i menyen/lenker og hvilken nettadresse den får. Kan skrives inn direkte, eller genereres fra tittelen — husk å legge til foreldre-stien selv da (f.eks. "om-klubben/" foran).',
       options: {
-        list: [
-          { title: "HMS – Oversikt", value: "hms" },
-          { title: "HMS – Generelt", value: "hms-generelt" },
-          { title: "HMS – Pirbadet", value: "hms-pirbadet" },
-          { title: "HMS – Havpadling", value: "hms-hav" },
-          { title: "HMS Hav – Fellespadling", value: "hms-hav-fellespadling" },
-          { title: "HMS Hav – Munkholmen", value: "hms-hav-munkholmen" },
-          { title: "HMS Hav – Cruisebåter", value: "hms-hav-cruisebater" },
-          { title: "HMS Hav – Rull & Tull", value: "hms-hav-rull-tull" },
-          { title: "HMS Hav – Sikker padling", value: "hms-hav-sikker-padling" },
-          { title: "HMS – Elvepadling", value: "hms-elv" },
-          { title: "HMS Elv – Klubbpadling Nidelven", value: "hms-elv-klubbpadling-nidelven" },
-          { title: "HMS Elv – Klubbpadling Nidelven HMS", value: "hms-elv-klubbpadling-nidelven-hms" },
-          { title: "HMS Elv – Spontan tur", value: "hms-elv-spontan-tur" },
-          { title: "HMS – Mitt varsel", value: "hms-mitt-varsel" },
-          { title: "HMS – Hendelsesrapporter", value: "hms-hendelsesrapporter" },
-          { title: "HMS – Politiattest", value: "hms-politiattest" },
-          { title: "Padling – Turledelse Hav", value: "padling-turledelse-hav" },
-          { title: "Padling – Kurs", value: "padling-kurs" },
-          { title: "Padling Hav – Havpadling", value: "padling-hav-havpadling" },
-          { title: "Padling Hav – Reolplasser", value: "padling-hav-reolplasser" },
-          { title: "Padling Hav – Søndagstur", value: "padling-hav-sondagstur" },
-          { title: "Padling Hav – Padlekart Midt-Norge", value: "padling-hav-padlekart" },
-          { title: "Padling Hav – Fyrmestergrad", value: "padling-hav-fyrmestergrad" },
-          { title: "Padling Elv – Elvepadling", value: "padling-elv-elvepadling" },
-          { title: "Padling Elv – Kajakk lån og leie", value: "padling-elv-kajakk-lan" },
-          { title: "Padling Flattvann – Flattvann og Surfski", value: "padling-flattvann-flattvann-surfski" },
-          { title: "Padling Flattvann – Kajakker", value: "padling-flattvann-kajakker" },
-          { title: "Padling Flattvann – Surfski", value: "padling-flattvann-surfski" },
-          { title: "Padling Flattvann – Vingarer", value: "padling-flattvann-vingarer" },
-          { title: "Padling Junior – Velkommen", value: "padling-junior-velkommen" },
-          { title: "Padling Junior – Juniorutstyr", value: "padling-junior-utstyr" },
-          { title: "Kom i gang", value: "kom-i-gang" },
-          { title: "Klubben – Administrasjon", value: "klubben-administrasjon" },
-          { title: "Klubben – Klubbhus", value: "klubben-klubbhus" },
-          { title: "Klubben – Sosialgruppe", value: "klubben-sosialgruppe" },
-          { title: "Klubben – Sosialgruppa", value: "klubben-sosialgruppe-sosialgruppa" },
-          { title: "Klubben – Utmerkelser", value: "klubben-sosialgruppe-utmerkelser" },
-          { title: "Klubben – Støtteordninger", value: "klubben-stotteordninger" },
-          { title: "Klubben – Kjøregodtgjørelse", value: "klubben-kjoregodtgjorelse" },
-          { title: "Klubben – Vedtektene", value: "klubben-vedtektene" },
-          { title: "Klubben – Huskalender", value: "klubben-huskalender" },
-          { title: "Klubben – Organisasjonsplanen", value: "klubben-organisasjonsplanen" },
-          { title: "Klubben – Skjemaer", value: "klubben-skjemaer" },
-          { title: "Klubben – Støtte til konkurransepadling", value: "klubben-stotte-konkurransepadling" },
-          { title: "Medlemskap", value: "medlemskap" },
-          { title: "Medlemskap – Fordeler hos samarbeidspartnere", value: "medlemskap-fordeler" },
-        ],
+        source: "title.no",
+        maxLength: 200,
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .trim()
+            .replace(/æ/g, "ae")
+            .replace(/ø/g, "o")
+            .replace(/å/g, "a")
+            .replace(/[^a-z0-9/]+/g, "-")
+            .replace(/-+/g, "-")
+            .replace(/-*\/-*/g, "/")
+            .replace(/^-|-$/g, "")
+            .replace(/^\/|\/$/g, ""),
       },
       validation: (r) =>
         r.required().custom(async (value, ctx) => {
-          if (!value) return true;
+          const current = (value as { current?: string } | undefined)?.current;
+          if (!current) return true;
+          if (current.startsWith("/") || current.endsWith("/")) {
+            return "Adressen skal ikke starte eller slutte med skråstrek";
+          }
+          if (!/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/.test(current)) {
+            return "Adressen kan bare inneholde små bokstaver, tall, bindestrek og skråstrek";
+          }
           const client = ctx.getClient({ apiVersion: "2024-01-01" });
           const id = (ctx.document?._id ?? "").replace(/^drafts\./, "");
           const other = await client.fetch(
-            `count(*[_type == "flexiblePage" && pageId == $value && !(_id in [$id, "drafts." + $id])])`,
-            { value, id }
+            `count(*[_type == "flexiblePage" && slug.current == $value && !(_id in [$id, "drafts." + $id])])`,
+            { value: current, id }
           );
-          return other === 0 ? true : "Denne Side-IDen er allerede i bruk av en annen side";
+          return other === 0 ? true : "Denne adressen er allerede i bruk av en annen side";
         }),
     }),
     defineField({
@@ -91,9 +73,25 @@ export const flexiblePage = defineType({
     noText("intro", "Ingress"),
     noBody("body", "Innhold"),
     seoField,
+    defineField({
+      name: "backLabel",
+      title: "Tekst på tilbake-lenke (valgfritt)",
+      type: "string",
+      description: 'Overstyrer standardteksten "← Tilbake" øverst på siden.',
+      fieldset: "advanced",
+    }),
+    defineField({
+      name: "previousSlugs",
+      title: "Tidligere adresser (viderekobling)",
+      type: "array",
+      of: [{ type: "string" }],
+      description:
+        "Gamle adresser denne siden har hatt. Besøkende som kommer via en gammel lenke blir automatisk videresendt til dagens adresse. Legg til den gamle adressen her FØR du endrer feltet over.",
+      fieldset: "advanced",
+    }),
   ],
   preview: {
-    select: { title: "title.no", subtitle: "pageId", updatedAt: "_updatedAt" },
+    select: { title: "title.no", subtitle: "slug.current", updatedAt: "_updatedAt" },
     prepare({ title, subtitle, updatedAt }: { title?: string; subtitle?: string; updatedAt?: string }) {
       const updated = updatedAt
         ? new Date(updatedAt).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })

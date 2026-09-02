@@ -4,7 +4,7 @@ import { resolveMenuLink, type MenuLinkData } from "../menuRoutes";
 const linkProjection = `
   linkType,
   disciplinePage->{ discipline },
-  flexiblePage->{ pageId },
+  flexiblePage->{ "slug": slug.current },
   customPath
 `;
 
