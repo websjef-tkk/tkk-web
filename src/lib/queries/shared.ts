@@ -7,7 +7,11 @@ export interface SeoField {
 const markDefsExpansion = `
   markDefs[]{
     ...,
-    _type == "link" => { ..., pdfFile{ asset->{ url, originalFilename, size } } }
+    _type == "link" => {
+      ...,
+      page->{ _type, "slug": slug.current, discipline },
+      pdfFile{ asset->{ url, originalFilename, size } }
+    }
   }
 `;
 

@@ -8,7 +8,9 @@ export interface Partner {
 
 export interface HeroButton {
   label: string;
-  href: string;
+  linkType?: "page" | "url";
+  page?: { _type?: string; slug?: string; discipline?: string } | null;
+  href?: string;
 }
 
 export interface HeroSlide {
@@ -35,7 +37,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     return await sanityClient.fetch(
       `*[_type == "siteSettings"][0] {
-        heroSlides[] { image, title, subtitle, buttons[] { label, href } },
+        heroSlides[] { image, title, subtitle, buttons[] { label, linkType, page->{ _type, "slug": slug.current, discipline }, href } },
         footerText,
         instagram,
         facebook,

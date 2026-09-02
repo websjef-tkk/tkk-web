@@ -8,6 +8,7 @@ import { getUpcomingEvents, getRecurringEvents } from "@/lib/queries/events";
 import { getAllBlogPosts } from "@/lib/queries/blog";
 import { getSiteSettings } from "@/lib/queries/settings";
 import { urlFor } from "@/lib/sanity";
+import { resolveContentLink } from "@/lib/linkResolver";
 import { BLOG_CATEGORY_LABELS, EVENT_DIFFICULTY_LABELS } from "@/lib/labels";
 import type { SanityEvent } from "@/lib/queries/events";
 import type { BlogPostSummary } from "@/lib/queries/blog";
@@ -43,13 +44,17 @@ const FALLBACK_SLIDE: HeroSlideView = {
 function toHeroSlides(settings: SiteSettings | null): HeroSlideView[] {
   const slides = (settings?.heroSlides ?? []).flatMap<HeroSlideView>((slide) => {
     if (!slide.image?.asset || !slide.title) return [];
+    const buttons = (slide.buttons ?? []).flatMap((button) => {
+      const href = resolveContentLink(button);
+      return href ? [{ label: button.label, href }] : [];
+    });
     return [
       {
         imageSrc: urlFor(slide.image).width(1920).height(1080).url(),
         imageAlt: slide.image.alt ?? slide.title,
         title: slide.title,
         subtitle: slide.subtitle,
-        buttons: slide.buttons,
+        buttons,
       },
     ];
   });

@@ -1,10 +1,12 @@
 import type { PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity";
+import { resolveContentLink, type ContentLinkPage } from "@/lib/linkResolver";
 
 type LinkValue = {
-  linkType?: "url" | "pdf";
+  linkType?: "page" | "url" | "pdf";
   href?: string;
+  page?: ContentLinkPage;
   pdfFile?: { asset?: { url?: string; originalFilename?: string } };
   openInNewTab?: boolean;
 };
@@ -14,46 +16,6 @@ type TableValue = {
   headerRow?: boolean;
   style?: "default" | "striped" | "compact";
 };
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
-    .replace(/\s+/g, "-");
-}
-
-function headingText(value: unknown): string {
-  const children = (value as { children?: unknown[] } | undefined)?.children;
-  if (!Array.isArray(children)) return "";
-  return children.map((c) => (c as { text?: string }).text ?? "").join("");
-}
-
-function AnchorHeading({
-  as: Tag,
-  className,
-  value,
-  children,
-}: {
-  as: "h2" | "h3";
-  className: string;
-  value: unknown;
-  children: React.ReactNode;
-}) {
-  const id = slugify(headingText(value));
-  return (
-    <Tag id={id} className={`group scroll-mt-24 ${className}`}>
-      <a
-        href={`#${id}`}
-        className="mr-2 opacity-0 group-hover:opacity-100 text-teal no-underline"
-        aria-hidden="true"
-      >
-        #
-      </a>
-      {children}
-    </Tag>
-  );
-}
 
 const tableStyleClasses: Record<NonNullable<TableValue["style"]>, string> = {
   default: "[&_td]:py-2 [&_th]:py-2 [&_td]:px-3 [&_th]:px-3",
@@ -65,7 +27,7 @@ export const richTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }: { children: React.ReactNode; value?: LinkValue }) => {
       const isPdf = value?.linkType === "pdf";
-      const href = isPdf ? value?.pdfFile?.asset?.url : value?.href;
+      const href = isPdf ? value?.pdfFile?.asset?.url : resolveContentLink(value);
       if (!href) return <>{children}</>;
       const newTab = !!value?.openInNewTab;
       return (
@@ -83,15 +45,11 @@ export const richTextComponents: PortableTextComponents = {
     },
   },
   block: {
-    h2: ({ children, value }) => (
-      <AnchorHeading as="h2" className="font-display font-bold text-navy text-2xl mb-3 mt-8" value={value}>
-        {children}
-      </AnchorHeading>
+    h2: ({ children }) => (
+      <h2 className="font-display font-bold text-navy text-2xl mb-3 mt-8">{children}</h2>
     ),
-    h3: ({ children, value }) => (
-      <AnchorHeading as="h3" className="font-display font-semibold text-navy text-xl mb-2 mt-6" value={value}>
-        {children}
-      </AnchorHeading>
+    h3: ({ children }) => (
+      <h3 className="font-display font-semibold text-navy text-xl mb-2 mt-6">{children}</h3>
     ),
   },
   types: {

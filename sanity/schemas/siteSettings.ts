@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { noString } from "./objects/localized";
+import { createLinkFields } from "./objects/link";
 
 const heroButton = {
   type: "object" as const,
@@ -7,20 +8,23 @@ const heroButton = {
   title: "Knapp",
   fields: [
     defineField({ name: "label", title: "Tekst", type: "string", validation: (r) => r.required() }),
-    defineField({
-      name: "href",
-      title: "Lenke",
-      type: "string",
-      description: 'Intern sti som starter med "/", eller en full adresse som starter med "https://".',
-      validation: (r) =>
-        r.required().custom((val: string | undefined) => {
-          if (!val) return "Lenke er påkrevd";
-          return val.startsWith("/") || val.startsWith("http") ? true : 'Lenken må starte med "/" eller "http"';
-        }),
-    }),
+    ...createLinkFields({ allowPdf: false, includeNewTab: false }),
   ],
   preview: {
-    select: { title: "label", subtitle: "href" },
+    select: { title: "label", subtitle: "href", linkType: "linkType", pageTitle: "page.title.no" },
+    prepare({
+      title,
+      subtitle,
+      linkType,
+      pageTitle,
+    }: {
+      title?: string;
+      subtitle?: string;
+      linkType?: string;
+      pageTitle?: string;
+    }) {
+      return { title, subtitle: linkType === "page" ? (pageTitle ?? "Side") : subtitle };
+    },
   },
 };
 

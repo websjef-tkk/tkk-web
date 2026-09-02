@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
+import { FieldInfo } from "../components/FieldInfo";
 
 export const flexiblePage = defineType({
   name: "flexiblePage",
@@ -18,8 +19,12 @@ export const flexiblePage = defineType({
       name: "slug",
       title: "Adresse (URL)",
       type: "slug",
-      description:
-        'Full sti til siden, uten skråstrek foran (f.eks. "om-klubben/klubbhus"). Bestemmer både hvor siden vises i menyen/lenker og hvilken nettadresse den får. Kan skrives inn direkte, eller genereres fra tittelen — husk å legge til foreldre-stien selv da (f.eks. "om-klubben/" foran).',
+      description: (
+        <FieldInfo
+          short="Genereres automatisk fra tittelen (kan overstyres)."
+          hint='Full sti til siden, uten skråstrek foran (f.eks. "om-klubben/klubbhus"). Bestemmer både hvor siden vises i menyen/lenker og hvilken nettadresse den får. Kan skrives inn direkte, eller genereres fra tittelen — husk å legge til foreldre-stien selv da (f.eks. "om-klubben/" foran).'
+        />
+      ),
       options: {
         source: "title.no",
         maxLength: 200,
@@ -70,6 +75,13 @@ export const flexiblePage = defineType({
       validation: (r) => r.required(),
     }),
     noString("title", "Tittel", { required: true }),
+    defineField({
+      name: "heroImage",
+      title: "Bilde",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],
+    }),
     noText("intro", "Ingress"),
     noBody("body", "Innhold"),
     seoField,

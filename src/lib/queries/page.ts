@@ -5,6 +5,7 @@ export interface FlexiblePage {
   _id: string;
   slug: string;
   title: { no: string };
+  heroImage?: { asset: { _ref: string }; alt?: string };
   intro?: { no?: string };
   body?: { no?: unknown[] };
   seo?: SeoField;
@@ -35,6 +36,7 @@ export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null
         _id,
         "slug": slug.current,
         title,
+        heroImage,
         intro,
         ${bodyProjection},
         seo,
