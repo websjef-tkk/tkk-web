@@ -3,11 +3,12 @@ import { bodyProjection, type SeoField } from "./shared";
 
 export interface FlexiblePage {
   _id: string;
-  pageId: string;
+  slug: string;
   title: { no: string };
   intro?: { no?: string };
   body?: { no?: unknown[] };
   seo?: SeoField;
+  backLabel?: string;
 }
 
 export interface SubPageLink {
@@ -27,19 +28,33 @@ export interface DisciplinePage {
   seo?: SeoField;
 }
 
-export async function getFlexiblePage(pageId: string): Promise<FlexiblePage | null> {
+export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null> {
   try {
     return await sanityClient.fetch(
-      `*[_type == "flexiblePage" && pageId == $pageId][0] {
+      `*[_type == "flexiblePage" && slug.current == $slug][0] {
         _id,
-        pageId,
+        "slug": slug.current,
         title,
         intro,
         ${bodyProjection},
-        seo
+        seo,
+        backLabel
       }`,
-      { pageId }
+      { slug }
     );
+  } catch {
+    return null;
+  }
+}
+
+/** Finner ny adresse for en side som har blitt flyttet, via previousSlugs. */
+export async function getFlexiblePageRedirect(slug: string): Promise<string | null> {
+  try {
+    const doc = await sanityClient.fetch<{ slug: string } | null>(
+      `*[_type == "flexiblePage" && $slug in previousSlugs][0]{ "slug": slug.current }`,
+      { slug }
+    );
+    return doc?.slug ?? null;
   } catch {
     return null;
   }
