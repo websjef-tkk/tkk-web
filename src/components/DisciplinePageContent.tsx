@@ -7,15 +7,13 @@ import { richTextComponents } from "@/components/portableText/richTextComponents
 
 type Props = {
   page: DisciplinePage;
-  locale: string;
 };
 
-export default function DisciplinePageContent({ page, locale }: Props) {
-  const isNo = locale === "no";
-  const title = isNo ? page.title.no : (page.title.en ?? page.title.no);
-  const intro = isNo ? page.intro?.no : (page.intro?.en ?? page.intro?.no);
+export default function DisciplinePageContent({ page }: Props) {
+  const title = page.title.no;
+  const intro = page.intro?.no;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const body = (isNo ? page.body?.no : (page.body?.en ?? page.body?.no)) as any[] | undefined;
+  const body = page.body?.no as any[] | undefined;
   const heroImageUrl = page.heroImage?.asset
     ? urlFor(page.heroImage).width(1200).height(600).url()
     : "/images/hav.jpg";
@@ -44,10 +42,10 @@ export default function DisciplinePageContent({ page, locale }: Props) {
 
         <div className="mt-10">
           <Link
-            href={`/${locale}/aktiviteter`}
+            href="/aktiviteter"
             className="inline-block bg-tkk-blue text-navy font-semibold px-6 py-3 rounded hover:bg-navy hover:text-white transition-colors text-sm"
           >
-            {isNo ? "Se kommende turer →" : "View upcoming trips →"}
+            Se kommende turer →
           </Link>
         </div>
       </div>
@@ -56,15 +54,15 @@ export default function DisciplinePageContent({ page, locale }: Props) {
         <div className="bg-slate-50 border-t border-slate-200 py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-display font-bold text-navy text-2xl mb-8">
-              {isNo ? "Mer om dette" : "Learn more"}
+              Mer om dette
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {page.subPageLinks.map((link) => {
-                const linkTitle = isNo ? (link.title.no ?? link.title.en) : (link.title.en ?? link.title.no);
+                const linkTitle = link.title.no;
                 return (
                   <Link
                     key={link.href}
-                    href={`/${locale}${link.href}`}
+                    href={link.href}
                     className="group block bg-white border border-slate-200 rounded-lg px-6 py-5 hover:border-teal hover:shadow-md transition-all"
                   >
                     <span className="font-semibold text-navy group-hover:text-teal transition-colors">

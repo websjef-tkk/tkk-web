@@ -1,19 +1,4 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
-
-const membersEnabled = process.env.ENABLE_MEMBERS === "true";
-
-const GATED_PATHS = [
-  "logg-inn",
-  "registrer",
-  "profil",
-  "verifiser-epost",
-  "verifiser-epost/bekreft",
-  "nif-samtykke",
-  "admin/:path*",
-];
 
 const nextConfig: NextConfig = {
   images: {
@@ -23,20 +8,13 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    const permanentRedirects: { source: string; destination: string; permanent: boolean }[] = [];
-
-    if (membersEnabled) return permanentRedirects;
-
-    const gatedRedirects = [
-      ...GATED_PATHS.map((path) => ({
-        source: `/:locale(no|en)/${path}`,
-        destination: "/:locale",
-        permanent: false,
-      })),
-    ];
-
-    return [...permanentRedirects, ...gatedRedirects];
+    // Nettstedet var tidligere tospråklig med /no- og /en-prefiks. Behold
+    // gamle lenker og søketreff ved å sende dem til den norske siden.
+    return ["no", "en"].flatMap((locale) => [
+      { source: `/${locale}`, destination: "/", permanent: true },
+      { source: `/${locale}/:path*`, destination: "/:path*", permanent: true },
+    ]);
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

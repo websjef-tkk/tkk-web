@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyBlockOf } from "./objects/blockContent";
+import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 
 export const disciplinePage = defineType({
@@ -34,52 +34,10 @@ export const disciplinePage = defineType({
           return other === 0 ? true : "Denne disiplinen er allerede i bruk av en annen side";
         }),
     }),
-    defineField({
-      name: "title",
-      title: "Tittel",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "tagline",
-      title: "Tagline",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string" }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "intro",
-      title: "Ingress",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "text", rows: 4 }),
-        defineField({ name: "en", title: "English", type: "text", rows: 4 }),
-      ],
-    }),
-    defineField({
-      name: "body",
-      title: "Innhold",
-      type: "object",
-      fields: [
-        defineField({
-          name: "no",
-          title: "Norsk",
-          type: "array",
-          of: bodyBlockOf("no"),
-        }),
-        defineField({
-          name: "en",
-          title: "English",
-          type: "array",
-          of: bodyBlockOf("en"),
-        }),
-      ],
-    }),
+    noString("title", "Tittel", { required: true }),
+    noString("tagline", "Tagline"),
+    noText("intro", "Ingress"),
+    noBody("body", "Innhold"),
     defineField({
       name: "subPageLinks",
       title: "Undersider",
@@ -89,15 +47,7 @@ export const disciplinePage = defineType({
         {
           type: "object",
           fields: [
-            defineField({
-              name: "title",
-              title: "Tittel",
-              type: "object",
-              fields: [
-                defineField({ name: "no", title: "Norsk", type: "string" }),
-                defineField({ name: "en", title: "English", type: "string" }),
-              ],
-            }),
+            noString("title", "Tittel"),
             defineField({
               name: "href",
               title: "Lenke (relativ sti)",

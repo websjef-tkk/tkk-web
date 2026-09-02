@@ -1,10 +1,16 @@
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 
+const DISCIPLINE_LINKS = [
+  { href: "/padling/hav", label: "Havpadling" },
+  { href: "/padling/elv", label: "Elvepadling" },
+  { href: "/padling/flattvann", label: "Flattvann" },
+  { href: "/padling/surfski", label: "Surfski" },
+  { href: "/padling/polo", label: "Kajakkpolo" },
+  { href: "/padling/junior", label: "Junior" },
+];
+
 export default function Footer() {
-  const t = useTranslations("footer");
-  const tn = useTranslations("nav");
 
   return (
     <footer className="bg-navy text-white mt-auto">
@@ -22,20 +28,20 @@ export default function Footer() {
               />
               <span className="font-display font-bold text-lg">Trondhjems Kajakklubb</span>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed">{t("tagline")}</p>
-            <p className="text-white/40 text-xs mt-3">{t("org")}: 990 255 105</p>
+            <p className="text-white/60 text-sm leading-relaxed">Trondhjems Kajakklubb — padle med oss</p>
+            <p className="text-white/40 text-xs mt-3">Org.nr: 990 255 105</p>
           </div>
 
           {/* Quick links */}
           <div>
             <h3 className="text-tkk-blue font-semibold text-sm uppercase tracking-wider mb-4">
-              {t("quick_links")}
+              Hurtiglenker
             </h3>
             <ul className="space-y-2 text-sm text-white/70">
-              {(["hav", "elv", "flattvann", "surfski", "polo", "junior"] as const).map((d) => (
-                <li key={d}>
-                  <Link href={`/no/padling/${d}`} className="hover:text-tkk-blue transition-colors">
-                    {tn(d)}
+              {DISCIPLINE_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className="hover:text-tkk-blue transition-colors">
+                    {label}
                   </Link>
                 </li>
               ))}
@@ -45,7 +51,7 @@ export default function Footer() {
           {/* Social + contact */}
           <div>
             <h3 className="text-tkk-blue font-semibold text-sm uppercase tracking-wider mb-4">
-              {t("follow")}
+              Følg oss
             </h3>
             <div className="space-y-2 text-sm text-white/70">
               <a
@@ -79,7 +85,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-10 pt-6 text-center text-white/30 text-xs">
-          © {new Date().getFullYear()} Trondhjems Kajakklubb. {t("rights")}.
+          © {new Date().getFullYear()} Trondhjems Kajakklubb. Alle rettigheter forbeholdt.
         </div>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyBlockOf } from "./objects/blockContent";
+import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 
 export const blogPost = defineType({
@@ -20,33 +20,9 @@ export const blogPost = defineType({
       type: "date",
       validation: (r) => r.required(),
     }),
-    defineField({
-      name: "title",
-      title: "Tittel",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "summary",
-      title: "Sammendrag",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "text", rows: 3, validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "text", rows: 3 }),
-      ],
-    }),
-    defineField({
-      name: "body",
-      title: "Innhold",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "array", of: bodyBlockOf("no", { image: true }) }),
-        defineField({ name: "en", title: "English", type: "array", of: bodyBlockOf("en", { image: true }) }),
-      ],
-    }),
+    noString("title", "Tittel", { required: true }),
+    noText("summary", "Sammendrag", { rows: 3, required: true }),
+    noBody("body", "Innhold", { image: true }),
     defineField({
       name: "category",
       title: "Kategori",

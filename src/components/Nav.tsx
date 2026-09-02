@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import type { ResolvedMenuItem } from "@/lib/queries/menu";
 
@@ -15,24 +14,9 @@ function useDropdown() {
   return { open, onEnter, onLeave, close: () => setOpen(false) };
 }
 
-const membersEnabled = process.env.NEXT_PUBLIC_ENABLE_MEMBERS === "true";
+const LOGBOOK_URL = "https://www.padleboken.no/logg/";
 
-type SessionUser = { firstName: string | null; lastName: string | null; email: string; isAdmin: boolean } | null;
-
-function menuLabel(label: { no: string; en?: string }, locale: string) {
-  return locale === "no" ? label.no : (label.en ?? label.no);
-}
-
-export default function Nav({
-  locale,
-  sessionUser,
-  menu,
-}: {
-  locale: string;
-  sessionUser: SessionUser;
-  menu: ResolvedMenuItem[];
-}) {
-  const t = useTranslations("nav");
+export default function Nav({ menu }: { menu: ResolvedMenuItem[] }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -43,17 +27,14 @@ export default function Nav({
     };
   }, [menuOpen]);
 
-  const otherLocale = locale === "no" ? "en" : "no";
-  const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`);
-  const href = (path: string) => `/${locale}${path}`;
-  const isActive = (path: string) => pathname.startsWith(`/${locale}${path}`);
+  const isActive = (path: string) => (path === "/" ? pathname === "/" : pathname.startsWith(path));
 
   return (
     <header className="bg-navy sticky top-0 z-50 shadow-md">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={href("/")} className="flex items-center gap-3 shrink-0">
+          <Link href="/" className="flex items-center gap-3 shrink-0">
             <Image src="/images/tkk_logo.svg" alt="Trondhjems Kajakklubb" width={44} height={44}
               className="rounded-full bg-white p-0.5" />
             <span className="text-white font-display font-bold text-base hidden lg:block">
@@ -66,50 +47,34 @@ export default function Nav({
           <div className="hidden md:flex items-center gap-0.5">
             {menu.map((item, i) =>
               item.itemType === "dropdown" ? (
-                <DesktopDropdownItem key={i} item={item} locale={locale} href={href} isActive={isActive} />
+                <DesktopDropdownItem key={i} item={item} isActive={isActive} />
               ) : (
-                <NavLink key={i} href={href(item.href!)} active={isActive(item.href!)}>
-                  {menuLabel(item.label, locale)}
+                <NavLink key={i} href={item.href!} active={isActive(item.href!)}>
+                  {item.label.no}
                 </NavLink>
               )
             )}
 
-            {membersEnabled && (
-              sessionUser ? (
-                <>
-                  {sessionUser.isAdmin && (
-                    <Link href={href("/admin/members")}
-                      className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded transition-colors ${isActive("/admin") ? "bg-sand text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
-                      Admin
-                    </Link>
-                  )}
-                  <Link href={href("/profil")}
-                    className={`ml-1 px-3 py-1.5 text-xs font-semibold rounded flex items-center gap-1.5 transition-colors ${isActive("/profil") ? "bg-tkk-blue text-navy" : "bg-white/10 text-white hover:bg-white/20"}`}>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
-                  </Link>
-                </>
-              ) : (
-                <Link href={href("/logg-inn")}
-                  className="ml-1 px-3 py-1.5 text-xs font-semibold border border-tkk-blue text-tkk-blue rounded hover:bg-tkk-blue hover:text-navy transition-colors">
-                  {t("log_in")}
-                </Link>
-              )
-            )}
-
-            <Link href={switchPath}
-              className="ml-1 px-3 py-1 text-xs font-semibold border border-tkk-blue text-tkk-blue rounded hover:bg-tkk-blue hover:text-navy transition-colors">
-              {otherLocale.toUpperCase()}
-            </Link>
+            <a
+              href={LOGBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-3 px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded hover:bg-white transition-colors"
+            >
+              Loggbok
+            </a>
           </div>
 
           {/* Mobile burger */}
           <div className="flex md:hidden items-center gap-3">
-            <Link href={switchPath} className="px-2 py-1 text-xs font-semibold border border-tkk-blue text-tkk-blue rounded">
-              {otherLocale.toUpperCase()}
-            </Link>
+            <a
+              href={LOGBOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded"
+            >
+              Loggbok
+            </a>
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-white p-2" aria-label="Toggle menu">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {menuOpen
@@ -126,38 +91,18 @@ export default function Nav({
             {menu.map((item, i) =>
               item.itemType === "dropdown" ? (
                 <div key={i}>
-                  <MobileSectionLabel>{menuLabel(item.label, locale)}</MobileSectionLabel>
+                  <MobileSectionLabel>{item.label.no}</MobileSectionLabel>
                   {item.children!.map((child, j) => (
-                    <MobileLink key={j} href={href(child.href)} onClick={() => setMenuOpen(false)} indent>
-                      {menuLabel(child.label, locale)}
+                    <MobileLink key={j} href={child.href} onClick={() => setMenuOpen(false)} indent>
+                      {child.label.no}
                     </MobileLink>
                   ))}
                 </div>
               ) : (
-                <MobileLink key={i} href={href(item.href!)} onClick={() => setMenuOpen(false)}>
-                  {menuLabel(item.label, locale)}
+                <MobileLink key={i} href={item.href!} onClick={() => setMenuOpen(false)}>
+                  {item.label.no}
                 </MobileLink>
               )
-            )}
-            {membersEnabled && (
-              <div className="border-t border-white/10 pt-2 mt-1">
-                {sessionUser ? (
-                  <>
-                    {sessionUser.isAdmin && (
-                      <MobileLink href={href("/admin/members")} onClick={() => setMenuOpen(false)}>
-                        ⚙ Admin
-                      </MobileLink>
-                    )}
-                    <MobileLink href={href("/profil")} onClick={() => setMenuOpen(false)}>
-                      👤 {sessionUser.firstName ?? sessionUser.email.split("@")[0]}
-                    </MobileLink>
-                  </>
-                ) : (
-                  <MobileLink href={href("/logg-inn")} onClick={() => setMenuOpen(false)}>
-                    {t("log_in")}
-                  </MobileLink>
-                )}
-              </div>
             )}
           </div>
         )}
@@ -167,11 +112,9 @@ export default function Nav({
 }
 
 function DesktopDropdownItem({
-  item, locale, href, isActive,
+  item, isActive,
 }: {
   item: ResolvedMenuItem;
-  locale: string;
-  href: (path: string) => string;
   isActive: (path: string) => boolean;
 }) {
   const dropdown = useDropdown();
@@ -179,15 +122,15 @@ function DesktopDropdownItem({
 
   return (
     <Dropdown
-      label={menuLabel(item.label, locale)}
+      label={item.label.no}
       active={active}
       open={dropdown.open}
       onEnter={dropdown.onEnter}
       onLeave={dropdown.onLeave}
     >
       {item.children!.map((child, i) => (
-        <DropdownLink key={i} href={href(child.href)} onClick={dropdown.close}>
-          {menuLabel(child.label, locale)}
+        <DropdownLink key={i} href={child.href} onClick={dropdown.close}>
+          {child.label.no}
         </DropdownLink>
       ))}
     </Dropdown>

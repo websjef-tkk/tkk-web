@@ -7,6 +7,7 @@ export const flexiblePagePaths: Record<string, string> = {
   "hms-hendelsesrapporter": "/hms/hendelsesrapporter",
   "hms-politiattest": "/hms/politiattest",
   "medlemskap": "/medlemskap",
+  "medlemskap-fordeler": "/medlemskap/fordeler",
   "kom-i-gang": "/kom-i-gang",
   "klubben-administrasjon": "/om-klubben/administrasjon",
   "klubben-klubbhus": "/om-klubben/klubbhus",

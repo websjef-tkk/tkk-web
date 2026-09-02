@@ -5,22 +5,21 @@ import { richTextComponents } from "@/components/portableText/richTextComponents
 
 type Props = {
   page: FlexiblePage;
-  locale: string;
   backHref?: string;
   backLabel?: string;
   extra?: React.ReactNode;
 };
 
-export default function FlexiblePageContent({ page, locale, backHref, backLabel, extra }: Props) {
-  const title = locale === "no" ? page.title.no : (page.title.en ?? page.title.no);
-  const intro = locale === "no" ? page.intro?.no : (page.intro?.en ?? page.intro?.no);
-  const body = (locale === "no" ? page.body?.no : (page.body?.en ?? page.body?.no)) as unknown[];
+export default function FlexiblePageContent({ page, backHref, backLabel, extra }: Props) {
+  const title = page.title.no;
+  const intro = page.intro?.no;
+  const body = page.body?.no as unknown[];
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {backHref && (
         <Link href={backHref} className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
-          {backLabel ?? (locale === "no" ? "← Tilbake" : "← Back")}
+          {backLabel ?? "← Tilbake"}
         </Link>
       )}
       <h1 className="font-display font-bold text-navy text-4xl mb-4">{title}</h1>

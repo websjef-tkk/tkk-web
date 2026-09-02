@@ -24,13 +24,17 @@ export const linkAnnotation = {
       name: "href",
       type: "url",
       title: "URL",
+      description: 'Full adresse (https://…) eller en intern sti som starter med "/".',
       hidden: ({ parent }) => (parent as { linkType?: string } | undefined)?.linkType === "pdf",
       validation: (r) =>
-        r.custom((val, ctx) => {
-          const parent = ctx.parent as { linkType?: string } | undefined;
-          if (parent?.linkType === "pdf") return true;
-          return val ? true : "URL er påkrevd";
-        }),
+        r
+          // Interne lenker som /kontakt skal også være lov.
+          .uri({ allowRelative: true, scheme: ["http", "https", "mailto", "tel"] })
+          .custom((val, ctx) => {
+            const parent = ctx.parent as { linkType?: string } | undefined;
+            if (parent?.linkType === "pdf") return true;
+            return val ? true : "URL er påkrevd";
+          }),
     }),
     defineField({
       name: "pdfFile",

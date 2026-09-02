@@ -1,16 +1,5 @@
 import { defineField, defineType } from "sanity";
-
-function bilingualLabel(name: string, title: string) {
-  return defineField({
-    name,
-    title,
-    type: "object",
-    fields: [
-      defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-      defineField({ name: "en", title: "English", type: "string" }),
-    ],
-  });
-}
+import { noString } from "./objects/localized";
 
 const menuLinkFields = [
   defineField({
@@ -68,7 +57,7 @@ const menuChild = {
   type: "object" as const,
   name: "menuChild",
   title: "Undermenypunkt",
-  fields: [bilingualLabel("label", "Etikett"), menuLink],
+  fields: [noString("label", "Etikett", { required: true }), menuLink],
   preview: {
     select: { title: "label.no" },
   },
@@ -92,7 +81,7 @@ export const mainMenu = defineType({
           name: "menuItem",
           title: "Menypunkt",
           fields: [
-            bilingualLabel("label", "Etikett"),
+            noString("label", "Etikett", { required: true }),
             defineField({
               name: "itemType",
               title: "Type",

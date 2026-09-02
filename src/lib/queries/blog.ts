@@ -5,8 +5,8 @@ export interface BlogPostSummary {
   _id: string;
   slug: string;
   publishedAt: string;
-  title: { no: string; en?: string };
-  summary: { no: string; en?: string };
+  title: { no: string };
+  summary: { no: string };
   category: string;
   author?: string;
   image?: { asset: { _ref: string }; alt?: string };
@@ -14,7 +14,7 @@ export interface BlogPostSummary {
 }
 
 export interface BlogPostFull extends BlogPostSummary {
-  body: { no: unknown[]; en?: unknown[] };
+  body: { no: unknown[] };
 }
 
 export async function getAllBlogPosts(): Promise<BlogPostSummary[]> {

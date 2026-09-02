@@ -5,29 +5,28 @@ import type { SeoField } from "@/lib/queries/shared";
 type ImageRef = { asset?: { _ref: string } } | null | undefined;
 
 type SeoPageInput = {
-  title?: { no?: string; en?: string };
-  intro?: { no?: string; en?: string };
-  summary?: { no?: string; en?: string };
-  description?: { no?: string; en?: string };
+  title?: { no?: string };
+  intro?: { no?: string };
+  summary?: { no?: string };
+  description?: { no?: string };
   seo?: SeoField;
   image?: ImageRef;
   heroImage?: ImageRef;
 };
 
-function pick(locale: string, field?: { no?: string; en?: string }): string | undefined {
-  if (!field) return undefined;
-  return (locale === "no" ? field.no : field.en ?? field.no) || undefined;
+function pick(field?: { no?: string }): string | undefined {
+  return field?.no || undefined;
 }
 
-export function buildPageMetadata(page: SeoPageInput | null | undefined, locale: string): Metadata {
+export function buildPageMetadata(page: SeoPageInput | null | undefined): Metadata {
   if (!page) return {};
 
-  const title = pick(locale, page.seo?.metaTitle) ?? pick(locale, page.title);
+  const title = pick(page.seo?.metaTitle) ?? pick(page.title);
   const description =
-    pick(locale, page.seo?.metaDescription) ??
-    pick(locale, page.intro) ??
-    pick(locale, page.summary) ??
-    pick(locale, page.description);
+    pick(page.seo?.metaDescription) ??
+    pick(page.intro) ??
+    pick(page.summary) ??
+    pick(page.description);
 
   const ogImage = page.seo?.ogImage ?? page.image ?? page.heroImage;
   const metadata: Metadata = { title, description };

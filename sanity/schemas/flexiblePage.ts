@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyBlockOf } from "./objects/blockContent";
+import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 
 export const flexiblePage = defineType({
@@ -58,6 +58,7 @@ export const flexiblePage = defineType({
           { title: "Klubben – Skjemaer", value: "klubben-skjemaer" },
           { title: "Klubben – Støtte til konkurransepadling", value: "klubben-stotte-konkurransepadling" },
           { title: "Medlemskap", value: "medlemskap" },
+          { title: "Medlemskap – Fordeler hos samarbeidspartnere", value: "medlemskap-fordeler" },
         ],
       },
       validation: (r) =>
@@ -86,43 +87,9 @@ export const flexiblePage = defineType({
       initialValue: "klubb",
       validation: (r) => r.required(),
     }),
-    defineField({
-      name: "title",
-      title: "Tittel",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "string", validation: (r) => r.required() }),
-        defineField({ name: "en", title: "English", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "intro",
-      title: "Ingress",
-      type: "object",
-      fields: [
-        defineField({ name: "no", title: "Norsk", type: "text", rows: 4 }),
-        defineField({ name: "en", title: "English", type: "text", rows: 4 }),
-      ],
-    }),
-    defineField({
-      name: "body",
-      title: "Innhold",
-      type: "object",
-      fields: [
-        defineField({
-          name: "no",
-          title: "Norsk",
-          type: "array",
-          of: bodyBlockOf("no"),
-        }),
-        defineField({
-          name: "en",
-          title: "English",
-          type: "array",
-          of: bodyBlockOf("en"),
-        }),
-      ],
-    }),
+    noString("title", "Tittel", { required: true }),
+    noText("intro", "Ingress"),
+    noBody("body", "Innhold"),
     seoField,
   ],
   preview: {
