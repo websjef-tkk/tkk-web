@@ -7,7 +7,7 @@ export type ContentLinkPage = {
 } | null;
 
 export type ContentLinkData = {
-  linkType?: "page" | "url" | "pdf";
+  linkType?: "page" | "url" | "pdf" | "anchor";
   page?: ContentLinkPage;
   href?: string | null;
 };

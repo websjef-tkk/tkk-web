@@ -1,8 +1,9 @@
 import { defineField } from "sanity";
+import { AnchorHeadingPicker } from "../../components/AnchorHeadingPicker";
 
 const MAX_PDF_BYTES = 20 * 1024 * 1024;
 
-type LinkType = "page" | "url" | "pdf";
+type LinkType = "page" | "url" | "pdf" | "anchor";
 type LinkParent = { linkType?: LinkType } | undefined;
 
 type LinkFieldsOptions = {
@@ -10,6 +11,8 @@ type LinkFieldsOptions = {
   allowPdf?: boolean;
   /** Legger til et "Åpne i ny fane"-valg. */
   includeNewTab?: boolean;
+  /** Lar redaktøren lenke til en overskrift (h2/h3) i brødteksten på denne siden. */
+  allowAnchor?: boolean;
 };
 
 /**
@@ -18,7 +21,11 @@ type LinkFieldsOptions = {
  * i brødtekst, slik at redaktøren kan søke frem en side i stedet for å skrive
  * inn stien for hånd.
  */
-export function createLinkFields({ allowPdf = false, includeNewTab = false }: LinkFieldsOptions = {}) {
+export function createLinkFields({
+  allowPdf = false,
+  includeNewTab = false,
+  allowAnchor = false,
+}: LinkFieldsOptions = {}) {
   return [
     defineField({
       name: "linkType",
@@ -29,6 +36,7 @@ export function createLinkFields({ allowPdf = false, includeNewTab = false }: Li
           { title: "Side på nettstedet", value: "page" },
           { title: "Ekstern lenke", value: "url" },
           ...(allowPdf ? [{ title: "PDF-fil", value: "pdf" }] : []),
+          ...(allowAnchor ? [{ title: "Overskrift på denne siden", value: "anchor" }] : []),
         ],
         layout: "radio",
       },
@@ -99,6 +107,24 @@ export function createLinkFields({ allowPdf = false, includeNewTab = false }: Li
             type: "boolean",
             title: "Åpne i ny fane",
             initialValue: false,
+          }),
+        ]
+      : []),
+    ...(allowAnchor
+      ? [
+          defineField({
+            name: "anchorBlockKey",
+            title: "Overskrift",
+            type: "string",
+            description: "Velg hvilken overskrift i brødteksten lenken skal hoppe til.",
+            components: { input: AnchorHeadingPicker },
+            hidden: ({ parent }) => (parent as LinkParent)?.linkType !== "anchor",
+            validation: (r) =>
+              r.custom((val, ctx) => {
+                const parent = ctx.parent as LinkParent;
+                if (parent?.linkType !== "anchor") return true;
+                return val ? true : "Velg en overskrift";
+              }),
           }),
         ]
       : []),

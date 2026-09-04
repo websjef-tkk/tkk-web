@@ -11,6 +11,7 @@ type Props = {
 
 export default function DisciplinePageContent({ page }: Props) {
   const title = page.title.no;
+  const tagline = page.tagline?.no;
   const intro = page.intro?.no;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const body = page.body?.no as any[] | undefined;
@@ -24,8 +25,9 @@ export default function DisciplinePageContent({ page }: Props) {
       <div className="relative h-64 md:h-96 overflow-hidden">
         <Image src={heroImageUrl} alt={heroAlt} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-navy/70" />
-        <div className="absolute inset-0 flex items-end pb-8 px-4 sm:px-8 max-w-7xl mx-auto">
+        <div className="absolute inset-0 flex flex-col justify-end pb-8 px-4 sm:px-8 max-w-7xl mx-auto">
           <h1 className="font-display text-white text-4xl md:text-5xl font-bold">{title}</h1>
+          {tagline && <p className="text-tkk-blue font-semibold mt-1">{tagline}</p>}
         </div>
       </div>
 

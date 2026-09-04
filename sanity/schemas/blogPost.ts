@@ -22,7 +22,7 @@ export const blogPost = defineType({
     }),
     noString("title", "Tittel", { required: true }),
     noText("summary", "Sammendrag", { rows: 3, required: true }),
-    noBody("body", "Innhold", { image: true }),
+    noBody("body", "Innhold"),
     defineField({
       name: "category",
       title: "Kategori",

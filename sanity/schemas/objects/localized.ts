@@ -51,7 +51,7 @@ export function noText(name: string, title: string, opts: Options = {}) {
   });
 }
 
-export function noBody(name: string, title: string, opts: { image?: boolean; description?: string } = {}) {
+export function noBody(name: string, title: string, opts: { description?: string } = {}) {
   return defineField({
     name,
     title,
@@ -62,7 +62,7 @@ export function noBody(name: string, title: string, opts: { image?: boolean; des
         name: "no",
         title: "Innhold",
         type: "array",
-        of: bodyBlock({ image: opts.image }),
+        of: bodyBlock(),
       }),
     ],
   });

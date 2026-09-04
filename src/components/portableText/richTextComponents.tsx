@@ -4,11 +4,12 @@ import { urlFor } from "@/lib/sanity";
 import { resolveContentLink, type ContentLinkPage } from "@/lib/linkResolver";
 
 type LinkValue = {
-  linkType?: "page" | "url" | "pdf";
+  linkType?: "page" | "url" | "pdf" | "anchor";
   href?: string;
   page?: ContentLinkPage;
   pdfFile?: { asset?: { url?: string; originalFilename?: string } };
   openInNewTab?: boolean;
+  anchorBlockKey?: string;
 };
 
 type TableValue = {
@@ -23,11 +24,47 @@ const tableStyleClasses: Record<NonNullable<TableValue["style"]>, string> = {
   compact: "[&_td]:py-1 [&_th]:py-1 [&_td]:px-2 [&_th]:px-2 text-sm",
 };
 
+type ImageValue = {
+  alt?: string;
+  caption?: string;
+  credit?: string;
+  size?: "small" | "medium" | "large" | "full";
+  alignment?: "left" | "center" | "right";
+  aspectRatio?: "auto" | "16:9" | "4:3" | "1:1" | "3:4";
+};
+
+const sizeToWidth: Record<NonNullable<ImageValue["size"]>, number> = {
+  small: 480,
+  medium: 720,
+  large: 1000,
+  full: 1600,
+};
+
+const aspectRatioToNumber: Record<Exclude<NonNullable<ImageValue["aspectRatio"]>, "auto">, number> = {
+  "16:9": 16 / 9,
+  "4:3": 4 / 3,
+  "1:1": 1,
+  "3:4": 3 / 4,
+};
+
+const alignmentClasses: Record<NonNullable<ImageValue["alignment"]>, string> = {
+  left: "float-left mr-6 mb-4 max-w-[50%]",
+  right: "float-right ml-6 mb-4 max-w-[50%]",
+  center: "mx-auto",
+};
+
 export const richTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }: { children: React.ReactNode; value?: LinkValue }) => {
       const isPdf = value?.linkType === "pdf";
-      const href = isPdf ? value?.pdfFile?.asset?.url : resolveContentLink(value);
+      const isAnchor = value?.linkType === "anchor";
+      const href = isPdf
+        ? value?.pdfFile?.asset?.url
+        : isAnchor
+          ? value?.anchorBlockKey
+            ? `#${value.anchorBlockKey}`
+            : undefined
+          : resolveContentLink(value);
       if (!href) return <>{children}</>;
       const newTab = !!value?.openInNewTab;
       return (
@@ -45,23 +82,45 @@ export const richTextComponents: PortableTextComponents = {
     },
   },
   block: {
-    h2: ({ children }) => (
-      <h2 className="font-display font-bold text-navy text-2xl mb-3 mt-8">{children}</h2>
+    h2: ({ children, value }) => (
+      <h2 id={value._key} className="font-display font-bold text-navy text-2xl mb-3 mt-8 scroll-mt-24">
+        {children}
+      </h2>
     ),
-    h3: ({ children }) => (
-      <h3 className="font-display font-semibold text-navy text-xl mb-2 mt-6">{children}</h3>
+    h3: ({ children, value }) => (
+      <h3 id={value._key} className="font-display font-semibold text-navy text-xl mb-2 mt-6 scroll-mt-24">
+        {children}
+      </h3>
     ),
   },
   types: {
-    image: ({ value }) => (
-      <Image
-        src={urlFor(value).width(1000).url()}
-        alt={value.alt ?? ""}
-        width={1000}
-        height={700}
-        className="rounded-lg w-full h-auto my-6"
-      />
-    ),
+    image: ({ value }: { value: ImageValue & { asset?: unknown; hotspot?: unknown; crop?: unknown } }) => {
+      const size = value.size ?? "large";
+      const width = sizeToWidth[size];
+      const ratio = value.aspectRatio && value.aspectRatio !== "auto" ? aspectRatioToNumber[value.aspectRatio] : undefined;
+      const height = ratio ? Math.round(width / ratio) : Math.round(width * 0.7);
+      let builder = urlFor(value).width(width);
+      if (ratio) builder = builder.height(height).fit("crop");
+      const alignClass = size === "full" ? "mx-auto w-full" : alignmentClasses[value.alignment ?? "center"];
+      return (
+        <figure className={`not-prose my-6 ${alignClass}`}>
+          <Image
+            src={builder.url()}
+            alt={value.alt ?? ""}
+            width={width}
+            height={height}
+            className="rounded-lg w-full h-auto"
+          />
+          {(value.caption || value.credit) && (
+            <figcaption className="text-sm text-slate/70 mt-2">
+              {value.caption}
+              {value.caption && value.credit && " — "}
+              {value.credit && <span className="italic">{value.credit}</span>}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
     table: ({ value }: { value: TableValue }) => {
       const rows = value.rows ?? [];
       const headerRow = value.headerRow ?? true;
