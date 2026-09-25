@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
+import { DISCIPLINES } from "./objects/disciplines";
 
 export const blogPost = defineType({
   name: "blogPost",
@@ -37,6 +38,16 @@ export const blogPost = defineType({
         ],
       },
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "disciplines",
+      title: "Grener",
+      description: "Hvilke grener saken gjelder. La stå tom for generelt innhold som ikke er knyttet til én bestemt gren.",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: DISCIPLINES,
+      },
     }),
     defineField({ name: "author", title: "Forfatter", type: "string" }),
     defineField({

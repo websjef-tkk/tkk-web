@@ -17,7 +17,7 @@ function OmKlubbenContent({ people }: { people: SanityPerson[] }) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="font-display font-bold text-navy text-4xl mb-6">Om klubben</h1>
-      <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">Trondhjems Kajakklubb er en av Norges største kajakklubbber med ~500 medlemmer og seks aktive disipliner.</p>
+      <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">Trondhjems Kajakklubb er en av Norges største kajakklubbber med ~500 medlemmer og seks aktive grener.</p>
 
       <section className="mb-12">
         <h2 className="font-display font-bold text-navy text-2xl mb-3">Våre verdier</h2>

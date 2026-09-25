@@ -1,4 +1,5 @@
 import type { StructureResolver } from "sanity/structure";
+import { DISCIPLINES } from "./schemas/objects/disciplines";
 
 const EXPLICITLY_HANDLED_TYPES = new Set([
   "siteSettings",
@@ -9,6 +10,59 @@ const EXPLICITLY_HANDLED_TYPES = new Set([
   "person",
   "mainMenu",
 ]);
+
+// Én pane per gren, med grenens side, nyheter og aktiviteter filtrert på
+// den grenen. Dette er kun en navigasjonssnarvei for forfatterne (klubbens
+// grensjefer m.fl. deler samme innlogging) — ikke en tilgangsbegrensning,
+// så alle kan fortsatt åpne andre grener eller "Alt innhold" under.
+const disciplineListItems = (S: Parameters<StructureResolver>[0]) =>
+  DISCIPLINES.map((d) =>
+    S.listItem()
+      .title(d.short)
+      .id(`gren-${d.value}`)
+      .child(
+        S.list()
+          .title(d.short)
+          .items([
+            S.listItem()
+              .title("Grenside")
+              .child(
+                S.documentList()
+                  .title("Grenside")
+                  .apiVersion("2024-01-01")
+                  .filter('_type == "disciplinePage" && discipline == $d')
+                  .params({ d: d.value })
+              ),
+            S.listItem()
+              .title(`${d.short}-innhold`)
+              .child(
+                S.documentList()
+                  .title(`${d.short}-innhold`)
+                  .apiVersion("2024-01-01")
+                  .filter('_type == "flexiblePage" && $d in disciplines')
+                  .params({ d: d.value })
+              ),
+            S.listItem()
+              .title("Nyheter")
+              .child(
+                S.documentList()
+                  .title("Nyheter")
+                  .apiVersion("2024-01-01")
+                  .filter('_type == "blogPost" && $d in disciplines')
+                  .params({ d: d.value })
+              ),
+            S.listItem()
+              .title("Aktiviteter")
+              .child(
+                S.documentList()
+                  .title("Aktiviteter")
+                  .apiVersion("2024-01-01")
+                  .filter('_type == "event" && $d in disciplines')
+                  .params({ d: d.value })
+              ),
+          ])
+      )
+  );
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -31,27 +85,6 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
 
-      S.divider(),
-
-      S.listItem()
-        .title("Padling-innhold")
-        .child(
-          S.list()
-            .title("Padling-innhold")
-            .items([
-              S.documentTypeListItem("disciplinePage").title("Disiplinsider"),
-              S.listItem()
-                .title("Padling-undersider")
-                .child(
-                  S.documentList()
-                    .title("Padling-undersider")
-                    .apiVersion("2024-01-01")
-                    .filter('_type == "flexiblePage" && section == $section')
-                    .params({ section: "padling" })
-                ),
-            ])
-        ),
-
       S.listItem()
         .title("Klubbinformasjon")
         .child(
@@ -64,10 +97,27 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      S.documentTypeListItem("event").title("Terminliste / Aktiviteter"),
+      S.listItem()
+        .title("Innhold per gren")
+        .child(S.list().title("Innhold per gren").items(disciplineListItems(S))),
 
-      S.documentTypeListItem("blogPost").title("Nyheter"),
-      S.documentTypeListItem("person").title("Personer / kontakter"),
+      S.divider(),
+
+      // "Alt innhold": ufiltrert admin-oversikt, inkluderer innhold som
+      // ikke er gren-merket ennå.
+      S.listItem()
+        .title("Alt innhold")
+        .child(
+          S.list()
+            .title("Alt innhold")
+            .items([
+              S.documentTypeListItem("disciplinePage").title("Grensider"),
+              S.documentTypeListItem("flexiblePage").title("Sider (alle)"),
+              S.documentTypeListItem("event").title("Terminliste / Aktiviteter"),
+              S.documentTypeListItem("blogPost").title("Nyheter"),
+              S.documentTypeListItem("person").title("Personer / kontakter"),
+            ])
+        ),
 
       S.divider(),
 

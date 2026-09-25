@@ -25,7 +25,7 @@ const DISCIPLINES = [
   { title: "Junior", emoji: "🌱", href: "/padling/junior" },
 ];
 
-const DEFAULT_STATS = ["~500 medlemmer", "To baser", "Utstyr inkludert", "Seks disipliner"];
+const DEFAULT_STATS = ["~500 medlemmer", "To baser", "Utstyr inkludert", "Seks grener"];
 
 // Brukes til forsiden er satt opp med bilder i Sanity, og som sikkerhetsnett
 // dersom innholdet ikke kan hentes.

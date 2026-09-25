@@ -42,7 +42,9 @@ function EventDetailContent({ event }: { event: SanityEvent }) {
   const body = event.body?.no as any[] | undefined;
 
   const backLabel = "← Alle aktiviteter";
-  const disciplineLabel = event.discipline ? DISCIPLINE_LABELS[event.discipline] : undefined;
+  const disciplineLabels = (event.disciplines ?? [])
+    .map((d) => DISCIPLINE_LABELS[d])
+    .filter((label): label is string => Boolean(label));
 
   const whenLabel = event.isRecurring
     ? `${DAY_LABELS[event.dayOfWeek ?? ""] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
@@ -66,11 +68,11 @@ function EventDetailContent({ event }: { event: SanityEvent }) {
             AVLYST
           </span>
         )}
-        {disciplineLabel && (
-          <span className="bg-navy/10 text-navy text-xs font-semibold px-2 py-0.5 rounded">
-            {disciplineLabel.toUpperCase()}
+        {disciplineLabels.map((label) => (
+          <span key={label} className="bg-navy/10 text-navy text-xs font-semibold px-2 py-0.5 rounded">
+            {label.toUpperCase()}
           </span>
-        )}
+        ))}
         <span className="text-slate text-sm font-medium">{whenLabel}</span>
         {event.location && <span className="text-slate text-sm">📍 {event.location}</span>}
       </div>

@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
+import { DISCIPLINES } from "./objects/disciplines";
 
 export const event = defineType({
   name: "event",
@@ -90,20 +91,13 @@ export const event = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: "discipline",
-      title: "Disiplin",
-      description: "Vises som merkelapp på aktivitetskortene. Fyll ut for at grenen skal synes.",
-      type: "string",
+      name: "disciplines",
+      title: "Grener",
+      description: "Vises som merkelapp(er) på aktivitetskortene. La stå tom hvis aktiviteten gjelder alle grener.",
+      type: "array",
+      of: [{ type: "string" }],
       options: {
-        list: [
-          { title: "Havpadling", value: "hav" },
-          { title: "Elvepadling", value: "elv" },
-          { title: "Flattvann", value: "flattvann" },
-          { title: "Surfski", value: "surfski" },
-          { title: "Kajakkpolo", value: "polo" },
-          { title: "Junior", value: "junior" },
-          { title: "Alle", value: "alle" },
-        ],
+        list: DISCIPLINES,
       },
     }),
     defineField({

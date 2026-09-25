@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "Trondhjems Kajakklubb", template: "%s | Trondhjems Kajakklubb" },
-  description: "En aktiv kajakklub i Trondheim med ~500 medlemmer og seks disipliner.",
+  description: "En aktiv kajakklub i Trondheim med ~500 medlemmer og seks grener.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -14,7 +14,7 @@ export interface SanityEvent {
   time?: string;
   location?: string;
   category: string;
-  discipline?: string;
+  disciplines?: string[];
   difficulty?: string;
   registerUrl?: string;
   cancelled?: boolean;
@@ -35,7 +35,7 @@ const eventProjection = `
   time,
   location,
   category,
-  discipline,
+  disciplines,
   difficulty,
   registerUrl,
   cancelled,

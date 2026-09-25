@@ -1,26 +1,19 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
+import { DISCIPLINES } from "./objects/disciplines";
 
 export const disciplinePage = defineType({
   name: "disciplinePage",
-  title: "Disiplinside",
+  title: "Grenside",
   type: "document",
   fields: [
     defineField({
       name: "discipline",
-      title: "Disiplin (nøkkel)",
+      title: "Gren (nøkkel)",
       type: "string",
       options: {
-        list: [
-          { title: "Havpadling", value: "hav" },
-          { title: "Elvepadling", value: "elv" },
-          { title: "Flattvann", value: "flattvann" },
-          { title: "Surfski", value: "surfski" },
-          { title: "Kajakkpolo", value: "polo" },
-          { title: "Junior", value: "junior" },
-          { title: "Pirbadet", value: "pirbadet" },
-        ],
+        list: DISCIPLINES,
       },
       validation: (r) =>
         r.required().custom(async (value, ctx) => {
@@ -31,7 +24,7 @@ export const disciplinePage = defineType({
             `count(*[_type == "disciplinePage" && discipline == $value && !(_id in [$id, "drafts." + $id])])`,
             { value, id }
           );
-          return other === 0 ? true : "Denne disiplinen er allerede i bruk av en annen side";
+          return other === 0 ? true : "Denne grenen er allerede i bruk av en annen side";
         }),
     }),
     noString("title", "Tittel", { required: true }),

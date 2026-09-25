@@ -29,7 +29,7 @@ export const DISCIPLINE_LABELS: Record<string, string> = {
   surfski: "Surfski",
   polo: "Kajakkpolo",
   junior: "Junior",
-  alle: "Alle grener",
+  pirbadet: "Pirbadet",
 };
 
 export const disciplineColour = "bg-navy/10 text-navy";
@@ -65,7 +65,9 @@ export default function EventCard({ event, labels }: Props) {
       ? labels.difficulty_erfaren
       : undefined;
 
-  const disciplineLabel = event.discipline ? DISCIPLINE_LABELS[event.discipline] : undefined;
+  const disciplineLabels = (event.disciplines ?? [])
+    .map((d) => DISCIPLINE_LABELS[d])
+    .filter((label): label is string => Boolean(label));
 
   const whenLabel = event.isRecurring
     ? `${DAY_LABELS[event.dayOfWeek ?? ""] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
@@ -86,11 +88,11 @@ export default function EventCard({ event, labels }: Props) {
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${categoryColour[event.category] ?? ""}`}>
             {event.category.toUpperCase()}
           </span>
-          {disciplineLabel && (
-            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${disciplineColour}`}>
-              {disciplineLabel.toUpperCase()}
+          {disciplineLabels.map((label) => (
+            <span key={label} className={`text-xs font-semibold px-2 py-0.5 rounded-full ${disciplineColour}`}>
+              {label.toUpperCase()}
             </span>
-          )}
+          ))}
           {event.difficulty && diffLabel && (
             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${difficultyColour[event.difficulty] ?? ""}`}>
               {diffLabel}

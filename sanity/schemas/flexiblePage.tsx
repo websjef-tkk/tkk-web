@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
+import { DISCIPLINES } from "./objects/disciplines";
 import { FieldInfo } from "../components/FieldInfo";
 
 export const flexiblePage = defineType({
@@ -73,6 +74,15 @@ export const flexiblePage = defineType({
       },
       initialValue: "klubb",
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "disciplines",
+      title: "Grener",
+      description: 'Hvilke grener siden tilhører. Styrer om siden vises under "[Gren]-innhold" i Studio.',
+      type: "array",
+      of: [{ type: "string" }],
+      options: { list: DISCIPLINES },
+      hidden: ({ parent }) => (parent as { section?: string } | undefined)?.section !== "padling",
     }),
     noString("title", "Tittel", { required: true }),
     defineField({

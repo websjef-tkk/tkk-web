@@ -8,7 +8,7 @@ const menuLinkFields = [
     type: "string",
     options: {
       list: [
-        { title: "Disiplinside", value: "discipline" },
+        { title: "Grenside", value: "discipline" },
         { title: "Fleksibel side", value: "flexible" },
         { title: "Egendefinert sti", value: "custom" },
       ],
@@ -19,7 +19,7 @@ const menuLinkFields = [
   }),
   defineField({
     name: "disciplinePage",
-    title: "Disiplinside",
+    title: "Grenside",
     type: "reference",
     to: [{ type: "disciplinePage" }],
     hidden: ({ parent }) => (parent as { linkType?: string } | undefined)?.linkType !== "discipline",
