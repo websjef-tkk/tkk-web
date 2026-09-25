@@ -1,4 +1,4 @@
-import { sanityClient } from "../sanity";
+import { sanityClient, getSanityClient } from "../sanity";
 import { bodyProjection, type SeoField } from "./shared";
 
 export interface FlexiblePage {
@@ -10,6 +10,7 @@ export interface FlexiblePage {
   body?: { no?: unknown[] };
   seo?: SeoField;
   backLabel?: string;
+  subPageLinks?: SubPageLink[];
 }
 
 export interface SubPageLink {
@@ -41,7 +42,8 @@ export interface DisciplinePage {
 
 export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null> {
   try {
-    return await sanityClient.fetch(
+    const client = await getSanityClient();
+    return await client.fetch(
       `*[_type == "flexiblePage" && slug.current == $slug][0] {
         _id,
         "slug": slug.current,
@@ -50,7 +52,8 @@ export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null
         intro,
         ${bodyProjection},
         seo,
-        backLabel
+        backLabel,
+        subPageLinks[] { title, href }
       }`,
       { slug }
     );
@@ -74,7 +77,8 @@ export async function getFlexiblePageRedirect(slug: string): Promise<string | nu
 
 export async function getDisciplinePage(discipline: string): Promise<DisciplinePage | null> {
   try {
-    return await sanityClient.fetch(
+    const client = await getSanityClient();
+    return await client.fetch(
       `*[_type == "disciplinePage" && discipline == $discipline][0] {
         _id,
         discipline,

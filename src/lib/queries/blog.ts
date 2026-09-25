@@ -1,4 +1,4 @@
-import { sanityClient } from "../sanity";
+import { sanityClient, getSanityClient } from "../sanity";
 import { bodyProjection, type SeoField } from "./shared";
 
 export interface BlogPostSummary {
@@ -39,7 +39,8 @@ export async function getAllBlogPosts(): Promise<BlogPostSummary[]> {
 
 export async function getBlogPost(slug: string): Promise<BlogPostFull | null> {
   try {
-    return await sanityClient.fetch(
+    const client = await getSanityClient();
+    return await client.fetch(
       `*[_type == "blogPost" && slug.current == $slug][0] {
         _id,
         "slug": slug.current,

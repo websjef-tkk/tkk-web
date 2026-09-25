@@ -1,4 +1,4 @@
-import { sanityClient } from "../sanity";
+import { sanityClient, getSanityClient } from "../sanity";
 import { bodyProjection } from "./shared";
 
 export interface SanityEvent {
@@ -77,7 +77,8 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
 
 export async function getEventBySlug(slug: string): Promise<SanityEvent | null> {
   try {
-    return await sanityClient.fetch(
+    const client = await getSanityClient();
+    return await client.fetch(
       `*[_type == "event" && slug.current == $slug][0] { ${eventProjection} }`,
       { slug }
     );

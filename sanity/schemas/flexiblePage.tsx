@@ -94,6 +94,32 @@ export const flexiblePage = defineType({
     }),
     noText("intro", "Ingress"),
     noBody("body", "Innhold"),
+    defineField({
+      name: "subPageLinks",
+      title: "Undersider",
+      description: "Lenker til undersider som vises som kort-grid nederst på siden",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            noString("title", "Tittel"),
+            defineField({
+              name: "href",
+              title: "Lenke (relativ sti)",
+              type: "string",
+              description: "F.eks. /om-klubben/vedtektene",
+            }),
+          ],
+          preview: {
+            select: { title: "title.no", subtitle: "href" },
+            prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+              return { title: title ?? "Underside", subtitle };
+            },
+          },
+        },
+      ],
+    }),
     seoField,
     defineField({
       name: "backLabel",

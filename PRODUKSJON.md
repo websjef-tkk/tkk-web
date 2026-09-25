@@ -51,6 +51,7 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 - [ ] `NEXT_PUBLIC_SANITY_DATASET` — `production`
 - [ ] `SANITY_API_READ_TOKEN` — Viewer-token fra Sanity
 - [ ] `SANITY_WEBHOOK_SECRET` — hemmelig token for ISR-webhook
+- [ ] `NEXT_PUBLIC_SANITY_PREVIEW_SECRET` — hemmelig token som lar redaktører forhåndsvise kladder via "Forhåndsvis"-lenken i Studio (se `/api/draft`). Denne er bevisst forskjellig fra webhook-hemmeligheten og trenger `NEXT_PUBLIC_`-prefiks siden Studio kjører som en Next.js-klientkomponent
 - [ ] `SANITY_WRITE_TOKEN` — Sanity-token med skriverettigheter (Settings → API → Tokens → Add API token → Editor), brukes av iSonen-synken
 
 ### NIF Activity API (iSonen-synk)
