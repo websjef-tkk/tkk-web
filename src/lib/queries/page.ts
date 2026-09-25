@@ -17,6 +17,15 @@ export interface SubPageLink {
   href: string;
 }
 
+export interface SafetyLink {
+  label: string;
+  linkType?: "page" | "url" | "pdf";
+  page?: { _type?: string; slug?: string; discipline?: string } | null;
+  href?: string;
+  pdfFile?: { asset?: { url?: string; originalFilename?: string; size?: number } };
+  openInNewTab?: boolean;
+}
+
 export interface DisciplinePage {
   _id: string;
   discipline: string;
@@ -26,6 +35,7 @@ export interface DisciplinePage {
   body?: { no?: unknown[] };
   heroImage?: { asset: { _ref: string }; alt?: string };
   subPageLinks?: SubPageLink[];
+  safetyLinks?: SafetyLink[];
   seo?: SeoField;
 }
 
@@ -74,6 +84,14 @@ export async function getDisciplinePage(discipline: string): Promise<DisciplineP
         ${bodyProjection},
         heroImage,
         subPageLinks[] { title, href },
+        safetyLinks[] {
+          label,
+          linkType,
+          page->{ _type, "slug": slug.current, discipline },
+          href,
+          pdfFile{ asset->{ url, originalFilename, size } },
+          openInNewTab
+        },
         seo
       }`,
       { discipline }

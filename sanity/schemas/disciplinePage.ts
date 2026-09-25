@@ -2,6 +2,36 @@ import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 import { DISCIPLINES } from "./objects/disciplines";
+import { createLinkFields } from "./objects/link";
+
+const safetyLink = {
+  type: "object" as const,
+  name: "safetyLink",
+  title: "Sikkerhetslenke",
+  fields: [
+    defineField({ name: "label", title: "Tekst", type: "string", validation: (r) => r.required() }),
+    ...createLinkFields({ allowPdf: true, includeNewTab: true }),
+  ],
+  preview: {
+    select: { title: "label", subtitle: "href", linkType: "linkType", pageTitle: "page.title.no" },
+    prepare({
+      title,
+      subtitle,
+      linkType,
+      pageTitle,
+    }: {
+      title?: string;
+      subtitle?: string;
+      linkType?: string;
+      pageTitle?: string;
+    }) {
+      return {
+        title,
+        subtitle: linkType === "page" ? (pageTitle ?? "Side") : linkType === "pdf" ? "PDF" : subtitle,
+      };
+    },
+  },
+};
 
 export const disciplinePage = defineType({
   name: "disciplinePage",
@@ -56,6 +86,14 @@ export const disciplinePage = defineType({
           },
         },
       ],
+    }),
+    defineField({
+      name: "safetyLinks",
+      title: "Sikker padling",
+      description:
+        "Lenker til HMS-sidene for denne grenen. Vises som en egen \"Sikker padling\"-boks med sikkerhetsikon på grensiden. Tom liste = boksen vises ikke.",
+      type: "array",
+      of: [safetyLink],
     }),
     defineField({
       name: "heroImage",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { urlFor } from "@/lib/sanity";
 import type { DisciplinePage } from "@/lib/queries/page";
 import { richTextComponents } from "@/components/portableText/richTextComponents";
+import { resolveContentLink } from "@/lib/linkResolver";
 
 type Props = {
   page: DisciplinePage;
@@ -34,6 +35,34 @@ export default function DisciplinePageContent({ page }: Props) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {intro && (
           <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">{intro}</p>
+        )}
+
+        {page.safetyLinks && page.safetyLinks.length > 0 && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-6 py-6 mb-10">
+            <h2 className="flex items-center gap-2 font-display font-bold text-navy text-xl mb-4">
+              <span aria-hidden="true">🛟</span> Sikker padling
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {page.safetyLinks.map((link, i) => {
+                const isPdf = link.linkType === "pdf";
+                const href = isPdf ? link.pdfFile?.asset?.url : resolveContentLink(link);
+                if (!href) return null;
+                const newTab = !!link.openInNewTab;
+                return (
+                  <a
+                    key={`${link.label}-${i}`}
+                    href={href}
+                    target={newTab ? "_blank" : undefined}
+                    rel={newTab ? "noopener noreferrer" : undefined}
+                    download={isPdf ? link.pdfFile?.asset?.originalFilename : undefined}
+                    className="bg-white border border-amber-200 rounded-lg px-4 py-3 text-sm font-medium text-navy hover:border-teal hover:text-teal transition-colors shadow-sm"
+                  >
+                    {link.label} →{isPdf && <span className="text-xs align-super ml-0.5">(PDF)</span>}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         )}
 
         {body?.length ? (
