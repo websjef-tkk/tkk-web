@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { DISCIPLINES } from "./objects/disciplines";
+import { EVENT_CATEGORIES } from "./objects/eventCategories";
 
 export const event = defineType({
   name: "event",
@@ -82,11 +83,7 @@ export const event = defineType({
       title: "Kategori",
       type: "string",
       options: {
-        list: [
-          { title: "Tur", value: "tur" },
-          { title: "Kurs", value: "kurs" },
-          { title: "Sosialt", value: "sosial" },
-        ],
+        list: EVENT_CATEGORIES,
       },
       validation: (r) => r.required(),
     }),

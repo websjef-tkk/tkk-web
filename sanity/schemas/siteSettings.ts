@@ -114,6 +114,15 @@ export const siteSettings = defineType({
           fields: [
             defineField({ name: "name", title: "Navn", type: "string" }),
             defineField({ name: "logo", title: "Logo", type: "image", options: { hotspot: true } }),
+            defineField({
+              name: "logoWidth",
+              title: "Bredde (%)",
+              description:
+                "Logoens bredde i prosent av tilgjengelig plass. Brukes til å justere slik at logoene fremstår like store i forhold til hverandre.",
+              type: "number",
+              initialValue: 100,
+              validation: (r) => r.min(1).max(100),
+            }),
             noString("description", "Beskrivelse"),
           ],
           preview: {

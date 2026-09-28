@@ -14,9 +14,7 @@ function useDropdown() {
   return { open, onEnter, onLeave, close: () => setOpen(false) };
 }
 
-const LOGBOOK_URL = "https://www.padleboken.no/logg/";
-
-export default function Nav({ menu }: { menu: ResolvedMenuItem[] }) {
+export default function Nav({ menu, loggbokUrl }: { menu: ResolvedMenuItem[]; loggbokUrl?: string }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -55,26 +53,30 @@ export default function Nav({ menu }: { menu: ResolvedMenuItem[] }) {
               )
             )}
 
-            <a
-              href={LOGBOOK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-3 px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded hover:bg-white transition-colors"
-            >
-              Loggbok
-            </a>
+            {loggbokUrl && (
+              <a
+                href={loggbokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-3 px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded hover:bg-white transition-colors"
+              >
+                Loggbok
+              </a>
+            )}
           </div>
 
           {/* Mobile burger */}
           <div className="flex md:hidden items-center gap-3">
-            <a
-              href={LOGBOOK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded"
-            >
-              Loggbok
-            </a>
+            {loggbokUrl && (
+              <a
+                href={loggbokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded"
+              >
+                Loggbok
+              </a>
+            )}
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-white p-2" aria-label="Toggle menu">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {menuOpen

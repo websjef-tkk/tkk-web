@@ -114,6 +114,13 @@ export const mainMenu = defineType({
         },
       ],
     }),
+    defineField({
+      name: "loggbokUrl",
+      title: "Loggbok-lenke",
+      description: 'Lenken "Loggbok"-knappen i hovedmenyen fører til.',
+      type: "url",
+      initialValue: "https://www.padleboken.no/logg/",
+    }),
   ],
   preview: {
     prepare() {

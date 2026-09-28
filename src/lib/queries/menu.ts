@@ -22,6 +22,7 @@ interface RawMenuItem {
 
 interface RawMainMenu {
   items?: RawMenuItem[];
+  loggbokUrl?: string;
 }
 
 export interface ResolvedMenuChild {
@@ -48,7 +49,8 @@ async function fetchMainMenu(): Promise<RawMainMenu | null> {
             label,
             link { ${linkProjection} }
           }
-        }
+        },
+        loggbokUrl
       }
     `);
   } catch {
@@ -56,9 +58,9 @@ async function fetchMainMenu(): Promise<RawMainMenu | null> {
   }
 }
 
-export async function getMainMenu(): Promise<ResolvedMenuItem[]> {
+export async function getMainMenu(): Promise<{ items: ResolvedMenuItem[]; loggbokUrl?: string }> {
   const raw = await fetchMainMenu();
-  if (!raw?.items) return [];
+  if (!raw?.items) return { items: [], loggbokUrl: raw?.loggbokUrl };
 
   const resolved: ResolvedMenuItem[] = [];
 
@@ -81,5 +83,5 @@ export async function getMainMenu(): Promise<ResolvedMenuItem[]> {
     }
   }
 
-  return resolved;
+  return { items: resolved, loggbokUrl: raw.loggbokUrl };
 }

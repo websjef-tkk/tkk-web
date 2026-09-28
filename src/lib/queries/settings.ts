@@ -4,6 +4,7 @@ export interface Partner {
   name?: string;
   description?: { no?: string };
   logo?: { asset: { _ref: string } };
+  logoWidth?: number;
 }
 
 export interface HeroButton {
@@ -46,7 +47,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         phone,
         orgNr,
         stats[] { label },
-        partners[] { name, description, logo }
+        partners[] { name, description, logo, logoWidth }
       }`
     );
   } catch {

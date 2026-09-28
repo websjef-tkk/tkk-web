@@ -27,13 +27,15 @@ export default function PartnersSection({ partners }: { partners: Partner[] }) {
                   uansett hvilket format logofilen har. */}
               <div className="flex h-32 w-64 items-center justify-center">
                 {p.logo ? (
-                  <Image
-                    src={urlFor(p.logo).width(520).height(260).fit("max").url()}
-                    alt={p.name ?? ""}
-                    width={520}
-                    height={260}
-                    className="h-full w-full object-contain"
-                  />
+                  <div className="relative h-full" style={{ width: `${p.logoWidth ?? 100}%` }}>
+                    <Image
+                      src={urlFor(p.logo).width(520).fit("max").url()}
+                      alt={p.name ?? ""}
+                      fill
+                      sizes="256px"
+                      className="object-contain"
+                    />
+                  </div>
                 ) : (
                   <span className="font-semibold text-navy text-lg">{p.name}</span>
                 )}

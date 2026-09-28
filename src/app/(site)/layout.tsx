@@ -9,7 +9,7 @@ import { getMainMenu } from "@/lib/queries/menu";
  * utenfor denne gruppen, og skal vises uten klubbens meny.
  */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const menu = await getMainMenu();
+  const { items: menu, loggbokUrl } = await getMainMenu();
   const isDraft = (await draftMode()).isEnabled;
   return (
     <>
@@ -21,7 +21,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           </Link>
         </div>
       )}
-      <Nav menu={menu} />
+      <Nav menu={menu} loggbokUrl={loggbokUrl} />
       <main className="flex-1">{children}</main>
       <Footer />
     </>
