@@ -14,12 +14,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function OmKlubbenPage() {
   const [page, people] = await Promise.all([getFlexiblePage("om-klubben"), getAllPeople()]);
-  const peopleAndPartners = <PeopleAndPartners people={people} />;
+  const peopleTables = <PeopleTables people={people} />;
 
   if (page) {
-    return <FlexiblePageContent page={page} extra={peopleAndPartners} />;
+    return <FlexiblePageContent page={page} extra={peopleTables} />;
   }
-  return <OmKlubbenFallback>{peopleAndPartners}</OmKlubbenFallback>;
+  return <OmKlubbenFallback>{peopleTables}</OmKlubbenFallback>;
 }
 
 /** Brukes bare hvis flexiblePage-dokumentet "om-klubben" ikke finnes (ennå) i Sanity. */
@@ -48,7 +48,7 @@ function OmKlubbenFallback({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PeopleAndPartners({ people }: { people: SanityPerson[] }) {
+function PeopleTables({ people }: { people: SanityPerson[] }) {
   const board = people.filter((p) => p.group === "board");
   const leaders = people.filter((p) => p.group === "leaders");
   const others = people.filter((p) => p.group === "others");
@@ -58,21 +58,6 @@ function PeopleAndPartners({ people }: { people: SanityPerson[] }) {
       {board.length > 0 && <PersonTable title="Styre" people={board} />}
       {leaders.length > 0 && <PersonTable title="Gruppeledere" people={leaders} />}
       {others.length > 0 && <PersonTable title="Andre" people={others} />}
-
-      <section className="mt-12">
-        <h2 className="font-display font-bold text-navy text-2xl mb-4">Samarbeidspartnere</h2>
-        <div className="flex flex-wrap gap-4">
-          <a href="https://www.padlespesialisten.no" target="_blank" rel="noopener noreferrer"
-            className="bg-white border border-mist rounded-lg px-5 py-3 text-navy hover:border-tkk-blue transition-colors text-sm font-medium">
-            Padlespesialisten
-          </a>
-          <a href="https://www.padling.no" target="_blank" rel="noopener noreferrer"
-            className="bg-white border border-mist rounded-lg px-5 py-3 text-navy hover:border-tkk-blue transition-colors text-sm font-medium">
-            Norges Padleforbund
-          </a>
-        </div>
-        <p className="mt-6 text-slate text-sm">Organisasjonsnummer: 990 255 105</p>
-      </section>
     </>
   );
 }
