@@ -53,6 +53,48 @@ const alignmentClasses: Record<NonNullable<ImageValue["alignment"]>, string> = {
   center: "mx-auto",
 };
 
+type EmbedValue = {
+  url?: string;
+  title?: string;
+  aspectRatio?: "16:9" | "4:3" | "1:1" | "9:16" | "custom";
+  height?: number;
+  allowFullscreen?: boolean;
+  caption?: string;
+};
+
+const embedAspectClasses: Record<Exclude<NonNullable<EmbedValue["aspectRatio"]>, "custom">, string> = {
+  "16:9": "aspect-video",
+  "4:3": "aspect-[4/3]",
+  "1:1": "aspect-square",
+  "9:16": "aspect-[9/16]",
+};
+
+function toEmbedUrl(rawUrl: string): string {
+  try {
+    const u = new URL(rawUrl);
+    const host = u.hostname.replace(/^www\./, "").replace(/^m\./, "");
+    if (host === "youtube.com") {
+      if (u.pathname === "/watch") {
+        const id = u.searchParams.get("v");
+        if (id) return `https://www.youtube.com/embed/${id}`;
+      }
+      const shorts = u.pathname.match(/^\/shorts\/([^/]+)/);
+      if (shorts) return `https://www.youtube.com/embed/${shorts[1]}`;
+    }
+    if (host === "youtu.be") {
+      const id = u.pathname.slice(1);
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+    if (host === "vimeo.com") {
+      const match = u.pathname.match(/^\/(\d+)/);
+      if (match) return `https://player.vimeo.com/video/${match[1]}`;
+    }
+    return rawUrl;
+  } catch {
+    return rawUrl;
+  }
+}
+
 export const richTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }: { children: React.ReactNode; value?: LinkValue }) => {
@@ -154,6 +196,31 @@ export const richTextComponents: PortableTextComponents = {
             </tbody>
           </table>
         </div>
+      );
+    },
+    embed: ({ value }: { value: EmbedValue }) => {
+      if (!value?.url) return null;
+      const src = toEmbedUrl(value.url);
+      const title = value.title?.trim() || "Innebygd innhold";
+      const aspectRatio = value.aspectRatio ?? "16:9";
+      const wrapperClass = aspectRatio === "custom" ? "" : embedAspectClasses[aspectRatio];
+      const wrapperStyle = aspectRatio === "custom" ? { height: value.height ?? 400 } : undefined;
+      return (
+        <figure className="not-prose my-6">
+          <div className={`w-full overflow-hidden rounded-lg bg-mist/30 ${wrapperClass}`} style={wrapperStyle}>
+            <iframe
+              src={src}
+              title={title}
+              loading="lazy"
+              className="h-full w-full"
+              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen={value.allowFullscreen ?? true}
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
+          {value.caption && <figcaption className="text-sm text-slate/70 mt-2">{value.caption}</figcaption>}
+        </figure>
       );
     },
   },

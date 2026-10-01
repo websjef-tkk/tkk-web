@@ -1,6 +1,7 @@
 import { defineField } from "sanity";
 import { linkAnnotation } from "./linkAnnotation";
 import { tableObject } from "./tableObject";
+import { embedObject } from "./embedObject";
 
 const bodyStyles = [
   { title: "Normal", value: "normal" },
@@ -74,5 +75,5 @@ export function bodyBlock() {
       }),
     ],
   };
-  return [blockType, tableObject, imageType];
+  return [blockType, tableObject, imageType, embedObject];
 }
