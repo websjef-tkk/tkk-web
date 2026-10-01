@@ -15,8 +15,21 @@ export interface FlexiblePage {
 
 export interface SubPageLink {
   title: { no?: string };
-  href: string;
+  linkType?: "page" | "url" | "pdf";
+  page?: { _type?: string; slug?: string; discipline?: string } | null;
+  href?: string;
+  pdfFile?: { asset?: { url?: string; originalFilename?: string; size?: number } };
+  openInNewTab?: boolean;
 }
+
+const subPageLinksProjection = `subPageLinks[] {
+  title,
+  linkType,
+  page->{ _type, "slug": slug.current, discipline },
+  href,
+  pdfFile{ asset->{ url, originalFilename, size } },
+  openInNewTab
+}`;
 
 export interface SafetyLink {
   label: string;
@@ -53,7 +66,7 @@ export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null
         ${bodyProjection},
         seo,
         backLabel,
-        subPageLinks[] { title, href }
+        ${subPageLinksProjection}
       }`,
       { slug }
     );
@@ -87,7 +100,7 @@ export async function getDisciplinePage(discipline: string): Promise<DisciplineP
         intro,
         ${bodyProjection},
         heroImage,
-        subPageLinks[] { title, href },
+        ${subPageLinksProjection},
         safetyLinks[] {
           label,
           linkType,

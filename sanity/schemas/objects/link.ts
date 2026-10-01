@@ -4,7 +4,16 @@ import { AnchorHeadingPicker } from "../../components/AnchorHeadingPicker";
 const MAX_PDF_BYTES = 20 * 1024 * 1024;
 
 type LinkType = "page" | "url" | "pdf" | "anchor";
-type LinkParent = { linkType?: LinkType } | undefined;
+type LinkParent = { linkType?: LinkType; href?: string } | undefined;
+
+/**
+ * Gamle lenker lagret før `linkType` fantes har bare `href` — de vises og
+ * valideres som eksterne lenker, i tråd med `resolveContentLink` på nettsiden.
+ */
+function effectiveLinkType(parent: unknown): LinkType | undefined {
+  const p = parent as LinkParent;
+  return p?.linkType ?? (p?.href ? "url" : undefined);
+}
 
 type LinkFieldsOptions = {
   /** Lar redaktøren i tillegg velge å lenke til en opplastet PDF-fil. */
@@ -60,11 +69,10 @@ export function createLinkFields({
       title: "Nettadresse",
       type: "string",
       description: 'F.eks. "tkk.no" eller "vg.no" — "https://" legges til automatisk om du utelater det.',
-      hidden: ({ parent }) => (parent as LinkParent)?.linkType !== "url",
+      hidden: ({ parent }) => effectiveLinkType(parent) !== "url",
       validation: (r) =>
         r.custom((val: string | undefined, ctx) => {
-          const parent = ctx.parent as LinkParent;
-          if (parent?.linkType !== "url") return true;
+          if (effectiveLinkType(ctx.parent) !== "url") return true;
           if (!val) return "Nettadresse er påkrevd";
           return /\s/.test(val) ? "Nettadressen kan ikke inneholde mellomrom" : true;
         }),

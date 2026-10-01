@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
+import { subPageLinksField } from "./objects/subPageLink";
 import { DISCIPLINES } from "./objects/disciplines";
 import { createLinkFields } from "./objects/link";
 
@@ -61,32 +62,7 @@ export const disciplinePage = defineType({
     noString("tagline", "Tagline"),
     noText("intro", "Ingress"),
     noBody("body", "Innhold"),
-    defineField({
-      name: "subPageLinks",
-      title: "Undersider",
-      description: "Lenker til undersider som vises som kort-grid nederst på siden",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            noString("title", "Tittel"),
-            defineField({
-              name: "href",
-              title: "Lenke (relativ sti)",
-              type: "string",
-              description: "F.eks. /padling/hav/reolplasser",
-            }),
-          ],
-          preview: {
-            select: { title: "title.no", subtitle: "href" },
-            prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
-              return { title: title ?? "Underside", subtitle };
-            },
-          },
-        },
-      ],
-    }),
+    subPageLinksField,
     defineField({
       name: "safetyLinks",
       title: "Sikker padling",
