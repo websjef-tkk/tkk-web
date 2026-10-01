@@ -10,6 +10,9 @@ export const sanityClient = createClient({
   apiVersion: "2024-01-01",
   useCdn: false,
   token: process.env.SANITY_API_READ_TOKEN,
+  // Uten dette blir kladder (drafts.*) som matcher en spørring vist til alle besøkende,
+  // ikke bare redaktører i "Forhåndsvis"-modus (se previewClient under).
+  perspective: "published",
 });
 
 /** Samme klient, men lest med kladder inkludert — brukes bare når Draft Mode er aktivert. */
