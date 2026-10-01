@@ -1,23 +1,35 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { getFlexiblePage } from "@/lib/queries/page";
 import { getAllPeople } from "@/lib/queries/people";
 import type { SanityPerson } from "@/lib/queries/people";
+import FlexiblePageContent from "@/components/FlexiblePageContent";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export default async function OmKlubbenPage() {
-  const people = await getAllPeople();
-  return <OmKlubbenContent people={people} />;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getFlexiblePage("om-klubben");
+  return buildPageMetadata(page);
 }
 
-function OmKlubbenContent({ people }: { people: SanityPerson[] }) {
-  const board = people.filter((p) => p.group === "board");
-  const leaders = people.filter((p) => p.group === "leaders");
-  const others = people.filter((p) => p.group === "others");
+export default async function OmKlubbenPage() {
+  const [page, people] = await Promise.all([getFlexiblePage("om-klubben"), getAllPeople()]);
+  const peopleAndPartners = <PeopleAndPartners people={people} />;
 
+  if (page) {
+    return <FlexiblePageContent page={page} extra={peopleAndPartners} />;
+  }
+  return <OmKlubbenFallback>{peopleAndPartners}</OmKlubbenFallback>;
+}
+
+/** Brukes bare hvis flexiblePage-dokumentet "om-klubben" ikke finnes (ennå) i Sanity. */
+function OmKlubbenFallback({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="font-display font-bold text-navy text-4xl mb-6">Om klubben</h1>
-      <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">Trondhjems Kajakklubb er en av Norges største kajakklubbber med ~500 medlemmer og seks aktive grener.</p>
+      <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">
+        Trondhjems Kajakklubb er en av Norges største kajakklubber, med rundt 500 medlemmer og seks aktive grener.
+      </p>
 
       <section className="mb-12">
         <h2 className="font-display font-bold text-navy text-2xl mb-3">Våre verdier</h2>
@@ -29,20 +41,20 @@ function OmKlubbenContent({ people }: { people: SanityPerson[] }) {
         <p className="text-slate leading-relaxed">
           Klubben styres av en organisasjonsplan som vedtas av årsmøtet, og av klubbens vedtekter.
         </p>
-        <ul className="mt-3 space-y-1 text-slate leading-relaxed">
-          <li>
-            <Link href="/om-klubben/organisasjonsplanen" className="text-teal font-medium hover:underline">
-              Se organisasjonsplanen →
-            </Link>
-          </li>
-          <li>
-            <Link href="/om-klubben/vedtektene" className="text-teal font-medium hover:underline">
-              Se vedtektene →
-            </Link>
-          </li>
-        </ul>
       </section>
 
+      {children}
+    </div>
+  );
+}
+
+function PeopleAndPartners({ people }: { people: SanityPerson[] }) {
+  const board = people.filter((p) => p.group === "board");
+  const leaders = people.filter((p) => p.group === "leaders");
+  const others = people.filter((p) => p.group === "others");
+
+  return (
+    <>
       {board.length > 0 && <PersonTable title="Styre" people={board} />}
       {leaders.length > 0 && <PersonTable title="Gruppeledere" people={leaders} />}
       {others.length > 0 && <PersonTable title="Andre" people={others} />}
@@ -61,7 +73,7 @@ function OmKlubbenContent({ people }: { people: SanityPerson[] }) {
         </div>
         <p className="mt-6 text-slate text-sm">Organisasjonsnummer: 990 255 105</p>
       </section>
-    </div>
+    </>
   );
 }
 

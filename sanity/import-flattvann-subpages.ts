@@ -269,9 +269,14 @@ const VINGARER_IMAGES: { afterKey: string; localFile: string }[] = [
   { afterKey: "ji5ry6yf", localFile: "vingarer_4_think-powerwing.png" }, // etter Think Powerwing-beskrivelsen (siste blokk)
 ];
 
-function stripSystemFields<T extends Record<string, unknown>>(doc: T) {
-  const { _rev, _createdAt, _updatedAt, ...rest } = doc as Record<string, unknown>;
-  return rest;
+function stripSystemFields(doc: Record<string, unknown>) {
+  const clone: Record<string, unknown> = { ...doc };
+  delete clone._rev;
+  delete clone._createdAt;
+  delete clone._updatedAt;
+  // Migration-script-only helper: the stripped clone still has `_id`/`_type`
+  // from the source doc at runtime, but TS can't track that through `delete`.
+  return clone as { _id: string; _type: string } & Record<string, unknown>;
 }
 
 async function patchVingarer() {
