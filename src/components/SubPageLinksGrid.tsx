@@ -18,12 +18,12 @@ export default function SubPageLinksGrid({ links, heading = "Mer om dette" }: Pr
               <Link
                 key={link.href}
                 href={link.href}
-                className="group block bg-white border border-slate-200 rounded-lg px-6 py-5 hover:border-teal hover:shadow-md transition-all"
+                className="group flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-6 py-5 hover:border-teal hover:shadow-md transition-all"
               >
                 <span className="font-semibold text-navy group-hover:text-teal transition-colors">
                   {linkTitle}
                 </span>
-                <span className="block text-teal text-sm mt-1 group-hover:translate-x-1 transition-transform">→</span>
+                <span className="text-teal text-sm group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             );
           })}
