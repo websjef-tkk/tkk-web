@@ -68,12 +68,12 @@ function KontaktContent({ people }: { people: SanityPerson[] }) {
         <div className="rounded-xl overflow-hidden border border-mist shadow-sm">
           <iframe
             title="TKK Kart"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=10.367%2C63.429%2C10.397%2C63.443&layer=mapnik&marker=63.436%2C10.382"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=10.359%2C63.425%2C10.389%2C63.439&layer=mapnik&marker=63.4317%2C10.3739"
             width="100%" height="340" className="block" loading="lazy"
           />
         </div>
         <p className="text-xs text-slate mt-2">
-          <a href="https://www.openstreetmap.org/?mlat=63.436&mlon=10.382#map=15/63.436/10.382"
+          <a href="https://www.openstreetmap.org/?mlat=63.4317&mlon=10.3739#map=16/63.4317/10.3739"
             target="_blank" rel="noopener noreferrer" className="hover:text-teal">
             Åpne i OpenStreetMap ↗
           </a>
