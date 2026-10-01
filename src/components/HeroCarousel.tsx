@@ -35,8 +35,8 @@ export default function HeroCarousel({ slides }: { slides: HeroSlideView[] }) {
             className="object-cover"
             priority={i === 0}
           />
-          {/* Mørkt slør slik at teksten er lesbar — lettere enn før, så bildet slipper mer til. */}
-          <div className="absolute inset-0 bg-navy/60" />
+          {/* Slør bare der teksten ligger (venstre side) — resten av bildet vises klart. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/65 via-navy/35 to-navy/10" />
         </div>
       ))}
 
