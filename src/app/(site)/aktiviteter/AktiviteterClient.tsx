@@ -44,9 +44,6 @@ export default function AktiviteterClient({ events }: Props) {
     return true;
   });
 
-  const recurring = filtered.filter((e) => e.isRecurring);
-  const oneOff = filtered.filter((e) => !e.isRecurring);
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="font-display font-bold text-navy text-4xl mb-8">Aktiviteter og kurs</h1>
@@ -86,25 +83,7 @@ export default function AktiviteterClient({ events }: Props) {
       {filtered.length === 0 ? (
         <p className="text-slate">Ingen kommende aktiviteter i denne kategorien.</p>
       ) : (
-        <>
-          {recurring.length > 0 && (
-            <div className="mb-10">
-              <h2 className="font-display font-bold text-navy text-xl mb-4">Faste aktiviteter</h2>
-              <EventGrid events={recurring} />
-            </div>
-          )}
-
-          {recurring.length > 0 && oneOff.length > 0 && <hr className="border-mist mb-10" />}
-
-          {oneOff.length > 0 && (
-            <div>
-              {recurring.length > 0 && (
-                <h2 className="font-display font-bold text-navy text-xl mb-4">Andre aktiviteter</h2>
-              )}
-              <EventGrid events={oneOff} />
-            </div>
-          )}
-        </>
+        <EventGrid events={filtered} />
       )}
     </div>
   );

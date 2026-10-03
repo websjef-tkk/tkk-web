@@ -36,6 +36,7 @@
 - [ ] Sett opp HTTPS (skjer automatisk på Vercel når domenet er koblet til)
 - [ ] Verifiser at `www.tkk.no` og `tkk.no` begge virker (redirect én til den andre)
 - [ ] Oppdater `NEXT_PUBLIC_APP_URL` i Vercel-miljøvariablene til `https://tkk.no` når domenet er live
+- [ ] Oppdater GitHub-secreten `SITE_URL` (repo → Settings → Secrets and variables → Actions) til `https://tkk.no` når domenet er live. Den brukes av timesynken mot iSonen og peker til Vercel-URL-en fram til da.
 
 ---
 
@@ -55,24 +56,22 @@ Vercel → Project Settings → Environment Variables. Husk å sette de samme va
 - [ ] `SANITY_WRITE_TOKEN` — Sanity-token med skriverettigheter (Settings → API → Tokens → Add API token → Editor), brukes av iSonen-synken
 
 ### NIF Activity API (iSonen-synk)
-- [ ] `NIF_ORG_ID` — TKKs organisasjons-ID i NIF
-- [ ] `NIF_ACTIVITY_API_BASE_URL` — base-URL for data.nif.no activity-API (fyll inn når tilgang er innvilget)
-- [ ] `NIF_ACTIVITY_CLIENT_ID` — OAuth2 client id
-- [ ] `NIF_ACTIVITY_CLIENT_SECRET` — OAuth2 client secret
+Org-ID (26548) og API-URL-ene er konstanter i `src/lib/isonen.ts`.
+- [ ] `NIF_ACTIVITY_CLIENT_ID` — OAuth2 client id (`KommendeKamperIL`)
+- [ ] `NIF_ACTIVITY_CLIENT_SECRET` — OAuth2 client secret. Merk den som **Sensitive** i Vercel, og legg den aldri i git eller chat.
 - [ ] `NIF_ACTIVITY_MOCK` — sett til `false` i produksjon (kun `true` for lokal testing uten reell tilgang)
 - [ ] `CRON_SECRET` — beskytter `/api/sync-isonen`-endepunktet mot uautorisert kjøring
 
 ---
 
-## 4. NIF Activity API — daglig import av aktiviteter fra iSonen
+## 4. NIF Activity API — import av aktiviteter fra iSonen hver time
 
-- [ ] Søk om API-tilgang til `data.nif.no` sitt activity-API (scope `data_activity_read`)
-- [ ] Be om OAuth2 client-ID/secret når tilgang er innvilget
-- [ ] Verifiser faktisk responsformat fra `EventsForOrg/Schedule` mot antagelsene i `src/lib/isonen.ts` (feltnavn er ikke bekreftet — se kommentar i filen) og juster mapping om nødvendig
-- [ ] Test synk-ruten (`/api/sync-isonen`) manuelt mot reelle data før cron skrus på i produksjon
-- [ ] Bekreft at kun aktiviteter fra "Trondhjems Kajakklubb" og "Trondhjems Kajakklubb - Padling" dukker opp som kladder i Sanity
-- [ ] Sett `NIF_ACTIVITY_MOCK=false` i produksjon
-- [ ] Bekreft at cron-jobben i `vercel.json` faktisk kjører daglig (Vercel-dashboard → Deployments → Cron Jobs)
+- [x] API-tilgang innvilget (scope `data_activity_read`, client `KommendeKamperIL`)
+- [x] Responsformatet er verifisert mot ekte data. API-et returnerer en liste direkte, ikke `data.apiEventSearch` som dokumentasjonen sier.
+- [ ] Legg inn `NIF_ACTIVITY_CLIENT_ID`, `NIF_ACTIVITY_CLIENT_SECRET` og `CRON_SECRET` i Vercel (Production)
+- [ ] Legg inn repo-secrets `CRON_SECRET` (samme verdi som i Vercel) og `SITE_URL` i GitHub (Settings → Secrets and variables → Actions)
+- [ ] Kjør workflowen «Synk iSonen» manuelt (Actions → Run workflow) og sjekk at den gir HTTP 200
+- [ ] Sett `NIF_ACTIVITY_MOCK=false` i produksjon (eller la den stå tom)
 
 ---
 

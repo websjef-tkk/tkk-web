@@ -5,7 +5,7 @@ import { EVENT_CATEGORIES } from "./objects/eventCategories";
 
 export const event = defineType({
   name: "event",
-  title: "Aktivitet / arrangement",
+  title: "Aktivitet",
   type: "document",
   fields: [
     noString("title", "Tittel", { required: true }),
@@ -19,59 +19,15 @@ export const event = defineType({
     noText("description", "Beskrivelse"),
     noBody("body", "Utfyllende innhold (hvordan delta)"),
     defineField({
-      name: "isRecurring",
-      title: "Gjentakende aktivitet?",
-      description: "Av = engangshendelse (bruker dato). På = gjentakende (bruker ukedag/klokkeslett).",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
       name: "date",
       title: "Startdato",
       type: "datetime",
-      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring === true,
-      validation: (r) =>
-        r.custom((val, ctx) => {
-          const parent = ctx.parent as { isRecurring?: boolean } | undefined;
-          if (parent?.isRecurring) return true;
-          return val ? true : "Startdato er påkrevd for engangshendelser";
-        }),
+      validation: (r) => r.required(),
     }),
     defineField({
       name: "endDate",
       title: "Sluttdato (valgfritt)",
       type: "datetime",
-      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring === true,
-    }),
-    defineField({
-      name: "dayOfWeek",
-      title: "Ukedag",
-      type: "string",
-      options: {
-        list: [
-          { title: "Mandag", value: "monday" },
-          { title: "Tirsdag", value: "tuesday" },
-          { title: "Onsdag", value: "wednesday" },
-          { title: "Torsdag", value: "thursday" },
-          { title: "Fredag", value: "friday" },
-          { title: "Lørdag", value: "saturday" },
-          { title: "Søndag", value: "sunday" },
-        ],
-      },
-      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring !== true,
-      validation: (r) =>
-        r.custom((val, ctx) => {
-          const parent = ctx.parent as { isRecurring?: boolean } | undefined;
-          if (!parent?.isRecurring) return true;
-          return val ? true : "Ukedag er påkrevd for gjentakende aktiviteter";
-        }),
-    }),
-    defineField({
-      name: "time",
-      title: "Klokkeslett",
-      type: "string",
-      description: "F.eks. 18:00",
-      hidden: ({ parent }) => (parent as { isRecurring?: boolean } | undefined)?.isRecurring !== true,
     }),
     defineField({
       name: "location",
@@ -109,16 +65,19 @@ export const event = defineType({
         ],
       },
     }),
-    defineField({ name: "registerUrl", title: "Påmeldingslenke", type: "url" }),
     defineField({
-      name: "sortOrder",
-      title: "Sorteringsrekkefølge (for gjentakende)",
-      type: "number",
+      name: "image",
+      title: "Bilde",
+      description: "Hentes fra iSonen når aktiviteten importeres, men kan byttes ut her.",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string" })],
     }),
+    defineField({ name: "registerUrl", title: "Påmeldingslenke", type: "url" }),
     defineField({
       name: "cancelled",
       title: "Avlyst",
-      description: "Settes automatisk når en importert aktivitet ikke lenger finnes på iSonen, eller manuelt for andre aktiviteter.",
+      description: "Settes automatisk for importerte aktiviteter når de avlyses (\"AVLYST\" i tittelen) eller fjernes fra iSonen. Settes manuelt for andre aktiviteter.",
       type: "boolean",
       initialValue: false,
     }),
@@ -133,7 +92,7 @@ export const event = defineType({
     defineField({
       name: "externalId",
       title: "Ekstern ID (iSonen)",
-      description: "iSonen sin egen ID for arrangementet — brukes til å koble sammen ved daglig synkronisering.",
+      description: "iSonen sin egen ID for arrangementet — brukes til å koble sammen ved synkronisering hver time.",
       type: "string",
       readOnly: true,
       hidden: ({ document }) => !(document as { externalSource?: string } | undefined)?.externalSource,
@@ -141,10 +100,10 @@ export const event = defineType({
   ],
   orderings: [{ title: "Dato (stigende)", name: "dateAsc", by: [{ field: "date", direction: "asc" }] }],
   preview: {
-    select: { title: "title.no", subtitle: "date", dayOfWeek: "dayOfWeek", isRecurring: "isRecurring" },
-    prepare({ title, subtitle, dayOfWeek, isRecurring }: { title?: string; subtitle?: string; dayOfWeek?: string; isRecurring?: boolean }) {
-      const sub = isRecurring ? dayOfWeek : subtitle ? new Date(subtitle).toLocaleDateString("no-NO") : "";
-      return { title: title ?? "Uten tittel", subtitle: sub };
+    select: { title: "title.no", subtitle: "date", media: "image" },
+    prepare({ title, subtitle, media }) {
+      const sub = subtitle ? new Date(subtitle).toLocaleDateString("no-NO") : "";
+      return { title: title ?? "Uten tittel", subtitle: sub, media };
     },
   },
 });

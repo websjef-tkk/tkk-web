@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { urlFor } from "@/lib/sanityImage";
 import type { SanityEvent } from "@/lib/queries/events";
 
 type Props = {
@@ -34,16 +36,6 @@ export const DISCIPLINE_LABELS: Record<string, string> = {
 
 export const disciplineColour = "bg-navy/10 text-navy";
 
-const DAY_LABELS: Record<string, string> = {
-  monday: "Mandag",
-  tuesday: "Tirsdag",
-  wednesday: "Onsdag",
-  thursday: "Torsdag",
-  friday: "Fredag",
-  saturday: "Lørdag",
-  sunday: "Søndag",
-};
-
 function formatDate(dateStr: string, endDate?: string) {
   const fmt = (d: string) =>
     new Date(d).toLocaleDateString("nb-NO", {
@@ -69,15 +61,19 @@ export default function EventCard({ event, labels }: Props) {
     .map((d) => DISCIPLINE_LABELS[d])
     .filter((label): label is string => Boolean(label));
 
-  const whenLabel = event.isRecurring
-    ? `${DAY_LABELS[event.dayOfWeek ?? ""] ?? event.dayOfWeek}${event.time ? ` kl. ${event.time}` : ""}`
-    : formatDate(event.date!, event.endDate);
+  const whenLabel = formatDate(event.date, event.endDate);
+  const imageUrl = event.image?.asset ? urlFor(event.image).width(600).height(300).url() : null;
 
   return (
     <Link
       href={`/aktiviteter/${event.slug}`}
-      className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
+      className="group bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
     >
+      {imageUrl && (
+        <div className="relative h-40 overflow-hidden">
+          <Image src={imageUrl} alt={event.image?.alt ?? title} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
+        </div>
+      )}
       <div className={`border-l-4 px-5 py-4 flex-1 ${event.cancelled ? "border-red-500" : "border-tkk-blue"}`}>
         <div className="flex flex-wrap gap-2 mb-2">
           {event.cancelled && (

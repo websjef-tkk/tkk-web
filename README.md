@@ -30,7 +30,7 @@ Kopier `.env` (eller be en annen utvikler om verdiene) og fyll inn følgende i e
 | `SANITY_WRITE_TOKEN` | Skrivetoken, brukes av iSonen-synken (`/api/sync-isonen`) |
 | `SANITY_WEBHOOK_SECRET` | Beskytter `/api/revalidate`-webhooken fra Sanity |
 | `NEXT_PUBLIC_APP_URL` | Nettstedets URL (f.eks. `http://localhost:3000` lokalt) |
-| `NIF_ORG_ID`, `NIF_ACTIVITY_API_BASE_URL`, `NIF_ACTIVITY_CLIENT_ID`, `NIF_ACTIVITY_CLIENT_SECRET`, `NIF_ACTIVITY_MOCK` | Tilgang til NIFs Activity API (iSonen), se under |
+| `NIF_ACTIVITY_CLIENT_ID`, `NIF_ACTIVITY_CLIENT_SECRET`, `NIF_ACTIVITY_MOCK` | Tilgang til NIFs Activity API (iSonen), se under |
 | `CRON_SECRET` | Beskytter `/api/sync-isonen` mot uautorisert kjøring |
 
 Se [PRODUKSJON.md](PRODUKSJON.md) for full forklaring av hver variabel og oppsett i produksjon.
@@ -43,14 +43,20 @@ Alt redaksjonelt innhold ligger i Sanity, ikke i denne kodebasen — se `/studio
 - `person` — styret, gruppeledere og andre kontakter
 - `disciplinePage` — én side per padledisiplin (hav, elv, flattvann, surfski, polo, junior)
 - `flexiblePage` — HMS-sider, Klubben-sider, Medlemskap m.m.
-- `event` — kommende aktiviteter og turer (fylles delvis automatisk, se under)
+- `event` — aktiviteter, kurs og turer, også faste økter (importeres automatisk fra iSonen, se under)
 - `blogPost` — blogginnlegg og turrapporter
 
 Skjemaene for disse er definert i [sanity/schemas/](sanity/schemas/).
 
 ### Automatisk aktivitetssynk (iSonen)
 
-`/api/sync-isonen` henter daglig (se cron i [vercel.json](vercel.json)) aktiviteter fra NIFs Activity API og oppretter dem som kladder (`event`-dokumenter) i Sanity for godkjenning. Logikken ligger i [src/lib/isonen.ts](src/lib/isonen.ts).
+`/api/sync-isonen` henter TKKs kommende aktiviteter (org-ID 26548) fra NIFs Activity API. Ruten kalles hver hele time av [GitHub Actions](.github/workflows/sync-isonen.yml) og daglig av Vercel Cron ([vercel.json](vercel.json)) som reserve. Vercel Hobby tillater ikke oftere enn daglig.
+
+- **Nye aktiviteter** opprettes som kladder med bilde. Et menneske fyller ut beskrivelse, kategori og så videre i Studio og publiserer.
+- **Feltene som kommer fra iSonen** (tittel, dato, sted, påmeldingslenke og avlyst) holdes oppdatert. Resten eies av redaksjonen og blir aldri overskrevet.
+- **Avlysning:** «AVLYST» i tittelen i iSonen, eller at en kommende aktivitet forsvinner, gjør at aktiviteten merkes som avlyst.
+
+Logikken ligger i [src/lib/isonen.ts](src/lib/isonen.ts). Du kan teste API-tilgangen uten å skrive noe til Sanity med `npx tsx sanity/test-isonen.ts [startdato]`.
 
 ## Prosjektstruktur
 

@@ -4,7 +4,7 @@ import DisciplineCard from "@/components/DisciplineCard";
 import EventCard from "@/components/EventCard";
 import BlogCard from "@/components/BlogCard";
 import PartnersSection from "@/components/PartnersSection";
-import { getUpcomingEvents, getRecurringEvents } from "@/lib/queries/events";
+import { getUpcomingEvents } from "@/lib/queries/events";
 import { getAllBlogPosts } from "@/lib/queries/blog";
 import { getSiteSettings } from "@/lib/queries/settings";
 import { urlFor } from "@/lib/sanity";
@@ -62,10 +62,9 @@ function toHeroSlides(settings: SiteSettings | null): HeroSlideView[] {
 }
 
 export default async function HomePage() {
-  const [events, posts, recurringEvents, settings] = await Promise.all([
+  const [events, posts, settings] = await Promise.all([
     getUpcomingEvents(),
     getAllBlogPosts(),
-    getRecurringEvents(),
     getSiteSettings(),
   ]);
 
@@ -76,7 +75,6 @@ export default async function HomePage() {
       slides={toHeroSlides(settings)}
       events={events.slice(0, 3)}
       posts={posts.slice(0, 3)}
-      recurringEvents={recurringEvents}
       partners={settings?.partners ?? []}
       stats={stats.length > 0 ? stats : DEFAULT_STATS}
     />
@@ -87,14 +85,12 @@ function HomeContent({
   slides,
   events,
   posts,
-  recurringEvents,
   partners,
   stats,
 }: {
   slides: HeroSlideView[];
   events: SanityEvent[];
   posts: BlogPostSummary[];
-  recurringEvents: SanityEvent[];
   partners: Partner[];
   stats: string[];
 }) {
@@ -164,21 +160,7 @@ function HomeContent({
         </div>
       </section>
 
-      {/* 3. Faste turer og trening */}
-      {recurringEvents.length > 0 && (
-        <section className="bg-slate-50 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-display font-bold text-navy text-3xl mb-8">Faste turer og trening</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {recurringEvents.map((re) => (
-                <EventCard key={re._id} event={re} labels={EVENT_DIFFICULTY_LABELS} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 4. Hva vil du padle? */}
+      {/* 3. Hva vil du padle? */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="font-display font-bold text-navy text-3xl mb-8">Hva vil du padle?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -188,7 +170,7 @@ function HomeContent({
         </div>
       </section>
 
-      {/* 5. Resten */}
+      {/* 4. Resten */}
       <PartnersSection partners={partners} />
 
       <section className="bg-tkk-blue py-16">

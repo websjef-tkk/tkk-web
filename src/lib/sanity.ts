@@ -1,8 +1,7 @@
 import { createClient } from "next-sanity";
-import { createImageUrlBuilder as imageUrlBuilder } from "@sanity/image-url";
 import { draftMode } from "next/headers";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SanityImageSource = any;
+
+export { urlFor } from "./sanityImage";
 
 export const sanityClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -37,9 +36,3 @@ export const sanityWriteClient = createClient({
   useCdn: false,
   token: process.env.SANITY_WRITE_TOKEN,
 });
-
-const builder = imageUrlBuilder(sanityClient);
-
-export function urlFor(source: SanityImageSource) {
-  return builder.image(source);
-}

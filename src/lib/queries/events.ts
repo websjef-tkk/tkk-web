@@ -7,11 +7,9 @@ export interface SanityEvent {
   title: { no: string };
   description?: { no?: string };
   body?: { no?: unknown[] };
-  isRecurring?: boolean;
-  date?: string;
+  image?: { asset?: { _ref: string }; alt?: string };
+  date: string;
   endDate?: string;
-  dayOfWeek?: string;
-  time?: string;
   location?: string;
   category: string;
   disciplines?: string[];
@@ -28,11 +26,9 @@ const eventProjection = `
   title,
   description,
   ${bodyProjection},
-  isRecurring,
+  image,
   date,
   endDate,
-  dayOfWeek,
-  time,
   location,
   category,
   disciplines,
@@ -43,32 +39,13 @@ const eventProjection = `
   externalId
 `;
 
+/** Kommende aktiviteter, inkludert de som har startet men ikke er ferdige ennå. */
 export async function getUpcomingEvents(): Promise<SanityEvent[]> {
   try {
     const now = new Date().toISOString();
     return await sanityClient.fetch(
-      `*[_type == "event" && isRecurring != true && date >= $now] | order(date asc) { ${eventProjection} }`,
+      `*[_type == "event" && coalesce(endDate, date) >= $now] | order(date asc) { ${eventProjection} }`,
       { now }
-    );
-  } catch {
-    return [];
-  }
-}
-
-export async function getRecurringEvents(): Promise<SanityEvent[]> {
-  try {
-    return await sanityClient.fetch(
-      `*[_type == "event" && isRecurring == true] | order(sortOrder asc) { ${eventProjection} }`
-    );
-  } catch {
-    return [];
-  }
-}
-
-export async function getAllEvents(): Promise<SanityEvent[]> {
-  try {
-    return await sanityClient.fetch(
-      `*[_type == "event"] | order(isRecurring asc, date asc) { ${eventProjection} }`
     );
   } catch {
     return [];
