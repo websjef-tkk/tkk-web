@@ -47,7 +47,6 @@ function formatDate(dateStr: string, endDate?: string) {
 
 export default function EventCard({ event, labels }: Props) {
   const title = event.title.no;
-  const desc = event.description?.no;
   const diffLabel =
     event.difficulty === "nybegynner"
       ? labels.difficulty_nybegynner
@@ -64,11 +63,11 @@ export default function EventCard({ event, labels }: Props) {
   const whenLabel = formatDate(event.date, event.endDate);
   const imageUrl = event.image?.asset ? urlFor(event.image).width(600).height(300).url() : null;
 
-  return (
-    <Link
-      href={`/aktiviteter/${event.slug}`}
-      className="group bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow"
-    >
+  // Aktiviteter importert fra iSonen lenker rett dit (nytt vindu); påmelding skjer der.
+  const isonenUrl = event.externalSource === "isonen" ? event.registerUrl : undefined;
+
+  const content = (
+    <>
       {imageUrl && (
         <div className="relative h-40 overflow-hidden">
           <Image src={imageUrl} alt={event.image?.alt ?? title} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -98,11 +97,23 @@ export default function EventCard({ event, labels }: Props) {
         <p className="text-xs text-slate font-medium mb-1">{whenLabel}</p>
         <h3 className="font-display font-bold text-navy text-lg leading-snug mb-2">{title}</h3>
         {event.location && <p className="text-slate text-sm mb-1">📍 {event.location}</p>}
-        {desc && <p className="text-slate text-sm leading-relaxed">{desc}</p>}
       </div>
       <div className="px-5 py-3 bg-mist border-t border-mist">
-        <span className="text-teal text-sm font-semibold">Les mer →</span>
+        <span className="text-teal text-sm font-semibold">{isonenUrl ? "Les mer på iSonen →" : "Les mer →"}</span>
       </div>
+    </>
+  );
+
+  const className =
+    "group bg-white rounded-xl shadow-sm border border-mist overflow-hidden flex flex-col hover:shadow-md transition-shadow";
+
+  return isonenUrl ? (
+    <a href={isonenUrl} target="_blank" rel="noopener noreferrer" className={className}>
+      {content}
+    </a>
+  ) : (
+    <Link href={`/aktiviteter/${event.slug}`} className={className}>
+      {content}
     </Link>
   );
 }

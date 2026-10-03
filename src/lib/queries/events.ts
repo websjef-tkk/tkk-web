@@ -1,12 +1,10 @@
 import { sanityClient, getSanityClient } from "../sanity";
-import { bodyProjection } from "./shared";
 
 export interface SanityEvent {
   _id: string;
   slug: string;
   title: { no: string };
   description?: { no?: string };
-  body?: { no?: unknown[] };
   image?: { asset?: { _ref: string }; alt?: string };
   date: string;
   endDate?: string;
@@ -25,7 +23,6 @@ const eventProjection = `
   "slug": slug.current,
   title,
   description,
-  ${bodyProjection},
   image,
   date,
   endDate,

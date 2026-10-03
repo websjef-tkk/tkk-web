@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { PortableText } from "@portabletext/react";
 import { getEventBySlug } from "@/lib/queries/events";
 import type { SanityEvent } from "@/lib/queries/events";
-import { richTextComponents } from "@/components/portableText/richTextComponents";
 import { DISCIPLINE_LABELS } from "@/components/EventCard";
 import { buildPageMetadata } from "@/lib/seo";
 import { urlFor } from "@/lib/sanity";
@@ -30,8 +28,6 @@ export default async function EventDetailPage({ params }: PageProps) {
 function EventDetailContent({ event }: { event: SanityEvent }) {
   const title = event.title.no;
   const desc = event.description?.no;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const body = event.body?.no as any[] | undefined;
 
   const backLabel = "← Alle aktiviteter";
   const disciplineLabels = (event.disciplines ?? [])
@@ -74,13 +70,7 @@ function EventDetailContent({ event }: { event: SanityEvent }) {
 
       <h1 className="font-display font-bold text-navy text-3xl md:text-4xl leading-tight mb-8">{title}</h1>
 
-      {desc && <p className="text-slate text-lg leading-relaxed mb-6">{desc}</p>}
-
-      {body?.length ? (
-        <div className="prose prose-slate max-w-none leading-relaxed mb-8">
-          <PortableText value={body} components={richTextComponents} />
-        </div>
-      ) : null}
+      {desc && <p className="text-slate text-lg leading-relaxed whitespace-pre-line mb-8">{desc}</p>}
 
       {event.registerUrl && (
         <Link

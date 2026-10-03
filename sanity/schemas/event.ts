@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { noString, noText, noBody } from "./objects/localized";
+import { noString, noText } from "./objects/localized";
 import { DISCIPLINES } from "./objects/disciplines";
 import { EVENT_CATEGORIES } from "./objects/eventCategories";
 
@@ -17,7 +17,6 @@ export const event = defineType({
       validation: (r) => r.required(),
     }),
     noText("description", "Beskrivelse"),
-    noBody("body", "Utfyllende innhold (hvordan delta)"),
     defineField({
       name: "date",
       title: "Startdato",
