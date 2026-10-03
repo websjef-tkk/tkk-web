@@ -133,6 +133,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Klarte ikke hente data fra iSonen" }, { status: 502 });
   }
 
+  try {
+    return NextResponse.json(await syncToSanity(events, startDate));
+  } catch (err) {
+    // Ruten er beskyttet av CRON_SECRET, så feilmeldingen kan trygt vises i GitHub-loggen.
+    console.error("Skriving til Sanity feilet:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: `Skriving til Sanity feilet: ${message}` }, { status: 500 });
+  }
+}
+
+async function syncToSanity(events: IsonenEvent[], startDate: string) {
   // Både publiserte dokumenter og kladder, slik at begge holdes oppdatert.
   const existing = await sanityWriteClient.fetch<ExistingDoc[]>(
     `*[_type == "event" && externalSource == "isonen"]{ _id, externalId, title, date, endDate, location, registerUrl, cancelled }`,
@@ -178,5 +189,5 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ created, updated, cancelled, unchanged, total: events.length });
+  return { created, updated, cancelled, unchanged, total: events.length };
 }
