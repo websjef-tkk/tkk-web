@@ -17,7 +17,12 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           SITE_URL: ${{ secrets.SITE_URL }}
+        # Krever eksakt HTTP 200: et redirect (f.eks. til Vercel-innlogging) skal ikke gi grønn kjøring.
         run: |
-          curl -fsS --max-time 240 \
-            -H "Authorization: Bearer $CRON_SECRET" \
-            "$SITE_URL/api/sync-isonen"
+          url="${SITE_URL%/}/api/sync-isonen"
+          echo "Kaller $url"
+          status=$(curl -sS -o response.txt -w "%{http_code}" --max-time 240 \
+            -H "Authorization: Bearer $CRON_SECRET" "$url")
+          echo "HTTP $status"
+          head -c 2000 response.txt; echo
+          [ "$status" = "200" ]
