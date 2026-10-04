@@ -49,7 +49,7 @@ export const blogPost = defineType({
         list: DISCIPLINES,
       },
     }),
-    defineField({ name: "author", title: "Forfatter", type: "string" }),
+    defineField({ name: "author", title: "Forfatter", type: "string", validation: (r) => r.required() }),
     defineField({
       name: "image",
       title: "Bilde",
