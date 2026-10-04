@@ -3,13 +3,14 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getMainMenu } from "@/lib/queries/menu";
+import { getSiteSettings } from "@/lib/queries/settings";
 
 /**
  * Rammen rundt selve nettstedet — meny og bunntekst. Sanity Studio ligger
  * utenfor denne gruppen, og skal vises uten klubbens meny.
  */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { items: menu, loggbokUrl } = await getMainMenu();
+  const [{ items: menu, loggbokUrl }, settings] = await Promise.all([getMainMenu(), getSiteSettings()]);
   const isDraft = (await draftMode()).isEnabled;
   return (
     <>
@@ -23,7 +24,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       )}
       <Nav menu={menu} loggbokUrl={loggbokUrl} />
       <main className="flex-1">{children}</main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }
