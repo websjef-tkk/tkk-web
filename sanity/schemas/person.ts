@@ -1,10 +1,12 @@
 import { defineField, defineType } from "sanity";
 import { noString } from "./objects/localized";
+import { readOnlyUnlessAdministrator } from "../roles";
 
 export const person = defineType({
   name: "person",
   title: "Person / kontakt",
   type: "document",
+  readOnly: readOnlyUnlessAdministrator,
   fields: [
     defineField({ name: "name", title: "Navn", type: "string", validation: (r) => r.required() }),
     noString("role", "Rolle", { required: true }),

@@ -48,6 +48,18 @@ Alt redaksjonelt innhold ligger i Sanity, ikke i denne kodebasen — se `/studio
 
 Skjemaene for disse er definert i [sanity/schemas/](sanity/schemas/).
 
+### Tilgang og roller
+
+Klubben har Sanitys Growth-plan gjennom non-profit-programmet. Alle som skriver har sin egen konto, og rollen settes i [Sanity Manage](https://www.sanity.io/manage) under Members. Ingen kode må endres når noen kommer til, bytter rolle eller slutter.
+
+| Rolle | Hvem | Kan |
+|---|---|---|
+| Administrator | Nettansvarlig og minst én til | Alt, også forside, meny, klubbinformasjon, medlemmer og tokens |
+| Editor | Grensjefer og faste ressurspersoner | Skrive og publisere innhold |
+| Contributor | Sporadiske skribenter | Skrive utkast som en Editor publiserer |
+
+Studio sjekker rollen til den innloggede ([sanity/roles.ts](sanity/roles.ts)). For alle andre enn administratorer er «Forside og meny», «Klubbinformasjon» og «Sider (alle)» skjult, og Vision-fanen borte. `siteSettings`, `mainMenu`, `person` og klubbsider (`flexiblePage` med seksjonen Klubbinformasjon) er skrivebeskyttet for dem, og nye sider de oppretter blir alltid padling-innhold. Dette er et gjerde mot uhell og ikke en lås, for Sanitys API tillater fortsatt at en Editor endrer disse dokumentene. Ekte tilgang per dokumenttype krever egendefinerte roller på Enterprise-planen.
+
 ### Automatisk aktivitetssynk (iSonen)
 
 `/api/sync-isonen` henter TKKs kommende aktiviteter (org-ID 26548) fra NIFs Activity API. Ruten kalles hver hele time av [GitHub Actions](.github/workflows/sync-isonen.yml) og daglig av Vercel Cron ([vercel.json](vercel.json)) som reserve. Vercel Hobby tillater ikke oftere enn daglig.
@@ -67,6 +79,7 @@ src/components/   Delte React-komponenter
 src/lib/          Sanity-klient, GROQ-spørringer, hjelpefunksjoner
 sanity/schemas/   Sanity-skjemadefinisjoner
 sanity/structure.ts  Egendefinert desk-struktur for Studio
+sanity/roles.ts      Rollesjekk som styrer hva ikke-administratorer ser i Studio
 ```
 
 ## Scripts

@@ -17,7 +17,11 @@
   - URL: `https://tkk.no/api/revalidate?secret=<SANITY_WEBHOOK_SECRET>`
   - Trigger på: publish, unpublish, delete
   - Bruk samme token som `SANITY_WEBHOOK_SECRET`
-- [ ] Inviter `leder@tkk.no` som **Administrator** (Settings → Members → Invite)
+- [ ] Inviter medlemmer med personlige kontoer og riktig rolle (Settings → Members → Invite) — se «Tilgang og roller» i [README.md](README.md). Ikke del innlogging.
+  - `leder@tkk.no` som **Administrator**, slik at klubben har minst to administratorer
+  - Grensjefer og faste ressurspersoner som **Editor**
+  - Sporadiske skribenter som **Contributor**
+- [ ] Bekreft antall seter og varighet på non-profit-avtalen (Growth-planen). Faller den bort, finnes bare rollene Administrator og Viewer.
 - [ ] Innholdet er allerede seedet til `production`-datasettet (engangsimport er gjort og de tilhørende scriptene er fjernet fra repoet) — bekreft heller at alt vises korrekt i Studio (`/studio`)
 - [ ] Logg inn på Studio (`/studio`) og gå gjennom innholdet:
   - `siteSettings` — forsidekarusell, bunntekst-tagline, sosiale lenker, adresse, samarbeidspartnere
@@ -36,6 +40,7 @@
 - [ ] Sett opp HTTPS (skjer automatisk på Vercel når domenet er koblet til)
 - [ ] Verifiser at `www.tkk.no` og `tkk.no` begge virker (redirect én til den andre)
 - [ ] Oppdater `NEXT_PUBLIC_APP_URL` i Vercel-miljøvariablene til `https://tkk.no` når domenet er live
+- [ ] Legg til `https://tkk.no` under CORS origins i Sanity Manage (API → CORS origins) med **Allow credentials**. Uten dette får ingen logget inn i Studio på `tkk.no/studio`.
 - [ ] Oppdater GitHub-secreten `SITE_URL` (repo → Settings → Secrets and variables → Actions) til `https://tkk.no` når domenet er live. Den brukes av timesynken mot iSonen og peker til Vercel-URL-en fram til da.
 
 ---

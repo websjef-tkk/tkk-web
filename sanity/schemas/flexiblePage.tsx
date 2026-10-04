@@ -4,11 +4,16 @@ import { seoField } from "./objects/seo";
 import { subPageLinksField } from "./objects/subPageLink";
 import { DISCIPLINES } from "./objects/disciplines";
 import { FieldInfo } from "../components/FieldInfo";
+import { isAdministrator, readOnlyUnlessAdministrator } from "../roles";
 
 export const flexiblePage = defineType({
   name: "flexiblePage",
   title: "Fleksibel side",
   type: "document",
+  // Klubbinformasjon er forbeholdt administratorer. Andre roller kan bare
+  // opprette og endre padling-innhold, se også "section"-feltet under.
+  readOnly: ({ currentUser, document }) =>
+    document?.section === "klubb" && !isAdministrator(currentUser),
   fieldsets: [
     {
       name: "advanced",
@@ -73,7 +78,8 @@ export const flexiblePage = defineType({
         ],
         layout: "radio",
       },
-      initialValue: "klubb",
+      initialValue: (_, { currentUser }) => (isAdministrator(currentUser) ? "klubb" : "padling"),
+      readOnly: readOnlyUnlessAdministrator,
       validation: (r) => r.required(),
     }),
     defineField({

@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { noString } from "./objects/localized";
+import { readOnlyUnlessAdministrator } from "../roles";
 import { createLinkFields } from "./objects/link";
 
 const heroButton = {
@@ -69,6 +70,7 @@ export const siteSettings = defineType({
   type: "document",
   // @ts-expect-error — singleton action list is not in the public type but works at runtime
   __experimental_actions: ["update", "publish"],
+  readOnly: readOnlyUnlessAdministrator,
   fields: [
     defineField({
       name: "heroSlides",
