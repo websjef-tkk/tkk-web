@@ -8,6 +8,7 @@ import { urlFor } from "@/lib/sanity";
 import type { BlogPostFull } from "@/lib/queries/blog";
 import { richTextComponents } from "@/components/portableText/richTextComponents";
 import { buildPageMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { BLOG_CATEGORY_LABELS } from "@/lib/labels";
 
 export const revalidate = 3600;
@@ -42,9 +43,15 @@ function BlogPostContent({ post }: { post: BlogPostFull }) {
 
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link href="/blogg" className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
-        ← Tilbake til bloggen
-      </Link>
+      <Breadcrumbs
+        path={`blogg/${post.slug}`}
+        current={title}
+        back={
+          <Link href="/blogg" className="hover:text-teal hover:underline">
+            ← Tilbake til bloggen
+          </Link>
+        }
+      />
 
       {imageUrl && (
         <div className="relative h-72 md:h-96 rounded-xl overflow-hidden mb-8">

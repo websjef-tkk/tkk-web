@@ -1,4 +1,5 @@
 import BlogCard from "@/components/BlogCard";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { getAllBlogPosts } from "@/lib/queries/blog";
 import { BLOG_CATEGORY_LABELS } from "@/lib/labels";
 
@@ -9,6 +10,7 @@ export default async function BloggPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Breadcrumbs path="blogg" current="Blogg og nyheter" />
       <h1 className="font-display font-bold text-navy text-4xl mb-10">Blogg og nyheter</h1>
       {posts.length === 0 ? (
         <p className="text-slate">Ingen innlegg ennå.</p>

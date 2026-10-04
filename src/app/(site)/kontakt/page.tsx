@@ -1,5 +1,6 @@
 import { getAllPeople } from "@/lib/queries/people";
 import type { SanityPerson } from "@/lib/queries/people";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -15,6 +16,7 @@ function KontaktContent({ people }: { people: SanityPerson[] }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Breadcrumbs path="kontakt" current="Kontakt oss" />
       <h1 className="font-display font-bold text-navy text-4xl mb-10">Kontakt oss</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">

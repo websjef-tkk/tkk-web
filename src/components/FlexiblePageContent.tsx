@@ -1,19 +1,23 @@
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
-import Link from "next/link";
 import { urlFor } from "@/lib/sanity";
 import type { FlexiblePage } from "@/lib/queries/page";
 import { richTextComponents } from "@/components/portableText/richTextComponents";
 import SubPageLinksGrid from "@/components/SubPageLinksGrid";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import BackLink from "@/components/BackLink";
 
 type Props = {
   page: FlexiblePage;
+  /** Sidens adresse. Utelates når siden som bruker komponenten viser brødsmulestien selv. */
+  path?: string;
+  /** Dit tilbake-lenken går når det ikke finnes en forrige side å gå tilbake til. */
   backHref?: string;
   backLabel?: string;
   extra?: React.ReactNode;
 };
 
-export default function FlexiblePageContent({ page, backHref, backLabel, extra }: Props) {
+export default function FlexiblePageContent({ page, path, backHref, backLabel, extra }: Props) {
   const title = page.title.no;
   const intro = page.intro?.no;
   const body = page.body?.no as unknown[];
@@ -24,10 +28,18 @@ export default function FlexiblePageContent({ page, backHref, backLabel, extra }
   return (
     <>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {backHref && (
-          <Link href={backHref} className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
-            {backLabel ?? "← Tilbake"}
-          </Link>
+        {path && (
+          <Breadcrumbs
+            path={path}
+            current={title}
+            back={
+              backHref && (
+                <BackLink fallbackHref={backHref} className="hover:text-teal hover:underline">
+                  {backLabel ?? "← Tilbake"}
+                </BackLink>
+              )
+            }
+          />
         )}
         {heroImageUrl && (
           <div className="relative h-72 md:h-96 rounded-xl overflow-hidden mb-8">

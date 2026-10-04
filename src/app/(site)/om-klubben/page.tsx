@@ -4,6 +4,7 @@ import { getAllPeople } from "@/lib/queries/people";
 import type { SanityPerson } from "@/lib/queries/people";
 import FlexiblePageContent from "@/components/FlexiblePageContent";
 import { buildPageMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -17,7 +18,7 @@ export default async function OmKlubbenPage() {
   const peopleTables = <PeopleTables people={people} />;
 
   if (page) {
-    return <FlexiblePageContent page={page} extra={peopleTables} />;
+    return <FlexiblePageContent page={page} path="om-klubben" extra={peopleTables} />;
   }
   return <OmKlubbenFallback>{peopleTables}</OmKlubbenFallback>;
 }
@@ -26,6 +27,7 @@ export default async function OmKlubbenPage() {
 function OmKlubbenFallback({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Breadcrumbs path="om-klubben" current="Om klubben" />
       <h1 className="font-display font-bold text-navy text-4xl mb-6">Om klubben</h1>
       <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-12">
         Trondhjems Kajakklubb er en av Norges største kajakklubber, med rundt 500 medlemmer og seks aktive grener.

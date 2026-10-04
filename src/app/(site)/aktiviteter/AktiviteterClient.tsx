@@ -22,6 +22,8 @@ const grenTabs: { key: string; label: string }[] = [
 
 type Props = {
   events: SanityEvent[];
+  /** Brødsmulestien, ferdig rendret på serveren. */
+  breadcrumbs?: React.ReactNode;
 };
 
 function EventGrid({ events }: { events: SanityEvent[] }) {
@@ -34,7 +36,7 @@ function EventGrid({ events }: { events: SanityEvent[] }) {
   );
 }
 
-export default function AktiviteterClient({ events }: Props) {
+export default function AktiviteterClient({ events, breadcrumbs }: Props) {
   const [filter, setFilter] = useState<string>("all");
   const [grenFilter, setGrenFilter] = useState<string>("all");
 
@@ -46,6 +48,7 @@ export default function AktiviteterClient({ events }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {breadcrumbs}
       <h1 className="font-display font-bold text-navy text-4xl mb-8">Aktiviteter og kurs</h1>
 
       <div className="flex flex-wrap gap-2 mb-3">

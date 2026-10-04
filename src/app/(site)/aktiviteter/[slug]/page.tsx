@@ -6,6 +6,7 @@ import { getEventBySlug } from "@/lib/queries/events";
 import type { SanityEvent } from "@/lib/queries/events";
 import { DISCIPLINE_LABELS } from "@/components/EventCard";
 import { buildPageMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { urlFor } from "@/lib/sanity";
 
 export const revalidate = 3600;
@@ -43,9 +44,15 @@ function EventDetailContent({ event }: { event: SanityEvent }) {
 
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Link href="/aktiviteter" className="text-teal text-sm font-semibold hover:underline mb-6 inline-block">
-        {backLabel}
-      </Link>
+      <Breadcrumbs
+        path={`aktiviteter/${event.slug}`}
+        current={title}
+        back={
+          <Link href="/aktiviteter" className="hover:text-teal hover:underline">
+            {backLabel}
+          </Link>
+        }
+      />
 
       {imageUrl && (
         <div className="relative h-72 md:h-96 rounded-xl overflow-hidden mb-8">

@@ -6,6 +6,7 @@ import type { DisciplinePage } from "@/lib/queries/page";
 import { richTextComponents } from "@/components/portableText/richTextComponents";
 import { resolveContentLink } from "@/lib/linkResolver";
 import SubPageLinksGrid from "@/components/SubPageLinksGrid";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 type Props = {
   page: DisciplinePage;
@@ -34,6 +35,7 @@ export default function DisciplinePageContent({ page }: Props) {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Breadcrumbs path={`padling/${page.discipline}`} current={title} />
         {intro && (
           <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">{intro}</p>
         )}

@@ -9,7 +9,10 @@ export const revalidate = 3600;
 type Params = { slug: string[] };
 type Props = { params: Promise<Params> };
 
-/** Foreldre-stien for tilbake-lenken — siste segment av adressen strippes. */
+/**
+ * Foreldre-stien (siste segment av adressen strippes). Tilbake-lenken går dit
+ * bare når den besøkende ikke har en forrige side på nettstedet å gå tilbake til.
+ */
 function backHrefFor(path: string): string | undefined {
   const segments = path.split("/");
   if (segments.length <= 1) return undefined;
@@ -29,7 +32,7 @@ export default async function FlexiblePageRoute({ params }: Props) {
   const page = await getFlexiblePage(path);
   if (page) {
     return (
-      <FlexiblePageContent page={page} backHref={backHrefFor(path)} backLabel={page.backLabel} />
+      <FlexiblePageContent page={page} path={path} backHref={backHrefFor(path)} backLabel={page.backLabel} />
     );
   }
 

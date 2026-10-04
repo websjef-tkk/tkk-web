@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getFlexiblePage } from "@/lib/queries/page";
 import FlexiblePageContent from "@/components/FlexiblePageContent";
 import { buildPageMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -26,6 +27,7 @@ export default async function HmsPage() {
     return (
       <>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+          <Breadcrumbs path="hms" current={page.title.no} />
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
             <HmsSubPageLinks />
           </div>
@@ -56,6 +58,7 @@ function HmsSubPageLinks() {
 function HmsFallback() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Breadcrumbs path="hms" current="Klubbens HMS-plan" />
       <h1 className="font-display font-bold text-navy text-4xl mb-4">Klubbens HMS-plan</h1>
       <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">
         Trondhjems Kajakklubb (TKK) er et idrettslag med ca. 500 medlemmer. Klubben har som mål å unngå

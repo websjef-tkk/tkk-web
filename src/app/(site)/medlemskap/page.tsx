@@ -3,6 +3,7 @@ import { getFlexiblePage } from "@/lib/queries/page";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buildPageMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -54,6 +55,7 @@ export default async function MedlemskapPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Breadcrumbs path="medlemskap" current={title} />
       <h1 className="font-display font-bold text-navy text-4xl mb-4">{title}</h1>
       {intro && (
         <p className="text-slate text-lg leading-relaxed border-l-4 border-tkk-blue pl-5 mb-10">{intro}</p>
