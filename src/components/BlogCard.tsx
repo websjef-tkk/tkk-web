@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { urlFor } from "@/lib/sanity";
+import { urlFor } from "@/lib/sanityImage";
 import type { BlogPostSummary } from "@/lib/queries/blog";
 
 type Props = {
