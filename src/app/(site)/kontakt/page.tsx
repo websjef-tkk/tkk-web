@@ -90,16 +90,17 @@ function ContactTable({ title, people }: { title: string; people: SanityPerson[]
     <section className="mb-10">
       <h2 className="font-display font-bold text-navy text-2xl mb-5">{title}</h2>
       <div className="bg-white rounded-xl shadow-sm border border-mist overflow-hidden">
-        <table className="w-full text-sm">
-          <tbody>
+        {/* På mobil: tittel på egen linje, deretter navn, telefon og e-post på linjen under. */}
+        <table className="block sm:table w-full text-sm">
+          <tbody className="block sm:table-row-group">
             {people.map((p, i) => (
-              <tr key={p._id} className={i % 2 === 0 ? "bg-white" : "bg-mist"}>
-                <td className="px-5 py-3 text-slate">{p.role.no}</td>
-                <td className="px-5 py-3 font-medium text-navy">{p.name}</td>
-                <td className="px-4 py-3 hidden sm:table-cell">
+              <tr key={p._id} className={`flex flex-wrap items-center sm:table-row ${i % 2 === 0 ? "bg-white" : "bg-mist"}`}>
+                <td className="block sm:table-cell w-full sm:w-auto px-5 pt-3 sm:py-3 text-slate">{p.role.no}</td>
+                <td className="block sm:table-cell flex-1 px-5 pt-1 pb-3 sm:py-3 font-medium text-navy">{p.name}</td>
+                <td className="block sm:table-cell px-4 pt-1 pb-3 sm:py-3">
                   {p.phone && <a href={`tel:${p.phone.replace(/\s/g, "")}`} className="text-teal hover:underline">{p.phone}</a>}
                 </td>
-                <td className="px-4 py-3 w-8">
+                <td className="block sm:table-cell px-4 pt-1 pb-3 sm:py-3 w-12 sm:w-8">
                   <a href={`mailto:${p.email}`} title={p.email} className="text-teal hover:text-navy transition-colors inline-flex items-center justify-center">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
