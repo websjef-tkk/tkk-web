@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buildPageMetadata } from "@/lib/seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { PortableText, type PortableTextBlock, type PortableTextComponents } from "@portabletext/react";
+import { richTextComponents } from "@/components/portableText/richTextComponents";
 
 export const revalidate = 3600;
 
@@ -12,28 +14,62 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata(page);
 }
 
-type Block = { style?: string; children?: { text?: string }[] };
+type Block = PortableTextBlock & { style?: string };
+type Section = { title: string; blocks: Block[] };
 
-function splitBySections(blocks: unknown[]): { title: string; texts: string[] }[] {
-  const result: { title: string; texts: string[] }[] = [];
-  let current: { title: string; texts: string[] } | null = null;
+/** Hele teksten i en blokk, på tvers av lenker og formatering. */
+function plainText(block: Block): string {
+  return (block.children ?? []).map((c) => ("text" in c && typeof c.text === "string" ? c.text : "")).join("");
+}
+
+function splitBySections(blocks: unknown[]): Section[] {
+  const result: Section[] = [];
+  let current: Section | null = null;
   for (const b of blocks as Block[]) {
     if (b.style === "h2") {
       if (current) result.push(current);
-      current = { title: b.children?.[0]?.text ?? "", texts: [] };
-    } else if (current) {
-      const text = b.children?.[0]?.text ?? "";
-      if (text) current.texts.push(text);
+      current = { title: plainText(b), blocks: [] };
+    } else if (current && plainText(b)) {
+      current.blocks.push(b);
     }
   }
   if (current) result.push(current);
   return result;
 }
 
-function parsePrice(line: string): [string, string] {
-  const idx = line.lastIndexOf(": ");
-  if (idx === -1) return [line, ""];
-  return [line.slice(0, idx), line.slice(idx + 2)];
+// Lenker og formatering beholdes, men avsnitt- og listeinnpakningen droppes
+// siden siden har sitt eget oppsett rundt hver tekstlinje.
+const inlineComponents = { ...richTextComponents, block: { normal: ({ children }) => <>{children}</> } } satisfies PortableTextComponents;
+
+function InlineText({ block }: { block: Block }) {
+  return (
+    <PortableText
+      value={{ ...block, style: "normal", listItem: undefined, level: undefined }}
+      components={inlineComponents}
+    />
+  );
+}
+
+/** Hele brødteksten i en seksjon — alle avsnitt og punktlister, med lenker. */
+function BoxText({ blocks }: { blocks: Block[] }) {
+  return (
+    <div className="prose prose-sm prose-slate max-w-none text-slate leading-relaxed">
+      <PortableText value={blocks} components={richTextComponents} />
+    </div>
+  );
+}
+
+/** Deler "Kategori: pris" ved siste kolon; prisen må stå i den siste tekstbiten. */
+function splitPrice(block: Block): [Block, string] {
+  const children = block.children ?? [];
+  const last = children[children.length - 1];
+  const lastText = last && "text" in last && typeof last.text === "string" ? last.text : "";
+  const idx = lastText.lastIndexOf(": ");
+  if (idx === -1) return [block, ""];
+  return [
+    { ...block, children: [...children.slice(0, -1), { ...last, text: lastText.slice(0, idx) }] },
+    lastText.slice(idx + 2),
+  ];
 }
 
 export default async function MedlemskapPage() {
@@ -46,10 +82,10 @@ export default async function MedlemskapPage() {
   const rawBody = page.body?.no ?? [];
   const sections = splitBySections(rawBody);
 
-  const priceRows = (sections[0]?.texts ?? []).map(parsePrice);
-  const benefits = sections[1]?.texts ?? [];
-  const qualText = sections[2]?.texts[0];
-  const afterText = sections[3]?.texts[0];
+  const priceRows = (sections[0]?.blocks ?? []).map(splitPrice);
+  const benefits = sections[1]?.blocks ?? [];
+  const qualBlocks = sections[2]?.blocks ?? [];
+  const afterBlocks = sections[3]?.blocks ?? [];
 
   const secTitle = (i: number) => sections[i]?.title ?? "";
 
@@ -83,7 +119,7 @@ export default async function MedlemskapPage() {
                     key={i}
                     className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}
                   >
-                    <td className="px-4 py-3 text-slate">{cat}</td>
+                    <td className="px-4 py-3 text-slate"><InlineText block={cat} /></td>
                     <td className="px-4 py-3 text-right font-semibold text-navy whitespace-nowrap">
                       {price}
                     </td>
@@ -105,7 +141,7 @@ export default async function MedlemskapPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-slate text-sm leading-relaxed">{b}</span>
+                <span className="text-slate text-sm leading-relaxed"><InlineText block={b} /></span>
               </li>
             ))}
           </ul>
@@ -113,16 +149,16 @@ export default async function MedlemskapPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        {qualText && (
+        {qualBlocks.length > 0 && (
           <div className="bg-slate-50 rounded-lg p-6 border border-slate-200">
             <h3 className="font-display font-bold text-navy text-lg mb-2">{secTitle(2)}</h3>
-            <p className="text-slate text-sm leading-relaxed">{qualText}</p>
+            <BoxText blocks={qualBlocks} />
           </div>
         )}
-        {afterText && (
+        {afterBlocks.length > 0 && (
           <div className="bg-tkk-blue/10 rounded-lg p-6 border border-tkk-blue/20">
             <h3 className="font-display font-bold text-navy text-lg mb-2">{secTitle(3)}</h3>
-            <p className="text-slate text-sm leading-relaxed">{afterText}</p>
+            <BoxText blocks={afterBlocks} />
           </div>
         )}
       </div>
