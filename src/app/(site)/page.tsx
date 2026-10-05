@@ -25,7 +25,14 @@ const DISCIPLINES = [
   { title: "Junior", emoji: "🌱", href: "/padling/junior" },
 ];
 
-const DEFAULT_STATS = ["~500 medlemmer", "To baser", "Utstyr inkludert", "Seks grener"];
+type Stat = { label: string; href?: string | null };
+
+const DEFAULT_STATS: Stat[] = [
+  { label: "~500 medlemmer" },
+  { label: "To baser" },
+  { label: "Utstyr inkludert" },
+  { label: "Seks grener" },
+];
 
 // Brukes til forsiden er satt opp med bilder i Sanity, og som sikkerhetsnett
 // dersom innholdet ikke kan hentes.
@@ -68,7 +75,10 @@ export default async function HomePage() {
     getSiteSettings(),
   ]);
 
-  const stats = settings?.stats?.map((s) => s.label.no) ?? [];
+  const stats: Stat[] = (settings?.stats ?? []).map((s) => ({
+    label: s.label.no,
+    href: s.page ? resolveContentLink({ linkType: "page", page: s.page }) : null,
+  }));
 
   return (
     <HomeContent
@@ -92,7 +102,7 @@ function HomeContent({
   events: SanityEvent[];
   posts: BlogPostSummary[];
   partners: Partner[];
-  stats: string[];
+  stats: Stat[];
 }) {
   return (
     <>
@@ -100,11 +110,23 @@ function HomeContent({
 
       <div className="bg-navy text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          {stats.map((stat, i) => (
-            <div key={i} className="text-sm font-semibold text-white/80">
-              <span className="text-tkk-blue">✓</span> {stat}
-            </div>
-          ))}
+          {stats.map(({ label, href }, i) => {
+            const content = (
+              <>
+                <span className="text-tkk-blue">✓</span> {label}
+              </>
+            );
+            // Samme utseende enten punktet lenker til en side eller ikke.
+            return href ? (
+              <Link key={i} href={href} className="text-sm font-semibold text-white/80">
+                {content}
+              </Link>
+            ) : (
+              <div key={i} className="text-sm font-semibold text-white/80">
+                {content}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -178,7 +200,7 @@ function HomeContent({
           <h2 className="font-display font-bold text-navy text-3xl mb-4">Bli en del av fellesskapet</h2>
           <p className="text-navy/80 text-lg leading-relaxed mb-8">
             For kr 800 i året får du tilgang til utstyr, turer, kurs og et aktivt sosialt miljø i en av
-            Norges største kajakklubbber.
+            Norges største kajakklubber.
           </p>
           <Link
             href="/medlemskap"

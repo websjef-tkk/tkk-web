@@ -1,4 +1,5 @@
 import { sanityClient } from "../sanity";
+import type { ContentLinkPage } from "../linkResolver";
 
 export interface Partner {
   name?: string;
@@ -30,7 +31,7 @@ export interface SiteSettings {
   postalAddress?: string;
   phone?: string;
   orgNr?: string;
-  stats?: { label: { no: string } }[];
+  stats?: { label: { no: string }; page?: ContentLinkPage }[];
   partners?: Partner[];
 }
 
@@ -46,7 +47,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         postalAddress,
         phone,
         orgNr,
-        stats[] { label },
+        stats[] { label, page->{ _type, "slug": slug.current, discipline } },
         partners[] { name, description, logo, logoWidth }
       }`
     );

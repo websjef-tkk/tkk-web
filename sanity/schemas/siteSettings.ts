@@ -90,16 +90,25 @@ export const siteSettings = defineType({
     defineField({ name: "orgNr", title: "Org.nr.", type: "string" }),
     defineField({
       name: "stats",
-      title: "Jumbo-statistikk (forside)",
+      title: "Jumbo-mini (forside)",
       description: "Punktene som vises i den mørke stripen øverst på forsiden.",
       type: "array",
       of: [
         {
           type: "object",
           name: "stat",
-          fields: [noString("label", "Tekst", { required: true })],
+          fields: [
+            noString("label", "Tekst", { required: true }),
+            defineField({
+              name: "page",
+              title: "Lenke til side",
+              description: "Valgfritt. Uten lenke vises punktet som vanlig tekst.",
+              type: "reference",
+              to: [{ type: "flexiblePage" }, { type: "disciplinePage" }, { type: "blogPost" }, { type: "event" }],
+            }),
+          ],
           preview: {
-            select: { title: "label.no" },
+            select: { title: "label.no", subtitle: "page.title.no" },
           },
         },
       ],
