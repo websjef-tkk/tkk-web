@@ -5,6 +5,8 @@ import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 import { resolvePreviewUrl } from "./sanity/previewUrl";
 import { isAdministrator } from "./sanity/roles";
+import { childPageTemplate } from "./sanity/childPageTemplate";
+import { publishWithPathSync } from "./sanity/actions/publishWithPathSync";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
@@ -23,8 +25,13 @@ export default defineConfig({
     isAdministrator(currentUser) ? prev : prev.filter((tool) => tool.name !== "vision"),
   schema: {
     types: schemaTypes,
+    templates: (prev) => [...prev, childPageTemplate],
   },
   document: {
+    actions: (prev, { schemaType }) =>
+      schemaType === "flexiblePage"
+        ? prev.map((action) => (action.action === "publish" ? publishWithPathSync(action) : action))
+        : prev,
     // Disse dokumenttypene skal bare finnes én gang (fast dokument-ID i sanity/structure.ts).
     // Uten dette kan en redaktør ved uhell opprette et nytt, konkurrerende dokument via
     // "+ Create new document"-menyen, som frontend da kan begynne å hente i stedet for det ekte.

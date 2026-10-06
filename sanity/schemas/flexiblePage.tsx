@@ -4,7 +4,19 @@ import { seoField } from "./objects/seo";
 import { subPageLinksField } from "./objects/subPageLink";
 import { DISCIPLINES } from "./objects/disciplines";
 import { FieldInfo } from "../components/FieldInfo";
+import { PagePathInput } from "../components/PagePathInput";
 import { isAdministrator, readOnlyUnlessAdministrator } from "../roles";
+import {
+  CODE_ROUTED_PAGES,
+  PAGE_PATH_API_VERSION,
+  fetchPagePath,
+  isReservedPath,
+  lastSegment,
+  slugifyPath,
+} from "../pagePath";
+
+const slugOf = (document: Record<string, unknown> | undefined) =>
+  (document?.slug as { current?: string } | undefined)?.current;
 
 export const flexiblePage = defineType({
   name: "flexiblePage",
@@ -23,30 +35,47 @@ export const flexiblePage = defineType({
   ],
   fields: [
     defineField({
+      name: "parent",
+      title: "Ligger under",
+      type: "reference",
+      to: [{ type: "flexiblePage" }, { type: "disciplinePage" }],
+      description: (
+        <FieldInfo
+          short="Siden denne hører til under. Bestemmer første del av adressen."
+          hint='Velg f.eks. "Om klubben" for å få adressen "om-klubben/…", eller en gren for å legge siden under den grenen. Flytter du siden hit eller dit senere, følger undersidene med, og gamle lenker blir videresendt.'
+        />
+      ),
+      // Sider med egen rute i koden må bli liggende der de er.
+      hidden: ({ document }) => CODE_ROUTED_PAGES.has(slugOf(document) ?? ""),
+      validation: (r) =>
+        r.custom(async (value, ctx) => {
+          const ref = (value as { _ref?: string } | undefined)?._ref;
+          if (!ref) return true;
+          const id = (ctx.document?._id ?? "").replace(/^drafts\./, "");
+          if (ref === id) return "En side kan ikke ligge under seg selv";
+          const client = ctx.getClient({ apiVersion: PAGE_PATH_API_VERSION });
+          const ancestors = await client.fetch<(string | null)[] | null>(
+            `*[_id == $ref][0]{ "ids": [parent._ref, parent->parent._ref, parent->parent->parent._ref, parent->parent->parent->parent._ref] }.ids`,
+            { ref }
+          );
+          return ancestors?.includes(id) ? "En side kan ikke ligge under en av sine egne undersider" : true;
+        }),
+    }),
+    defineField({
       name: "slug",
       title: "Adresse (URL)",
       type: "slug",
       description: (
         <FieldInfo
-          short="Genereres automatisk fra tittelen (kan overstyres)."
-          hint='Full sti til siden, uten skråstrek foran (f.eks. "om-klubben/klubbhus"). Bestemmer både hvor siden vises i menyen/lenker og hvilken nettadresse den får. Kan skrives inn direkte, eller genereres fra tittelen — husk å legge til foreldre-stien selv da (f.eks. "om-klubben/" foran).'
+          short="Følger av «Ligger under» pluss sidens eget ledd."
+          hint='Første del av adressen kommer fra siden denne ligger under, og kan bare endres ved å flytte siden. Siste ledd skriver du selv, eller lager fra tittelen. Sider på toppnivå (uten «Ligger under») opprettes av administratorer.'
         />
       ),
+      components: { input: PagePathInput },
       options: {
         source: "title.no",
         maxLength: 200,
-        slugify: (input: string) =>
-          input
-            .toLowerCase()
-            .trim()
-            .replace(/æ/g, "ae")
-            .replace(/ø/g, "o")
-            .replace(/å/g, "a")
-            .replace(/[^a-z0-9/]+/g, "-")
-            .replace(/-+/g, "-")
-            .replace(/-*\/-*/g, "/")
-            .replace(/^-|-$/g, "")
-            .replace(/^\/|\/$/g, ""),
+        slugify: slugifyPath,
       },
       validation: (r) =>
         r.required().custom(async (value, ctx) => {
@@ -58,7 +87,17 @@ export const flexiblePage = defineType({
           if (!/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/.test(current)) {
             return "Adressen kan bare inneholde små bokstaver, tall, bindestrek og skråstrek";
           }
-          const client = ctx.getClient({ apiVersion: "2024-01-01" });
+          if (isReservedPath(current, DISCIPLINES.map((d) => d.value))) {
+            return "Denne adressen er reservert for en annen del av nettstedet";
+          }
+          const client = ctx.getClient({ apiVersion: PAGE_PATH_API_VERSION });
+          const parentRef = (ctx.document?.parent as { _ref?: string } | undefined)?._ref;
+          if (parentRef) {
+            const parentPath = await fetchPagePath(client, parentRef);
+            if (parentPath && current !== `${parentPath}/${lastSegment(current)}`) {
+              return `Adressen må være "${parentPath}/" pluss ett ledd, siden siden ligger under /${parentPath}`;
+            }
+          }
           const id = (ctx.document?._id ?? "").replace(/^drafts\./, "");
           const other = await client.fetch(
             `count(*[_type == "flexiblePage" && slug.current == $value && !(_id in [$id, "drafts." + $id])])`,
@@ -116,7 +155,7 @@ export const flexiblePage = defineType({
       type: "array",
       of: [{ type: "string" }],
       description:
-        "Gamle adresser denne siden har hatt. Besøkende som kommer via en gammel lenke blir automatisk videresendt til dagens adresse. Legg til den gamle adressen her FØR du endrer feltet over.",
+        "Gamle adresser denne siden har hatt. Besøkende som kommer via en gammel lenke blir automatisk videresendt til dagens adresse. Fylles ut automatisk når en publisert side flyttes eller får ny adresse.",
       fieldset: "advanced",
     }),
   ],

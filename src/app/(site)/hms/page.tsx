@@ -1,20 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFlexiblePage } from "@/lib/queries/page";
+import { getChildPages, getFlexiblePage } from "@/lib/queries/page";
 import FlexiblePageContent from "@/components/FlexiblePageContent";
 import { buildPageMetadata } from "@/lib/seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const revalidate = 3600;
-
-const HMS_SUB_PAGES = [
-  { label: "HMS generelt", path: "/hms/generelt" },
-  { label: "HMS hav", path: "/hms/hav" },
-  { label: "HMS elv", path: "/hms/elv" },
-  { label: "Mitt varsel", path: "/hms/mitt-varsel" },
-  { label: "Hendelsesrapporter", path: "/hms/hendelsesrapporter" },
-  { label: "Politiattest", path: "/hms/politiattest" },
-];
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getFlexiblePage("hms");
@@ -24,13 +15,25 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HmsPage() {
   const page = await getFlexiblePage("hms");
   if (page) {
+    // Undersidene er sidene som ligger under HMS i Studio, så nye sider dukker opp her av seg selv.
+    const subPages = await getChildPages(page._id);
     return (
       <>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
           <Breadcrumbs path="hms" current={page.title.no} />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
-            <HmsSubPageLinks />
-          </div>
+          {subPages.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
+              {subPages.map(({ slug, title }) => (
+                <Link
+                  key={slug}
+                  href={`/${slug}`}
+                  className="bg-white border border-mist rounded-lg px-4 py-3 text-sm font-medium text-navy hover:border-tkk-blue hover:text-teal transition-colors shadow-sm"
+                >
+                  {title} →
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         <FlexiblePageContent page={page} />
       </>
@@ -39,22 +42,7 @@ export default async function HmsPage() {
   return <HmsFallback />;
 }
 
-function HmsSubPageLinks() {
-  return (
-    <>
-      {HMS_SUB_PAGES.map(({ label, path }) => (
-        <Link
-          key={path}
-          href={path}
-          className="bg-white border border-mist rounded-lg px-4 py-3 text-sm font-medium text-navy hover:border-tkk-blue hover:text-teal transition-colors shadow-sm"
-        >
-          {label} →
-        </Link>
-      ))}
-    </>
-  );
-}
-
+/** Brukes bare hvis flexiblePage-dokumentet "hms" ikke finnes i Sanity. */
 function HmsFallback() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -64,9 +52,6 @@ function HmsFallback() {
         Trondhjems Kajakklubb (TKK) er et idrettslag med ca. 500 medlemmer. Klubben har som mål å unngå
         hendelser som fører til skade på folk, miljø og utstyr.
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <HmsSubPageLinks />
-      </div>
     </div>
   );
 }

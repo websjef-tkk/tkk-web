@@ -42,7 +42,7 @@ Alt redaksjonelt innhold ligger i Sanity, ikke i denne kodebasen — se `/studio
 - `siteSettings` — forsidekarusell, bunntekst, sosiale lenker, samarbeidspartnere
 - `person` — styret, gruppeledere og andre kontakter
 - `disciplinePage` — én side per padledisiplin (hav, elv, flattvann, surfski, polo, junior)
-- `flexiblePage` — HMS-sider, Klubben-sider, Medlemskap m.m.
+- `flexiblePage` — HMS-sider, Klubben-sider, Medlemskap m.m. Feltet «Ligger under» plasserer siden i hierarkiet og gir første del av adressen; flyttes en publisert side, følger undersidene med og gamle adresser viderekobles
 - `event` — aktiviteter, kurs og turer, også faste økter (importeres automatisk fra iSonen, se under)
 - `blogPost` — blogginnlegg og turrapporter
 
@@ -58,7 +58,7 @@ Klubben har Sanitys Growth-plan gjennom non-profit-programmet. Alle som skriver 
 | Editor | Grensjefer og faste ressurspersoner | Skrive og publisere innhold |
 | Contributor | Sporadiske skribenter | Skrive utkast som en Editor publiserer |
 
-Studio sjekker rollen til den innloggede ([sanity/roles.ts](sanity/roles.ts)). For alle andre enn administratorer er «Forside og meny», «Klubbinformasjon» og «Sider (alle)» skjult, og Vision-fanen borte. `siteSettings`, `mainMenu`, `person` og klubbsider (`flexiblePage` med seksjonen Klubbinformasjon) er skrivebeskyttet for dem, og nye sider de oppretter blir alltid padling-innhold. Dette er et gjerde mot uhell og ikke en lås, for Sanitys API tillater fortsatt at en Editor endrer disse dokumentene. Ekte tilgang per dokumenttype krever egendefinerte roller på Enterprise-planen.
+Studio sjekker rollen til den innloggede ([sanity/roles.ts](sanity/roles.ts)). For alle andre enn administratorer er «Forside og meny», «Klubbinformasjon» og «Alle sider» skjult, og Vision-fanen borte. `siteSettings`, `mainMenu`, `person` og klubbsider (`flexiblePage` med seksjonen Klubbinformasjon) er skrivebeskyttet for dem, og nye sider de oppretter blir alltid padling-innhold. Dette er et gjerde mot uhell og ikke en lås, for Sanitys API tillater fortsatt at en Editor endrer disse dokumentene. Ekte tilgang per dokumenttype krever egendefinerte roller på Enterprise-planen.
 
 ### Automatisk aktivitetssynk (iSonen)
 

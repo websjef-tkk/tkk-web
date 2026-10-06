@@ -75,6 +75,22 @@ export async function getFlexiblePage(slug: string): Promise<FlexiblePage | null
   }
 }
 
+/** Sidene som ligger rett under en side ("Ligger under" i Studio), sortert på tittel. */
+export async function getChildPages(parentId: string): Promise<{ slug: string; title: string }[]> {
+  try {
+    const client = await getSanityClient();
+    return await client.fetch(
+      `*[_type == "flexiblePage" && parent._ref == $parentId && defined(slug.current)] | order(title.no asc) {
+        "slug": slug.current,
+        "title": title.no
+      }`,
+      { parentId }
+    );
+  } catch {
+    return [];
+  }
+}
+
 /** Finner ny adresse for en side som har blitt flyttet, via previousSlugs. */
 export async function getFlexiblePageRedirect(slug: string): Promise<string | null> {
   try {
