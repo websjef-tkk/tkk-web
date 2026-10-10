@@ -1,5 +1,5 @@
 import { useId, useState, type ComponentType } from "react";
-import { InfoOutlineIcon } from "@sanity/icons";
+import { InfoOutlineIcon } from "@sanity/icons/InfoOutline";
 import type { InputProps } from "sanity";
 
 /**
