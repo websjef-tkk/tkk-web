@@ -3,7 +3,7 @@ import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 import { subPageLinksField } from "./objects/subPageLink";
 import { DISCIPLINES } from "./objects/disciplines";
-import { FieldInfo } from "../components/FieldInfo";
+import { withFieldHint } from "../components/FieldInfo";
 import { PagePathInput } from "../components/PagePathInput";
 import { isAdministrator, readOnlyUnlessAdministrator } from "../roles";
 import {
@@ -39,12 +39,12 @@ export const flexiblePage = defineType({
       title: "Ligger under",
       type: "reference",
       to: [{ type: "flexiblePage" }, { type: "disciplinePage" }],
-      description: (
-        <FieldInfo
-          short="Siden denne hører til under. Bestemmer første del av adressen."
-          hint='Velg f.eks. "Om klubben" for å få adressen "om-klubben/…", eller en gren for å legge siden under den grenen. Flytter du siden hit eller dit senere, følger undersidene med, og gamle lenker blir videresendt.'
-        />
-      ),
+      description: "Siden denne hører til under. Bestemmer første del av adressen.",
+      components: {
+        input: withFieldHint(
+          'Velg f.eks. "Om klubben" for å få adressen "om-klubben/…", eller en gren for å legge siden under den grenen. Flytter du siden hit eller dit senere, følger undersidene med, og gamle lenker blir videresendt.'
+        ),
+      },
       // Sider med egen rute i koden må bli liggende der de er.
       hidden: ({ document }) => CODE_ROUTED_PAGES.has(slugOf(document) ?? ""),
       validation: (r) =>
@@ -65,13 +65,13 @@ export const flexiblePage = defineType({
       name: "slug",
       title: "Adresse (URL)",
       type: "slug",
-      description: (
-        <FieldInfo
-          short="Følger av «Ligger under» pluss sidens eget ledd."
-          hint='Første del av adressen kommer fra siden denne ligger under, og kan bare endres ved å flytte siden. Siste ledd skriver du selv, eller lager fra tittelen. Sider på toppnivå (uten «Ligger under») opprettes av administratorer.'
-        />
-      ),
-      components: { input: PagePathInput },
+      description: "Følger av «Ligger under» pluss sidens eget ledd.",
+      components: {
+        input: withFieldHint(
+          'Første del av adressen kommer fra siden denne ligger under, og kan bare endres ved å flytte siden. Siste ledd skriver du selv, eller lager fra tittelen. Sider på toppnivå (uten «Ligger under») opprettes av administratorer.',
+          PagePathInput
+        ),
+      },
       options: {
         source: "title.no",
         maxLength: 200,

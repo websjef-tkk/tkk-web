@@ -1,40 +1,41 @@
-import { useId, useState } from "react";
+import { useId, useState, type ComponentType } from "react";
 import { InfoOutlineIcon } from "@sanity/icons";
+import type { InputProps } from "sanity";
 
 /**
- * Kort, alltid synlig tekst pluss en infoknapp som viser/skjuler en lengre
- * forklaring. Brukes som `description` på felter der standardteksten ellers
- * blir for lang til å stå fremme hele tiden.
+ * Infoknapp som viser/skjuler en lengre forklaring. Brukes på felter der
+ * forklaringen blir for lang til å stå fremme hele tiden. Selve beskrivelsen
+ * (`description`) må være vanlig tekst, så knappen ligger over feltets input
+ * i stedet, se `withFieldHint`.
  */
-export function FieldInfo({ short, hint }: { short: string; hint: string }) {
+export function FieldHint({ hint }: { hint: string }) {
   const [open, setOpen] = useState(false);
   const hintId = useId();
 
   return (
-    <span style={{ display: "inline-flex", flexDirection: "column", gap: 4 }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-        {short}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls={hintId}
-          title="Vis forklaring"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "none",
-            border: "none",
-            padding: 2,
-            margin: 0,
-            cursor: "pointer",
-            color: "inherit",
-          }}
-        >
-          <InfoOutlineIcon />
-        </button>
-      </span>
+    <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 4 }}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={hintId}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          background: "none",
+          border: "none",
+          padding: 2,
+          margin: 0,
+          cursor: "pointer",
+          color: "inherit",
+          fontSize: "0.85em",
+          opacity: 0.8,
+        }}
+      >
+        <InfoOutlineIcon />
+        Mer forklaring
+      </button>
       {open && (
         <span
           id={hintId}
@@ -51,4 +52,19 @@ export function FieldInfo({ short, hint }: { short: string; hint: string }) {
       )}
     </span>
   );
+}
+
+/**
+ * Lager en input-komponent som viser `FieldHint` over feltet. Uten `Input`
+ * brukes Sanitys standard-input for feltet.
+ */
+export function withFieldHint<P extends InputProps>(hint: string, Input?: ComponentType<P>) {
+  return function InputWithFieldHint(props: P) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <FieldHint hint={hint} />
+        {Input ? <Input {...props} /> : props.renderDefault(props)}
+      </div>
+    );
+  };
 }
