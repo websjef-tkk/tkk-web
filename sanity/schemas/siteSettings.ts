@@ -112,7 +112,7 @@ export const siteSettings = defineType({
           },
         },
       ],
-      validation: (r) => r.max(4).warning("Mer enn 4 punkter kan se trangt ut i stripen"),
+      validation: (r) => r.max(6).error("Stripen har plass til maks 6 punkter"),
     }),
     defineField({
       name: "partners",

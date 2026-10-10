@@ -27,6 +27,17 @@ const DISCIPLINES = [
 
 type Stat = { label: string; href?: string | null };
 
+// Kolonner per antall punkter i Jumbo-mini. Skrevet ut i sin helhet så Tailwind
+// finner klassene.
+const STATS_GRID_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-2 md:grid-cols-3",
+  4: "grid-cols-2 md:grid-cols-4",
+  5: "grid-cols-2 md:grid-cols-3 lg:grid-cols-5",
+  6: "grid-cols-2 md:grid-cols-3 lg:grid-cols-6",
+};
+
 const DEFAULT_STATS: Stat[] = [
   { label: "~500 medlemmer" },
   { label: "To baser" },
@@ -75,7 +86,7 @@ export default async function HomePage() {
     getSiteSettings(),
   ]);
 
-  const stats: Stat[] = (settings?.stats ?? []).map((s) => ({
+  const stats: Stat[] = (settings?.stats ?? []).slice(0, 6).map((s) => ({
     label: s.label.no,
     href: s.page ? resolveContentLink({ linkType: "page", page: s.page }) : null,
   }));
@@ -109,7 +120,9 @@ function HomeContent({
       <HeroCarousel slides={slides} />
 
       <div className="bg-navy text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid ${STATS_GRID_COLS[stats.length] ?? STATS_GRID_COLS[6]} gap-4 text-center max-md:[&>*:last-child:nth-child(odd)]:col-span-2`}
+        >
           {stats.map(({ label, href }, i) => {
             const content = (
               <>
