@@ -35,11 +35,6 @@ const pageTree = (
         : '(_type == "flexiblePage" && !defined(parent)) || _type == "disciplinePage"'
     )
     .params(parent ? { parentId: parent.id } : {})
-    .initialValueTemplates([
-      parent
-        ? S.initialValueTemplateItem(CHILD_PAGE_TEMPLATE_ID, { parentId: parent.id })
-        : S.initialValueTemplateItem("flexiblePage"),
-    ])
     .child(async (documentId) => {
       const doc = await context
         .getClient({ apiVersion: "2024-01-01" })
@@ -63,7 +58,14 @@ const pageTree = (
             .id("undersider")
             .child(pageTree(S, context, { id: documentId, title })),
         ]);
-    });
+    })
+    // Må stå sist: hvert senere kall i kjeden lager en kopi som gjetter malen
+    // ut fra filteret på nytt og overskriver denne med vanlig "flexiblePage".
+    .initialValueTemplates([
+      parent
+        ? S.initialValueTemplateItem(CHILD_PAGE_TEMPLATE_ID, { parentId: parent.id })
+        : S.initialValueTemplateItem("flexiblePage"),
+    ]);
 
 // Én pane per gren, med grenens side, nyheter og aktiviteter filtrert på
 // den grenen. Dette er kun en navigasjonssnarvei for forfatterne (klubbens
