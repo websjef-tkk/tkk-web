@@ -2,6 +2,8 @@ import { defineField, defineType } from "sanity";
 import { noString, noText } from "./objects/localized";
 import { DISCIPLINES } from "./objects/disciplines";
 import { EVENT_CATEGORIES } from "./objects/eventCategories";
+import { AUTO_SLUG_MAX_LENGTH, AutoSlugInput, slugFromTitle } from "../components/AutoSlugInput";
+import { compactSlugField } from "../components/CompactSlugField";
 
 export const event = defineType({
   name: "event",
@@ -11,9 +13,10 @@ export const event = defineType({
     noString("title", "Tittel", { required: true }),
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Adresse (URL)",
       type: "slug",
-      options: { source: "title.no" },
+      components: { field: compactSlugField("/aktiviteter/"), input: AutoSlugInput },
+      options: { source: "title.no", maxLength: AUTO_SLUG_MAX_LENGTH, slugify: slugFromTitle },
       validation: (r) => r.required(),
     }),
     noText("description", "Beskrivelse"),

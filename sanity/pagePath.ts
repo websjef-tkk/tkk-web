@@ -47,6 +47,9 @@ export function slugifyPath(input: string): string {
     .replace(/^\/|\/$/g, "");
 }
 
+/** Ett ledd i en adresse, laget fra en tittel. */
+export const segmentFromTitle = (title: string | undefined) => slugifyPath((title ?? "").replace(/\//g, "-"));
+
 /** Siste ledd i en adresse ("om-klubben/klubbhus" → "klubbhus"). */
 export const lastSegment = (path: string) => path.slice(path.lastIndexOf("/") + 1);
 

@@ -73,7 +73,7 @@ export const disciplinePage = defineType({
     }),
     defineField({
       name: "heroImage",
-      title: "Bilde",
+      title: "Toppbilde",
       type: "image",
       options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],

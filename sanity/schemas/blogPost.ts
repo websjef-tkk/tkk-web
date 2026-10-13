@@ -2,26 +2,32 @@ import { defineField, defineType } from "sanity";
 import { noString, noText, noBody } from "./objects/localized";
 import { seoField } from "./objects/seo";
 import { DISCIPLINES } from "./objects/disciplines";
+import { AUTO_SLUG_MAX_LENGTH, AutoSlugInput, slugFromTitle } from "../components/AutoSlugInput";
+import { compactSlugField } from "../components/CompactSlugField";
 
 export const blogPost = defineType({
   name: "blogPost",
   title: "Blogginnlegg",
   type: "document",
   fields: [
+    noString("title", "Tittel", { required: true }),
     defineField({
       name: "slug",
-      title: "Slug (URL)",
+      title: "Adresse (URL)",
       type: "slug",
-      options: { source: "title.no", maxLength: 96 },
+      components: { field: compactSlugField("/blogg/"), input: AutoSlugInput },
+      options: { source: "title.no", maxLength: AUTO_SLUG_MAX_LENGTH, slugify: slugFromTitle },
       validation: (r) => r.required(),
     }),
     defineField({
       name: "publishedAt",
       title: "Publiseringsdato",
       type: "date",
+      options: { dateFormat: "DD.MM.YYYY" },
+      // Dagens dato i lokal tid, på formen ÅÅÅÅ-MM-DD.
+      initialValue: () => new Date().toLocaleDateString("sv-SE"),
       validation: (r) => r.required(),
     }),
-    noString("title", "Tittel", { required: true }),
     noText("summary", "Sammendrag", { rows: 3, required: true }),
     noBody("body", "Innhold"),
     defineField({
@@ -52,7 +58,8 @@ export const blogPost = defineType({
     defineField({ name: "author", title: "Forfatter", type: "string", validation: (r) => r.required() }),
     defineField({
       name: "image",
-      title: "Bilde",
+      title: "Fremsidebilde",
+      description: "Vises på nyhetskortet og øverst i saken.",
       type: "image",
       options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],

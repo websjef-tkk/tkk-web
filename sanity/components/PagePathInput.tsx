@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { set, useClient, useCurrentUser, useEditState, useFormValue, type SlugInputProps } from "sanity";
-import { CODE_ROUTED_PAGES, PAGE_PATH_API_VERSION, fetchPagePath, lastSegment, slugifyPath } from "../pagePath";
+import {
+  CODE_ROUTED_PAGES,
+  PAGE_PATH_API_VERSION,
+  fetchPagePath,
+  lastSegment,
+  segmentFromTitle,
+  slugifyPath,
+} from "../pagePath";
 import { isAdministrator } from "../roles";
 
 const buttonStyle = {
@@ -14,9 +21,6 @@ const buttonStyle = {
   whiteSpace: "nowrap" as const,
   cursor: "pointer",
 };
-
-/** Sidens eget ledd i adressen, laget fra tittelen. */
-const segmentFromTitle = (title: string | undefined) => slugifyPath((title ?? "").replace(/\//g, "-"));
 
 const inputStyle = {
   flex: 1,

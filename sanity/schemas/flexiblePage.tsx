@@ -5,6 +5,7 @@ import { subPageLinksField } from "./objects/subPageLink";
 import { DISCIPLINES } from "./objects/disciplines";
 import { withFieldHint } from "../components/FieldInfo";
 import { PagePathInput } from "../components/PagePathInput";
+import { compactSlugField } from "../components/CompactSlugField";
 import { isAdministrator, readOnlyUnlessAdministrator } from "../roles";
 import {
   CODE_ROUTED_PAGES,
@@ -62,11 +63,37 @@ export const flexiblePage = defineType({
         }),
     }),
     defineField({
+      name: "section",
+      title: "Seksjon (for redigeringsmenyen)",
+      type: "string",
+      options: {
+        list: [
+          { title: "Padling-innhold", value: "padling" },
+          { title: "Klubbinformasjon", value: "klubb" },
+        ],
+        layout: "radio",
+      },
+      initialValue: (_, { currentUser }) => (isAdministrator(currentUser) ? "klubb" : "padling"),
+      readOnly: readOnlyUnlessAdministrator,
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "disciplines",
+      title: "Grener",
+      description: 'Hvilke grener siden tilhører. Styrer om siden vises under "[Gren]-innhold" i Studio.',
+      type: "array",
+      of: [{ type: "string" }],
+      options: { list: DISCIPLINES },
+      hidden: ({ parent }) => (parent as { section?: string } | undefined)?.section !== "padling",
+    }),
+    noString("title", "Tittel", { required: true }),
+    defineField({
       name: "slug",
       title: "Adresse (URL)",
       type: "slug",
       description: "Følger av «Ligger under» pluss sidens eget ledd.",
       components: {
+        field: compactSlugField("/"),
         input: withFieldHint(
           'Første del av adressen kommer fra siden denne ligger under, og kan bare endres ved å flytte siden. Siste ledd skriver du selv, eller lager fra tittelen. Sider på toppnivå (uten «Ligger under») opprettes av administratorer.',
           PagePathInput
@@ -107,33 +134,8 @@ export const flexiblePage = defineType({
         }),
     }),
     defineField({
-      name: "section",
-      title: "Seksjon (for redigeringsmenyen)",
-      type: "string",
-      options: {
-        list: [
-          { title: "Padling-innhold", value: "padling" },
-          { title: "Klubbinformasjon", value: "klubb" },
-        ],
-        layout: "radio",
-      },
-      initialValue: (_, { currentUser }) => (isAdministrator(currentUser) ? "klubb" : "padling"),
-      readOnly: readOnlyUnlessAdministrator,
-      validation: (r) => r.required(),
-    }),
-    defineField({
-      name: "disciplines",
-      title: "Grener",
-      description: 'Hvilke grener siden tilhører. Styrer om siden vises under "[Gren]-innhold" i Studio.',
-      type: "array",
-      of: [{ type: "string" }],
-      options: { list: DISCIPLINES },
-      hidden: ({ parent }) => (parent as { section?: string } | undefined)?.section !== "padling",
-    }),
-    noString("title", "Tittel", { required: true }),
-    defineField({
       name: "heroImage",
-      title: "Bilde",
+      title: "Toppbilde",
       type: "image",
       options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alt-tekst", type: "string", validation: (r) => r.required() })],
