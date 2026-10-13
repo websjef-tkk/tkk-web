@@ -15,8 +15,13 @@
 - [ ] Opprett et **webhook-hemmelig token** for ISR-revalidering
   - Settings → API → Webhooks → Create webhook
   - URL: `https://tkk.no/api/revalidate?secret=<SANITY_WEBHOOK_SECRET>`
-  - Trigger på: publish, unpublish, delete
-  - Bruk samme token som `SANITY_WEBHOOK_SECRET`
+    (testversjonen: `https://tkk-web-seven.vercel.app/api/revalidate?secret=…`, byttes til tkk.no ved lansering)
+  - Dataset `production`, trigger på create, update og delete, ikke for kladder, HTTP POST
+  - Filter: `_type in ["blogPost", "event", "flexiblePage", "disciplinePage", "siteSettings", "mainMenu", "person"]`
+    (uten filteret utløses webhooken også hver gang et bilde får en merkelapp)
+  - Bruk samme token som `SANITY_WEBHOOK_SECRET`. Det skal stå i URL-en; feltet «Secret» i Sanity-skjemaet brukes ikke.
+  - Uten webhooken oppdateres sidene bare én gang i timen. Med den vises endringer ved neste sidelasting etter publisering.
+- [ ] Opprett merkelappene for bilder og merk eksisterende bilder: `npx tsx sanity/seed-image-tags.ts` (tørrkjøring), deretter med `--write`. Må gjøres før Studio-endringen som krever merkelapp rulles ut, ellers får alle dokumenter med bilde en valideringsfeil.
 - [ ] Inviter medlemmer med personlige kontoer og riktig rolle (Settings → Members → Invite) — se «Tilgang og roller» i [README.md](README.md). Ikke del innlogging.
   - `leder@tkk.no` som **Administrator**, slik at klubben har minst to administratorer
   - Grensjefer og faste ressurspersoner som **Editor**
@@ -112,7 +117,7 @@ Org-ID (26548) og API-URL-ene er konstanter i `src/lib/isonen.ts`.
 - [ ] Test Sanity-webhook: publiser en endring i Studio → vent ~10 sek → bekreft at siden oppdateres
 - [ ] Test at `/studio` laster og at du kan redigere innhold
 - [ ] Test forsidekarusellen: at strekene nederst bytter bilde, og at knappene går dit de skal
-- [ ] Test at "Loggbok" i menyen åpner padleboken.no i ny fane
+- [ ] Test at "Padleboka" i menyen åpner padleboken.no i ny fane
 - [ ] Test på mobil og nettbrett
 - [ ] Kjør Lighthouse (i Chrome DevTools) og sjekk ytelse, tilgjengelighet og SEO
 

@@ -1,12 +1,14 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { media } from "sanity-plugin-media";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 import { resolvePreviewUrl } from "./sanity/previewUrl";
 import { isAdministrator } from "./sanity/roles";
 import { childPageTemplate } from "./sanity/childPageTemplate";
 import { publishWithPathSync } from "./sanity/actions/publishWithPathSync";
+import { imageTagNoticeInput, publishWithImageTagCheck } from "./sanity/imageTagCheck";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
@@ -19,7 +21,7 @@ export default defineConfig({
   projectId,
   dataset,
   basePath: "/studio",
-  plugins: [structureTool({ structure }), visionTool()],
+  plugins: [structureTool({ structure }), media(), visionTool()],
   // Vision er et utviklerverktøy og skjules for alle andre enn administratorer.
   tools: (prev, { currentUser }) =>
     isAdministrator(currentUser) ? prev : prev.filter((tool) => tool.name !== "vision"),
@@ -27,11 +29,16 @@ export default defineConfig({
     types: schemaTypes,
     templates: (prev) => [...prev, childPageTemplate],
   },
+  form: {
+    components: { input: imageTagNoticeInput },
+  },
   document: {
     actions: (prev, { schemaType }) =>
-      schemaType === "flexiblePage"
-        ? prev.map((action) => (action.action === "publish" ? publishWithPathSync(action) : action))
-        : prev,
+      prev.map((action) =>
+        action.action === "publish"
+          ? publishWithImageTagCheck(schemaType === "flexiblePage" ? publishWithPathSync(action) : action)
+          : action
+      ),
     // Disse dokumenttypene skal bare finnes én gang (fast dokument-ID i sanity/structure.ts).
     // Uten dette kan en redaktør ved uhell opprette et nytt, konkurrerende dokument via
     // "+ Create new document"-menyen, som frontend da kan begynne å hente i stedet for det ekte.

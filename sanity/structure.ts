@@ -11,6 +11,9 @@ const EXPLICITLY_HANDLED_TYPES = new Set([
   "blogPost",
   "person",
   "mainMenu",
+  // Merkelapper og mapper for bilder styres fra "Media"-verktøyet (sanity-plugin-media).
+  "media.tag",
+  "media.folder",
 ]);
 
 type S = Parameters<StructureResolver>[0];
