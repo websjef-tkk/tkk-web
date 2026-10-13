@@ -43,7 +43,21 @@ export default function DisciplinePageContent({ page }: Props) {
         {page.safetyLinks && page.safetyLinks.length > 0 && (
           <div className="bg-amber-50 border border-amber-200 rounded-lg px-6 py-6 mb-10">
             <h2 className="flex items-center gap-2 font-display font-bold text-navy text-xl mb-4">
-              <span aria-hidden="true">🛟</span> Sikker padling
+              {/* Tegnet som SVG: livbøye-emojien mangler på eldre operativsystemer. */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="w-6 h-6 shrink-0 text-red-600"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="4" />
+                <path d="m5.6 5.6 3.6 3.6m5.6 5.6 3.6 3.6m0-12.8-3.6 3.6m-5.6 5.6-3.6 3.6" />
+              </svg>
+              Sikker padling
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {page.safetyLinks.map((link, i) => {

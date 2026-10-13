@@ -60,7 +60,7 @@ export default function Nav({ menu, loggbokUrl }: { menu: ResolvedMenuItem[]; lo
                 rel="noopener noreferrer"
                 className="ml-3 px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded hover:bg-white transition-colors"
               >
-                Loggbok
+                Padleboka
               </a>
             )}
           </div>
@@ -74,7 +74,7 @@ export default function Nav({ menu, loggbokUrl }: { menu: ResolvedMenuItem[]; lo
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 text-xs font-semibold bg-tkk-blue text-navy rounded"
               >
-                Loggbok
+                Padleboka
               </a>
             )}
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-white p-2" aria-label="Toggle menu">
