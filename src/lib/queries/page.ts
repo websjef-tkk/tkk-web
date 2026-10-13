@@ -14,7 +14,9 @@ export interface FlexiblePage {
 }
 
 export interface SubPageLink {
-  title: { no?: string };
+  /** Kan mangle: da brukes tittelen på siden det lenkes til. */
+  title?: { no?: string } | null;
+  pageTitle?: string | null;
   linkType?: "page" | "url" | "pdf";
   page?: { _type?: string; slug?: string; discipline?: string } | null;
   href?: string;
@@ -24,6 +26,7 @@ export interface SubPageLink {
 
 const subPageLinksProjection = `subPageLinks[] {
   title,
+  "pageTitle": page->title.no,
   linkType,
   page->{ _type, "slug": slug.current, discipline },
   href,

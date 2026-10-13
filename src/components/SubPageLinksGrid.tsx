@@ -19,12 +19,13 @@ export default function SubPageLinksGrid({ links, heading = "Mer om dette" }: Pr
           {links.map((link, i) => {
             const isPdf = link.linkType === "pdf";
             const href = isPdf ? link.pdfFile?.asset?.url : resolveContentLink(link);
-            if (!href) return null;
+            const title = link.title?.no || link.pageTitle;
+            if (!href || !title) return null;
             const newTab = !!link.openInNewTab;
             const content = (
               <>
                 <span className="font-semibold text-navy group-hover:text-teal transition-colors">
-                  {link.title.no}
+                  {title}
                   {isPdf && <span className="text-xs align-super ml-0.5">(PDF)</span>}
                 </span>
                 <span className="text-teal text-sm group-hover:translate-x-1 transition-transform">→</span>

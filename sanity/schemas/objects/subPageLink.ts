@@ -11,7 +11,17 @@ export const subPageLinksField = defineField({
   of: [
     {
       type: "object",
-      fields: [noString("title", "Tittel"), ...createLinkFields({ allowPdf: true, includeNewTab: true })],
+      fields: [
+        noString("title", "Tittel", {
+          description: "Kan stå tom for lenker til en side på nettstedet. Da brukes sidens egen tittel.",
+        }),
+        ...createLinkFields({ allowPdf: true, includeNewTab: true }),
+      ],
+      validation: (r) =>
+        r.custom((value) => {
+          const link = value as { title?: { no?: string }; linkType?: string } | undefined;
+          return link?.title?.no || link?.linkType === "page" ? true : "Lenken må ha en tittel";
+        }),
       preview: {
         select: { title: "title.no", subtitle: "href", linkType: "linkType", pageTitle: "page.title.no" },
         prepare({
@@ -26,7 +36,7 @@ export const subPageLinksField = defineField({
           pageTitle?: string;
         }) {
           return {
-            title: title ?? "Underside",
+            title: title ?? pageTitle ?? "Underside",
             subtitle: linkType === "page" ? (pageTitle ?? "Side") : linkType === "pdf" ? "PDF" : subtitle,
           };
         },
